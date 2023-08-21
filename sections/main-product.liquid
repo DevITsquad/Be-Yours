@@ -70,7 +70,7 @@
       <p class="product__heading mobile_show h1">
         {{ product.title | escape }}
       </p>
-      <div class="mobile-show">
+      <div class="mobile_show">
         {%- if product.metafields.reviews.rating.value != blank -%}
           {% liquid
             assign rating_decimal = 0
