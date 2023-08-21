@@ -59,6 +59,30 @@
       animation-duration: {{ section.settings.autorotate_speed }}s;
     }
   }
+
+
+  .slideshow__image img{
+    filter: brightness(0.6);
+  }
+  .slideshow__card .slideshow__heading {
+font-size:3rem;
+font-weight:900;
+  }
+  .slideshow__card .slideshow__text{
+font-size:2.4rem;
+
+  }
+
+  .slideshow__button .button.custom__CTA{
+    background: orange;
+    opacity: 1;
+    color:white;
+    border-radius:3px;
+    width:100% !important;
+    max-width: 300px;
+    margin-left:auto;
+    margin-right:auto;
+      }
 {%- endstyle -%}
 
 {{ 'section-slideshow.css' | asset_url | stylesheet_tag }}
@@ -125,12 +149,12 @@
                 {%- if block.settings.button_label != blank -%}
                   <div class="slideshow__button" data-animate data-animate-delay-{{ animate_delay }}>
                     {%- if block.settings.button_style_secondary -%}
-                      <a class="button button--cta button--{{ block.settings.button_size }}"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% else %} role="link" aria-disabled="true"{% endif %}>
+                      <a  class="custom__CTA button button--cta button--{{ block.settings.button_size }}"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% else %} role="link" aria-disabled="true"{% endif %}>
                         <span class="label">{{ block.settings.button_label | escape }}</span>
                         {% render 'icon', icon: 'arrow' %}
                       </a>
                     {%- else -%}
-                      <a class="button button--{{ block.settings.button_size }}"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% else %} role="link" aria-disabled="true"{% endif %}>
+                      <a class="custom__CTA button button--{{ block.settings.button_size }}"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% else %} role="link" aria-disabled="true"{% endif %}>
                         {{ block.settings.button_label | escape }}
                       </a>
                     {%- endif -%}

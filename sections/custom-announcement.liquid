@@ -1,0 +1,107 @@
+<style>
+  .announcement-wrapper {
+    background-color: black;
+    overflow: hidden;
+  }
+  .announcement-wrapper .inner_item {
+    display: flex;
+    justify-content: space-between;
+    height: 49px;
+    background-color: black;
+    overflow: hidden;
+  }
+
+  div.announcement-element {
+    box-sizing: border-box;
+    max-width: 25%;
+    flex-basis: 25%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 12px;
+    font-size: 16px;
+    color: white;
+  }
+
+  @media screen and (max-width: 1000px) {
+    .announcement-wrapper .inner_item {
+      min-width: 1000px;
+    }
+    .announcement-element {
+      animation: text 10s linear infinite;
+      width: 153px;
+      gap: 5px;
+    }
+    .announcement-element img {
+      width: 18px;
+      height: 18px;
+    }
+    .announcement-element span {
+      font-size: 12px;
+    }
+    .announcement-wrapper .inner_item {
+      height: 35px;
+    }
+  }
+
+  @keyframes text {
+    0% {
+      transform: translate(180%, 0);
+    }
+
+    100% {
+      transform: translate(-380%, 0);
+    }
+  }
+</style>
+
+{%- if section.blocks.size > 0 -%}
+  <div class="announcement-wrapper">
+    <div class="inner_item">
+      {% for block in section.blocks %}
+        <div class="announcement-element">
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 30 | image_tag: height: 30, loading: 'lazy' }}
+          {%- endif -%}
+          <span>
+            {{ block.settings.text }}
+          </span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "announcement-custom",
+  "max_blocks": 4,
+  "class": "announcement-bar-section",
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "announcement-custom",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "announcement-custom",
+          "default": "some info"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Img"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "announcement-custom"
+    }
+  ]
+}
+{% endschema %}

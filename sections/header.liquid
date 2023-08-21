@@ -284,6 +284,16 @@
 {%- endif -%}
 
 <{% if enable_sticky_header %}sticky-header{% if section.settings.show_sticky_header_scroll_up %} data-scroll-up{% endif %}{% else %}header-wrapper{% endif %} class="header-wrapper{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}{% if enable_transparent_header %} header-transparent{% if section.settings.show_transparent_header_border %} header-transparent--border-bottom{% endif %}{% endif %}">
+ <style>
+header svg{
+  filter: brightness(.1) !important;
+  
+}
+header{
+background:white !important;
+max-width: 100% !important; 
+}
+</style>
   <header class="header header--{{ logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width header-section--padding">
     <div class="header__left
       {%- if language_selector != blank or country_selector != blank -%}

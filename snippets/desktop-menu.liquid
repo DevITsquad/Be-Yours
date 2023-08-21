@@ -33,7 +33,7 @@
             {%- else -%}
               <dropdown-menu>
                 <a href="{{ link.url }}" class="header__menu-item{% if link.active or link.child_active %} header__active-menu-item{% endif %} header__menu-item--top list-menu__item focus-inset">
-                  <span class="label">{{ link.title | escape }}</span>
+                  <span style="color:black;" class="label">{{ link.title | escape }}</span>
                   {% render 'icon', icon: 'caret' %}
                 </a>
                 <div class="list-menu-dropdown hidden">
@@ -43,13 +43,13 @@
                         {%- if childlink.links == blank -%}
                           <dropdown-menu>
                             <a href="{{ childlink.url }}" class="header__menu-item list-menu__item focus-inset{% if childlink.current %} list-menu__item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
-                              <span class="label">{{ childlink.title | escape }}</span>
+                              <span style="color:black;"  class="label">{{ childlink.title | escape }}</span>
                             </a>
                           </dropdown-menu>
                         {%- else -%}
                           <dropdown-menu>
                             <a href="{{ childlink.url }}" class="header__menu-item{% if childlink.active or childlink.child_active %} header__active-menu-item{% endif %} list-menu__item focus-inset">
-                              <span class="label">{{ childlink.title | escape }}</span>
+                              <span style="color:black;" class="label">{{ childlink.title | escape }}</span>
                               {% render 'icon', icon: 'caret' %}
                             </a>
                             <div class="list-menu-dropdown hidden">
@@ -137,7 +137,7 @@
           {%- else -%}
             <dropdown-menu>
               <a href="{{ link.url }}" class="header__menu-item{% if link.current %} header__active-menu-item{% endif %} header__menu-item--top list-menu__item focus-inset"{% if link.current %} aria-current="page"{% endif %}>
-                <span class="label">{{ link.title | escape }}</span>
+                <span style="color:black;" class="label">{{ link.title | escape }}</span>
               </a>
             </dropdown-menu>
           {%- endif -%}

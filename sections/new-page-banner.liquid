@@ -1,0 +1,171 @@
+{% style %}
+  .main-page-banner_wrapper {
+    margin-top: 170px;
+  }
+  .main-page-banner_wrapper_inner {
+  }
+
+  .custom__CTA svg {
+    fill: white;
+    width: 20px;
+    height: 20px;
+    transition: 0.3s;
+  }
+  .custom__CTA {
+    background: orange;
+    opacity: 1;
+    color: white;
+    border-radius: 3px;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 57px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .custom__CTA:hover {
+    opacity: 0.7;
+  }
+  .custom__CTA:hover svg {
+    transform: translate(10px);
+
+  }
+
+  .main-page-banner_header {
+  }
+  .main-page-banner_text {
+  }
+
+  .main-page-banner_img_wrapper {
+    height: 620px;
+    max-width: 1920px;
+    margin: auto;
+    background-image: url({{section.settings.image | image_url}});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin-top: 30px;
+    /* background-attachment: fixed; */
+  }
+
+  .main-page-banner_header {
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    font-size: 51px;
+    font-weight: bold;
+  }
+
+  .main-page-banner_text {
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    font-size: 27px;
+  }
+  .custom__CTA {
+    transition:0.5s;
+    margin-top: 30px;
+  }
+  .main-page-banner_images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  .main-page-banner_images img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .custom---padding {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+  @media screen and (max-width: 989px) {
+    .main-page-banner_img_wrapper {
+        height:350px;
+    }
+    .main-page-banner_wrapper {
+      margin-top: 70px;
+    }
+
+    .main-page-banner_header {
+      font-size: 32px;
+    }
+
+    .main-page-banner_text {
+      font-size: 21px;
+    }
+    .main-page-banner_img_wrapper {
+      margin-top: 20px;
+    }
+  }
+{% endstyle %}
+
+<div class="main-page-banner_wrapper">
+  <div class="main-page-banner_wrapper_inner">
+    <h2 class="custom---padding main-page-banner_header">{{ section.settings.heading }}</h2>
+    <p class="custom---padding main-page-banner_text">{{ section.settings.under_title }}</p>
+
+    <div class="main-page-banner_img_wrapper">
+      {% comment %} {{}} {% endcomment %}
+    </div>
+    <a class="custom__CTA" href="{{section.settings.link}}">
+      {{- section.settings.button_text }}
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+        <title>3-Arrow Right</title><g id="_3-Arrow_Right" data-name="3-Arrow Right"><path d="M31.71,15.29l-10-10L20.29,6.71,28.59,15H0v2H28.59l-8.29,8.29,1.41,1.41,10-10A1,1,0,0,0,31.71,15.29Z"/></g>
+      </svg>
+    </a>
+    <div class="custom---padding main-page-banner_images">
+      {% for block in section.blocks %}
+        <img src="{{block.settings.image | image_url}}" alt="some_img">
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "new-page-banner",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "image"
+    },
+    { "type": "text", "id": "heading", "label": "heading", "default": "One, clear, value proposition" },
+    { "type": "text", "id": "under_title", "label": "under_title", "default": "One, clear, strong call to action." },
+    { "type": "text", "id": "button_text", "label": "button_text", "default": "SHOP NOW" },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "button-link"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "image"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "new-page-banner"
+    }
+  ]
+}
+{% endschema %}
