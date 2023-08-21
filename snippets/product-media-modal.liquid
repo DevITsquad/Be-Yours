@@ -1,0 +1,90 @@
+{% comment %}
+  Renders a product media modal.
+  Accepts:
+  - product: {Object} Product liquid object
+  - variant_images: {Array} Product images associated with a variant
+  Usage:
+  {% render 'product-media-modal' %}
+{% endcomment %}
+<product-modal id="ProductModal-{{ section.id }}" class="product-media-modal">
+  <div role="dialog" aria-label="{{ 'products.modal.label' | t }}" aria-modal="true" tabindex="-1">
+    <button id="ModalClose-{{ section.id }}" type="button" class="product-media-modal__toggle" aria-label="{{ 'accessibility.close' | t }}" tabindex="-1">
+      <span class="icon icon-plus-alt"></span>
+    </button>
+
+    <div class="product-media-modal__content" role="document" aria-label="{{ 'products.modal.label' | t }}" tabindex="-1">
+      {%- liquid
+        if product.selected_or_first_available_variant.featured_media != null
+          assign featured_media = product.selected_or_first_available_variant.featured_media
+          if section.settings.hide_variants and variant_images contains featured_media.src
+            assign variant_image = true
+          else
+            assign variant_image = false
+          endif
+
+          assign gang_option_name = ''
+          assign gang_media_active = false
+          assign gang_connect = ''
+          if featured_media.alt contains '#' and section.settings.hide_variants == false
+            assign gang_connect = featured_media.alt | split: '#' | last
+            if gang_connect contains '_'
+              assign gang_exist = true
+              assign gang_option_name = gang_connect | split: '_' | first | handleize
+              
+              for option_name in product.options
+                assign option_name_handlized = option_name | handleize
+                if option_name_handlized == gang_option_name
+                  assign option_key = 'option' | append: forloop.index
+                  assign current_option_value = product.selected_or_first_available_variant[option_key] | handleize
+                  assign current_connect = option_name_handlized | append: '_' | append: current_option_value
+                  if gang_connect == current_connect
+                    assign gang_media_active = true
+                  endif
+                  break
+                endif
+              endfor
+            endif
+          endif
+
+          render 'product-media', media: featured_media, loop: section.settings.enable_video_looping, variant_image: variant_image, gang_exist: gang_exist, gang_media_active: gang_media_active, gang_option_name: gang_option_name, gang_connect: gang_connect
+        endif
+
+        for media in product.media
+          unless media.id == product.selected_or_first_available_variant.featured_media.id
+            if section.settings.hide_variants and variant_images contains media.src
+              assign variant_image = true
+            else
+              assign variant_image = false
+            endif
+          
+            assign gang_option_name = ''
+            assign gang_media_active = false
+            assign gang_connect = ''
+            if media.alt contains '#' and section.settings.hide_variants == false
+              assign gang_connect = media.alt | split: '#' | last
+              if gang_connect contains '_'
+                assign gang_exist = true
+                assign gang_option_name = gang_connect | split: '_' | first | handleize
+
+                for option_name in product.options
+                  assign option_name_handlized = option_name | handleize
+                  if option_name_handlized == gang_option_name
+                    assign option_key = 'option' | append: forloop.index
+                    assign current_option_value = product.selected_or_first_available_variant[option_key] | handleize
+                    assign current_connect = option_name_handlized | append: '_' | append: current_option_value
+                    if gang_connect == current_connect
+                      assign gang_media_active = true
+                    endif
+                    break
+                  endif
+                endfor
+              endif
+            endif
+
+            render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image, gang_exist: gang_exist, gang_media_active: gang_media_active, gang_option_name: gang_option_name, gang_connect: gang_connect
+          endunless
+        endfor
+      -%}
+    </div>
+  </div>
+</product-modal>

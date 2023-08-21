@@ -1,0 +1,73 @@
+.shipping-calculator .title-wrapper {
+  margin-bottom: 2rem;
+}
+
+.shipping-calculator--outline .title-wrapper {
+  margin-bottom: 0;
+  justify-content: center;
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  padding: 0 2rem;
+  transform: translate(-50%, -50%);
+  background: rgb(var(--color-background));
+}
+
+.shipping-calculator shipping-calculator {
+  display: block;
+  position: relative;
+  padding: 3.5rem 3rem 3rem;
+  background-color: rgba(var(--color-foreground), 0.06);
+  border-radius: min(var(--button-radius), 0.8rem);
+}
+
+.shipping-calculator--outline shipping-calculator {
+  border: 0.1rem solid rgb(var(--color-border));
+  background-color: transparent;
+}
+
+.shipping-calculator form-state {
+  display: grid;
+  gap: 2rem;
+}
+
+.shipping-calculator form-state .field {
+  width: auto;
+}
+
+.shipping-calculator .form__message {
+  margin-top: 3rem;
+}
+
+@media screen and (min-width: 750px) {
+  .shipping-calculator shipping-calculator {
+    padding: 7rem 5rem;
+  }
+
+  .shipping-calculator form-state {
+    display: flex;
+  }
+
+  .shipping-calculator--outline form-state,
+  [data-heading-center] .shipping-calculator form-state {
+    justify-content: center;
+  }
+
+  .shipping-calculator--outline .form__message,
+  [data-heading-center] .shipping-calculator .form__message {
+    display: flex;
+    justify-content: center;
+  }
+
+  .shipping-calculator .button {
+    min-height: 4.5rem;
+    min-width: auto;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .shipping-calculator .title-wrapper {
+    justify-content: center;
+  }
+}

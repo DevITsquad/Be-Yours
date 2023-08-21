@@ -1,0 +1,95 @@
+.faq--colored {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: rgba(var(--color-foreground), 0.06);
+}
+
+.faq accordion-tab {
+  display: block;
+}
+
+.faq accordion-tab + accordion-tab {
+  margin-top: 2rem;
+}
+
+.faq .h3 {
+  margin-top: 0;
+}
+
+.faq .h3 + .rte {
+  margin-top: -1rem;
+  margin-bottom: 3rem;
+}
+
+.faq accordion-tab + .h3 {
+  margin-top: 4rem;
+}
+
+@media screen and (min-width: 750px) {
+  .faq accordion-tab + .h3 {
+    margin-top: 6rem;
+  }
+}
+
+.faq details summary {
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
+  font-size: 1.2rem;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+@media screen and (min-width: 750px) {
+  .faq details summary {
+    font-size: 1.3rem;
+  }
+}
+
+.faq details summary > span {
+  display: flex;
+  align-items: center;
+}
+
+.faq details summary .icon {
+  position: relative;
+  flex: 0 0 3.4rem;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  margin-inline-end: 1.5rem;
+  color: rgb(var(--color-foreground));
+  background-color: rgb(var(--color-background));
+  box-shadow: 0 0 0 0.1rem rgb(var(--color-border));
+  transition-property: transform, color, background-color;
+  transition-timing-function: ease;
+  transition-duration: var(--duration-default);
+}
+
+.faq details summary .icon::before {
+  width: 1.2rem;
+}
+
+.faq details summary .icon::after {
+  height: 1.2rem;
+  transition: height var(--duration-default) ease;
+}
+
+@media screen and (hover: hover) {
+  .faq details:not([open]) summary:hover .icon {
+    transform: rotate(90deg);
+  }
+}
+
+.faq details summary ~ * {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.faq details[open] summary .icon {
+  box-shadow: none;
+  color: rgb(var(--color-background));
+  background-color: rgb(var(--color-foreground));
+}
+
+.faq details[open] summary .icon::after {
+  height: 0;
+}

@@ -1,0 +1,117 @@
+{%- liquid
+  assign body_font_bold = settings.type_body_font | font_modify: 'weight', '600'
+  assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
+  assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+  assign header_font_bold = settings.type_header_font | font_modify: 'weight', '600'
+  assign button_font_baseline = settings.type_header_font.baseline_ratio | times: 10 | round
+  if settings.type_button_font == 'body'
+    assign button_font_baseline = settings.type_body_font.baseline_ratio | times: 10 | round
+  endif
+
+  assign color_background_dark = settings.colors_background | color_lighten: 8
+  assign color_background_brightness = settings.colors_background | color_brightness | round
+  if color_background_brightness > 125
+    assign color_background_dark = settings.colors_background | color_darken: 8
+  endif
+%}
+{%- style -%}
+  {{ settings.type_body_font | font_face: font_display: 'swap' }}
+  {{ body_font_bold | font_face: font_display: 'swap' }}
+  {{ body_font_italic | font_face: font_display: 'swap' }}
+  {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+  {{ settings.type_header_font | font_face: font_display: 'swap' }}
+  {{ header_font_bold | font_face: font_display: 'swap' }}
+
+  :root {
+    --be-yours-version: "6.9.1";
+    --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body-style: {{ settings.type_body_font.style }};
+    --font-body-weight: {{ settings.type_body_font.weight }};
+
+    --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+    --font-heading-style: {{ settings.type_header_font.style }};
+    --font-heading-weight: {{ settings.type_header_font.weight }};
+
+    --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+    --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
+
+    --font-navigation-family: var(--font-{{ settings.type_navigation_font }}-family);
+    --font-navigation-size: {{ settings.type_navigation_size }}px;
+    --font-navigation-weight: var(--font-{{ settings.type_navigation_font }}-weight);
+    --font-button-family: var(--font-{{ settings.type_button_font }}-family);
+    --font-button-size: {{ settings.type_button_size }}px;
+    --font-button-baseline: {% if button_font_baseline >= 2 %}{{ button_font_baseline | divided_by: 10.0 }}{% else %}0{% endif %}rem;
+    --font-price-family: var(--font-{{ settings.type_price_font }}-family);
+    --font-price-scale: var(--font-{{ settings.type_price_font }}-scale);
+
+    --color-base-text: {{ settings.colors_text.red }}, {{ settings.colors_text.green }}, {{ settings.colors_text.blue }};
+    --color-base-background: {{ settings.colors_background.red }}, {{ settings.colors_background.green }}, {{ settings.colors_background.blue }};
+    --color-base-solid-button-labels: {{ settings.colors_solid_button_labels.red }}, {{ settings.colors_solid_button_labels.green }}, {{ settings.colors_solid_button_labels.blue }};
+    --color-base-outline-button-labels: {{ settings.colors_outline_button_labels.red }}, {{ settings.colors_outline_button_labels.green }}, {{ settings.colors_outline_button_labels.blue }};
+    --color-base-accent: {{ settings.colors_accent.red }}, {{ settings.colors_accent.green }}, {{ settings.colors_accent.blue }};
+    --color-base-heading: {{ settings.colors_heading.red }}, {{ settings.colors_heading.green }}, {{ settings.colors_heading.blue }};
+    --color-base-border: {{ settings.colors_border.red }}, {{ settings.colors_border.green }}, {{ settings.colors_border.blue }};
+    --color-placeholder: {{ settings.colors_img_background.red }}, {{ settings.colors_img_background.green }}, {{ settings.colors_img_background.blue }};
+    --color-overlay: {{ settings.colors_overlay.red }}, {{ settings.colors_overlay.green }}, {{ settings.colors_overlay.blue }};
+    --color-keyboard-focus: {{ settings.colors_keyboard_focus.red }}, {{ settings.colors_keyboard_focus.green }}, {{ settings.colors_keyboard_focus.blue }};
+    --color-shadow: {{ settings.colors_shadow.red }}, {{ settings.colors_shadow.green }}, {{ settings.colors_shadow.blue }};
+    --shadow-opacity: 1;
+
+    --color-background-dark: {{ color_background_dark.red }}, {{ color_background_dark.green }}, {{ color_background_dark.blue }};
+    --color-price: {{ settings.colors_price }};
+    --color-sale-price: {{ settings.colors_sale_price }};
+    --color-reviews: {{ settings.colors_reviews }};
+    --color-critical: #d72c0d;
+    --color-success: #008060;
+
+    --payment-terms-background-color: {{ settings.colors_background }};
+    --page-width: {{ settings.page_width | divided_by: 10 }}rem;
+    --page-width-margin: {% if settings.page_width == '1600' %}2{% else %}0{% endif %}rem;
+
+    --card-color-scheme: var(--color-placeholder);
+    --card-text-alignment: {{ settings.card_text_alignment }};
+    --card-flex-alignment: {% if settings.card_text_alignment == 'center' %}center{% else %}flex-{{ settings.card_text_alignment }}{% endif %};
+    --card-image-padding: {{ settings.card_image_padding }}px;
+    --card-border-width: {{ settings.card_border_thickness }}px;
+    --card-radius: {{ settings.card_corner_radius }}px;
+    --card-shadow-horizontal-offset: {{ settings.card_shadow_horizontal_offset }}px;
+    --card-shadow-vertical-offset: {{ settings.card_shadow_vertical_offset }}px;
+    
+    --button-radius: {{ settings.button_corner_radius }}px;
+    --button-border-width: {{ settings.button_border_thickness }}px;
+    --button-shadow-horizontal-offset: {{ settings.button_shadow_horizontal_offset }}px;
+    --button-shadow-vertical-offset: {{ settings.button_shadow_vertical_offset }}px;
+
+    --spacing-sections-desktop: {{ settings.spacing_sections }}px;
+    --spacing-sections-mobile: {% if settings.spacing_sections < 24 %}{{ settings.spacing_sections }}{% else %}{{ settings.spacing_sections | times: 0.7 | round | at_least: 20 }}{% endif %}px;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  html {
+    box-sizing: border-box;
+    font-size: calc(var(--font-body-scale) * 62.5%);
+    height: 100%;
+  }
+
+  body {
+    min-height: 100%;
+    margin: 0;
+    font-size: 1.5rem;
+    letter-spacing: 0.06rem;
+    line-height: calc(1 + 0.8 / var(--font-body-scale));
+    font-family: var(--font-body-family);
+    font-style: var(--font-body-style);
+    font-weight: var(--font-body-weight);
+  }
+
+  @media screen and (min-width: 750px) {
+    body {
+      font-size: 1.6rem;
+    }
+  }
+{%- endstyle -%}

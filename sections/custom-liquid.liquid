@@ -1,0 +1,72 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div class="section--padding{% if section.settings.show_divider %} section--divider{% endif %}">
+  <div class="page-width{% if section.settings.full_width %} page-width--full-width{% endif %}">
+    {{ section.settings.custom_liquid }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.custom-liquid.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "t:sections.custom-liquid.settings.custom_liquid.label",
+      "info": "t:sections.custom-liquid.settings.custom_liquid.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "t:sections.all.full_width.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "default": false,
+      "label": "t:sections.all.show_divider.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.custom-liquid.presets.name"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["custom.overlay"]
+  }
+}
+{% endschema %}

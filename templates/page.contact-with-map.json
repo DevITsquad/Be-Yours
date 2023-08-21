@@ -1,0 +1,238 @@
+{
+  "sections": {
+    "image-banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Contact Us",
+            "heading_size": "h0"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Questions? Comments? Let your customers get in touch with you by filling out the email form below.<\/p>",
+            "text_size": "typeset3"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "image": "",
+        "image_position": "center center",
+        "text_box_position": "center",
+        "text_alignment": "center",
+        "image_ratio": "450px",
+        "full_width": true,
+        "mobile_text_alignment": "center",
+        "mobile_image_ratio": "250px",
+        "stack_images_on_mobile": false,
+        "show_text_below": false,
+        "colors_text": "#ffffff",
+        "colors_overlay": "#000000",
+        "colors_overlay_opacity": 28,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "narrow": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich-text": {
+      "type": "rich-text",
+      "blocks": {
+        "rich-text-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Can we help?",
+            "heading_size": "h2"
+          }
+        },
+        "rich-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "text_size": "typeset",
+            "secondary_color": false
+          }
+        }
+      },
+      "block_order": [
+        "rich-text-0",
+        "rich-text-1"
+      ],
+      "settings": {
+        "text_alignment": "left",
+        "narrow": true,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "show_phone": true,
+        "heading": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "guarantees-0": {
+      "type": "guarantees",
+      "blocks": {
+        "guarantees-0-0": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "title": "Guarantee 1",
+            "text": "<p>Share information about your brand with your customers.<\/p>"
+          }
+        },
+        "guarantees-0-1": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "title": "Guarantee 2",
+            "text": "<p>Share information about your brand with your customers.<\/p>"
+          }
+        },
+        "guarantees-0-2": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "title": "Guarantee 3",
+            "text": "<p>Share information about your brand with your customers.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "guarantees-0-0",
+        "guarantees-0-1",
+        "guarantees-0-2"
+      ],
+      "settings": {
+        "layout": "default",
+        "column_alignment": "left",
+        "heading": "",
+        "heading_size": "h2",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "guarantees-1": {
+      "type": "guarantees",
+      "blocks": {
+        "guarantees-1-0": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "title": "Guarantee 4",
+            "text": "<p>Share information about your brand with your customers.<\/p>"
+          }
+        },
+        "guarantees-1-1": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "title": "Guarantee 5",
+            "text": "<p>Share information about your brand with your customers.<\/p>"
+          }
+        },
+        "guarantees-1-2": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "title": "Guarantee 6",
+            "text": "<p>Share information about your brand with your customers.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "guarantees-1-0",
+        "guarantees-1-1",
+        "guarantees-1-2"
+      ],
+      "settings": {
+        "layout": "default",
+        "column_alignment": "left",
+        "heading": "",
+        "heading_size": "h2",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "map": {
+      "type": "map",
+      "blocks": {
+        "map-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our store",
+            "heading_size": "h2"
+          }
+        },
+        "map-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "text_size": "typeset",
+            "secondary_color": true
+          }
+        },
+        "map-2": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "map-0",
+        "map-1",
+        "map-2"
+      ],
+      "settings": {
+        "map_address": "620 King St W, Toronto, ON M5V 1M7, Canada",
+        "map_api_key": "",
+        "map_zoom": 14,
+        "map_style": "standard",
+        "image_position": "center center",
+        "text_box_position": "middle-left",
+        "text_alignment": "left",
+        "image_ratio": "550px",
+        "full_width": true,
+        "show_divider": false,
+        "mobile_text_box_position": "image_first",
+        "mobile_text_alignment": "left",
+        "mobile_image_ratio": "400px",
+        "colors_text": "#1a1b18",
+        "colors_overlay": "#ffffff",
+        "colors_overlay_opacity": 100,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "image-banner",
+    "main",
+    "rich-text",
+    "form",
+    "guarantees-0",
+    "guarantees-1",
+    "map"
+  ]
+}

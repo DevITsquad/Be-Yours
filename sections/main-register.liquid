@@ -1,0 +1,132 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div class="customer register page-width section--padding">
+  <h1 class="h2">{{ 'customer.register.title' | t }}</h1>
+  <form-state>
+    {%- form 'create_customer' -%}
+      {%- if form.errors contains 'form' -%}
+        <div class="form__message errors" tabindex="-1" autofocus>
+          {% render 'icon', icon: 'error' %}
+          <div class="rte">{{ form.errors.messages['form'] }}</div>
+        </div>
+      {%- endif -%}
+      <div class="field">      
+        <input
+          type="text"
+          name="customer[first_name]"
+          id="RegisterForm-FirstName"
+          {% if form.first_name %}value="{{ form.first_name }}"{% endif %}
+          autocomplete="given-name"
+          placeholder="{{ 'customer.register.first_name' | t }}"
+        >
+        <label class="visually-hidden" for="RegisterForm-FirstName">{{ 'customer.register.first_name' | t }}</label>
+      </div>
+      <div class="field">
+        <input
+          type="text"
+          name="customer[last_name]"
+          id="RegisterForm-LastName"
+          {% if form.last_name %}value="{{ form.last_name }}"{% endif %}
+          autocomplete="family-name"
+          placeholder="{{ 'customer.register.last_name' | t }}"
+        >
+        <label class="visually-hidden" for="RegisterForm-LastName">{{ 'customer.register.last_name' | t }}</label>
+      </div>
+      <div class="field">      
+        <input
+          required="required"
+          class="required{% if form.errors contains 'email' %} invalid{% endif %}"
+          type="email"
+          name="customer[email]"
+          id="RegisterForm-email"
+          {% if form.email %} value="{{ form.email }}"{% endif %}
+          spellcheck="false"
+          autocapitalize="off"
+          autocomplete="email"
+          aria-required="true"
+          {% if form.errors contains 'email' %}
+            aria-invalid="true"
+            aria-describedby="RegisterForm-email-error"
+          {% endif %}
+          placeholder="{{ 'customer.register.email' | t }}"
+        >
+        <label class="visually-hidden" for="RegisterForm-email">{{ 'customer.register.email' | t }}</label>
+      </div>
+      {%- if form.errors contains 'email' -%}
+        <span id="RegisterForm-email-error" class="form__message errors">
+          {% render 'icon', icon: 'error' %}
+          {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.
+        </span>
+      {%- endif -%}
+      <div class="field">     
+        <input
+          required="required"
+          class="required{% if form.errors contains 'password' %} invalid{% endif %}"
+          type="password"
+          name="customer[password]"
+          id="RegisterForm-password"
+          aria-required="true"
+          {% if form.errors contains 'password' %}
+            aria-invalid="true"
+            aria-describedby="RegisterForm-password-error"
+          {% endif %}
+          placeholder="{{ 'customer.register.password' | t }}"
+        >
+        <label class="visually-hidden" for="RegisterForm-password">{{ 'customer.register.password' | t }}</label>
+      </div>
+      {%- if form.errors contains 'password' -%}
+        <span id="RegisterForm-password-error" class="form__message errors">
+          {% render 'icon', icon: 'error' %}
+          {{ form.errors.translated_fields['password'] | capitalize }} {{ form.errors.messages['password'] }}.
+        </span>
+      {%- endif -%}
+
+      <button class="button" type="submit">
+        {{ 'customer.register.submit' | t }}
+      </button>
+
+      <a class="link link--underline" href="{{ routes.root_url }}">
+        {{ 'customer.register.return' | t }}
+      </a>
+    {%- endform -%}
+  </form-state>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-register.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 80
+    }
+  ]
+}
+{% endschema %}

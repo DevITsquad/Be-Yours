@@ -1,0 +1,97 @@
+.shopify-section-group-footer-group:last-child {
+  padding-bottom: var(--mobile-dock-height);
+}
+
+.mobile-dock {
+  display: flex !important;
+  z-index: 20;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  transform: translateY(100%);
+  transition: transform var(--duration-default) ease;
+  background: var(--gradient-background);
+  background-color: rgb(var(--color-background));
+  box-shadow: 0 0.1rem 0.8rem rgba(var(--color-foreground), 0.15), 0 2rem 4rem rgba(var(--color-foreground), 0.08);
+}
+
+.mobile-dock.is-active {
+  overflow: visible;
+  transform: translateY(0);
+}
+
+.dock__item {
+  flex-grow: 1;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+}
+
+.mobile-dock--2-col .dock__item {
+  width: 50%;
+}
+
+.mobile-dock--3-col .dock__item {
+  width: 33.33%;
+}
+
+.mobile-dock--4-col .dock__item {
+  width: 25%;
+}
+
+.mobile-dock--5-col .dock__item {
+  width: 20%;
+}
+
+.mobile-dock--6-col .dock__item {
+  width: 16.66%;
+}
+
+.dock__item p {
+  margin: 0;
+  position: relative;
+  display: flex;
+}
+
+.dock__item .cart-count-bubble {
+  margin-top: -0.5rem;
+  margin-right: -2rem;
+}
+
+.dock__item svg {
+  height: 1.8rem;
+  width: auto;
+  margin-bottom: 0.6rem;
+}
+
+.dock__item .icon-cart {
+  height: 1.9rem;
+  width: 1.9rem;
+}
+
+.dock__item .icon-hamburger {
+  stroke-width: 2;
+}
+
+.dock__item > span {
+  font-size: 0.9rem;
+  letter-spacing: 0.13rem;
+  line-height: calc(1 + 0.2 / var(--font-body-scale));
+  text-transform: uppercase;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+@media screen and (min-width: 750px) {
+  .mobile-dock {
+    display: none !important;
+  }
+}

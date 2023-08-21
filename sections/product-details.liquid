@@ -1,0 +1,240 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+{{ 'section-product-details.css' | asset_url | stylesheet_tag }}
+
+<div id="ProductDetails" class="product-details page-width section--padding">
+  <div class="grid">
+    {%- if section.settings.heading != blank -%}
+      <div class="grid__item grid__item--one-quarter">
+        <{{ section.settings.heading_tag }} class="product-details__heading {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag }}>
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="grid__item {% if section.settings.heading != blank %}grid__item--three-quarter{% else %}grid__item--full-width{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+          {%- when 'description' -%}
+            {%- if product.description != blank -%}
+              {%- if block.settings.heading != blank -%}
+                <accordion-tab class="accordion" {{ block.shopify_attributes }}>
+                  <details {% if section.settings.open_first_collapsible_row and forloop.index0 == 0 %}open="open"{% endif %}>
+                    <summary>
+                      <span class="summary__title">
+                        <p class="accordion__title h3">
+                          {{ block.settings.heading | escape }}
+                        </p>
+                      </span>
+                      <span class="icon icon-plus-alt"></span>
+                    </summary>
+                    <div class="accordion__content rte typeset">
+                      {{ product.description }}
+                    </div>
+                  </details>
+                </accordion-tab>
+              {%- else -%}
+                <div class="product__description rte typeset" {{ block.shopify_attributes }}>
+                  {{ product.description }}
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+          {%- when 'collapsible_tab' -%}
+            <accordion-tab class="accordion" {{ block.shopify_attributes }}>
+              <details {% if section.settings.open_first_collapsible_row and forloop.index0 == 0 %}open="open"{% endif %}>
+                <summary>
+                  <span class="summary__title">
+                    <p class="accordion__title h3">
+                      {{ block.settings.heading | default: block.settings.page.title | escape }}
+                    </p>
+                  </span>
+                  <span class="icon icon-plus-alt"></span>
+                </summary>
+                <div class="accordion__content rte typeset">
+                  {{ block.settings.content }}
+                  {{ block.settings.page.content }}
+                </div>
+              </details>
+            </accordion-tab>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.product-details.name",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "description",
+      "name": "t:sections.product-details.blocks.description.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Description",
+          "info": "t:sections.product-details.blocks.description.settings.heading.info",
+          "label": "t:sections.product-details.blocks.description.settings.heading.label"
+        }
+      ]
+    },
+    {
+      "type": "collapsible_tab",
+      "name": "t:sections.product-details.blocks.collapsible_tab.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Collapsible row",
+          "info": "t:sections.product-details.blocks.collapsible_tab.settings.heading.info",
+          "label": "t:sections.product-details.blocks.collapsible_tab.settings.heading.label"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "default": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.</p><p>Ex: Shipping and return policies, size guides, and other common questions.</p>",
+          "label": "t:sections.product-details.blocks.collapsible_tab.settings.content.label"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "t:sections.product-details.blocks.collapsible_tab.settings.page.label"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "open_first_collapsible_row",
+      "default": false,
+      "label": "t:sections.product-details.settings.open_first_collapsible_row.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.heading.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Product Details",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_tag.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_tag.options__2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_tag.options__3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_tag.options__4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_tag.options__5.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.all.heading_tag.options__6.label"
+        },
+        {
+          "value": "div",
+          "label": "t:sections.all.heading_tag.options__7.label"
+        },
+        {
+          "value": "span",
+          "label": "t:sections.all.heading_tag.options__8.label"
+        },
+        {
+          "value": "p",
+          "label": "t:sections.all.heading_tag.options__9.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_tag.label",
+      "info": "t:sections.all.heading_tag.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product-details.presets.name",
+      "blocks": [
+        {
+          "type": "collapsible_tab"
+        },
+        {
+          "type": "collapsible_tab"
+        },
+        {
+          "type": "collapsible_tab"
+        }
+      ]
+    }
+  ],
+  "templates": ["product"]
+}
+{% endschema %}

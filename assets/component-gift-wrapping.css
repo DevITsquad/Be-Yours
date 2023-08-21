@@ -1,0 +1,90 @@
+.gift-wrapping + .cart__note {
+  margin-top: 3rem;
+}
+
+.gift-wrapping {
+  display: block;
+  position: relative;
+}
+
+.gift-wrapping__label {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  line-height: normal;
+  margin-bottom: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.gift-wrapping__icon {
+  background-color: rgb(var(--color-background));
+  top: 0.5rem;
+  position: absolute;
+  left: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.gift-wrapping__icon path:last-child {
+  opacity: 0;
+}
+
+.gift-wrapping > input:checked ~ .gift-wrapping__label .gift-wrapping__icon path:last-child {
+  opacity: 1;
+}
+
+.gift-wrapping__text {
+  display: inline-block;
+  padding-inline-start: 2.5rem;
+}
+
+.gift-wrapping__text .price {
+  display: inline-flex;
+}
+
+.gift-wrapping__text bdi {
+  position: relative;
+}
+
+.cart-drawer .gift-wrapping__text {
+  font-size: 1.4rem;
+}
+
+.cart-drawer .gift-wrapping__text bdi {
+  font-size: calc(var(--font-heading-scale) * 1.6rem);
+}
+
+.gift-wrapping__text bdi::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0.2rem;
+  width: 100%;
+  height: 0.6rem;
+  opacity: 0.2;
+  background-color: var(--color-critical);
+}
+
+.gift-wrapping__note {
+  display: block;
+}
+
+@media screen and (min-width: 750px) {
+  .gift-wrapping .field__input {
+    max-width: 36rem;
+  }
+}
+
+.gift-wrapping .loading-overlay {
+  width: 1.5rem;
+  top: 0.4rem;
+  left: 0;
+}
+
+.gift-wrapping .loading-overlay__spinner {
+  width: 100%;
+}
+
+.gift-wrapping .loading-overlay:not(.hidden) ~ * {
+  visibility: hidden;
+}

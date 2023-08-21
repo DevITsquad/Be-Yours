@@ -1,0 +1,146 @@
+{% comment %}
+  Renders share button.
+  Accepts:
+  - block: {Object} either passing the block/section.
+  - share_link: {String} url to be added to the input the user will get/copy.
+  - share_title: {String} title to be added to the social.
+  - share_image: {String} image to be added to the social.
+  Usage:
+  {% render 'share-button',
+    block: block,
+    share_link: share_url,
+    share_title: share_title,
+    share_image: share_image
+  %}
+{% endcomment %}
+<share-button
+  id="Share-{{ section.id }}"
+  class="share-button"
+  {{ block.shopify_attributes }}
+>
+  <button class="share-button__button link link-with-icon hidden" type="button">
+    {% render 'icon', icon: 'share' %}
+    <span class="label">{{ block.settings.share_label | escape }}</span>
+  </button>
+  <details id="Details-{{ block.id }}-{{ section.id }}">
+    <summary class="share-button__button link link-with-icon">
+      {% render 'icon', icon: 'share' %}
+      <span class="label">{{ block.settings.share_label | escape }}</span>
+    </summary>
+    <div id="Product-share-{{ section.id }}" class="share-button__fallback motion-reduce">
+      <button class="share-button__close no-js-hidden">
+        {% render 'icon', icon: 'close-alt' %}
+        <span class="visually-hidden">{{ 'general.share.close' | t }}</span>
+      </button>
+      <div class="field">
+        <label class="field__label" for="url-{{ block.id }}-{{ section.id }}">{{ 'general.share.share_url' | t }}</label>
+        <div class="share-button__field">
+          <span id="ShareMessage-{{ section.id }}" class="share-button__message hidden" role="status"></span>
+          <input
+            type="text"
+            class="field__input share-button__input"
+            id="url-{{ block.id }}-{{ section.id }}"
+            value="{{ share_link }}"
+            placeholder="{{ 'general.share.share_url' | t }}"
+            readonly
+          />
+          <button class="share-button__copy button button--small medium-hide large-up-hide no-js-hidden">
+            {% render 'icon', icon: 'clipboard' %}
+            <span class="visually-hidden">{{ 'general.share.copy_to_clipboard' | t }}</span>
+          </button>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field__label">{{ 'general.share.share' | t }}</span>
+        <ul class="list-social list-unstyled">
+          {%- if settings.share_facebook -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="//www.facebook.com/sharer.php?u={{ share_link }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {% render 'icon-brand', icon: 'facebook' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_on_facebook' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.share_twitter -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="//twitter.com/share?text={{ share_title | url_param_escape }}&amp;url={{ share_link }}"
+                target="_blank"
+                rel="noopener"
+              >
+                <svg aria-hidden="true" focusable="false" class="icon icon-twitter" viewBox="0 0 18 15">
+                  <path fill="currentColor" d="M17.64 2.6a7.33 7.33 0 01-1.75 1.82c0 .05 0 .13.02.23l.02.23a9.97 9.97 0 01-1.69 5.54c-.57.85-1.24 1.62-2.02 2.28a9.09 9.09 0 01-2.82 1.6 10.23 10.23 0 01-8.9-.98c.34.02.61.04.83.04 1.64 0 3.1-.5 4.38-1.5a3.6 3.6 0 01-3.3-2.45A2.91 2.91 0 004 9.35a3.47 3.47 0 01-2.02-1.21 3.37 3.37 0 01-.8-2.22v-.03c.46.24.98.37 1.58.4a3.45 3.45 0 01-1.54-2.9c0-.61.14-1.2.45-1.79a9.68 9.68 0 003.2 2.6 10 10 0 004.08 1.07 3 3 0 01-.13-.8c0-.97.34-1.8 1.03-2.48A3.45 3.45 0 0112.4.96a3.49 3.49 0 012.54 1.1c.8-.15 1.54-.44 2.23-.85a3.4 3.4 0 01-1.54 1.94c.74-.1 1.4-.28 2.01-.54z"/>
+                </svg>
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_on_twitter' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.share_pinterest -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="//pinterest.com/pin/create/button/?url={{ share_link }}&amp;media={{ share_image | image_url }}&amp;description={{ share_title | url_param_escape }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {% render 'icon-brand', icon: 'pinterest' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_on_pinterest' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.share_whatsapp -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="//web.whatsapp.com/send?text={{ share_link }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {% render 'icon-brand', icon: 'whatsapp' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_on_whatsapp' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.share_telegram -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="//telegram.me/share/url?url={{ share_link }}&amp;media={{ share_image | image_url }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {% render 'icon-brand', icon: 'telegram' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_on_telegram' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.share_email -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="mailto:?&subject={{ share_title | url_param_escape }}&body={{ share_link }}"
+              >
+                {% render 'icon-brand', icon: 'envelope' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_by_email' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+        </ul>        
+      </div>
+    </div>
+  </details>
+</share-button>
+{{ 'component-share-button.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'share.js' | asset_url }}" defer="defer"></script>

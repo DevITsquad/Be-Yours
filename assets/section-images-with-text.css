@@ -1,0 +1,107 @@
+.images-with-text {
+  padding: 20% 8% 10% 8%;
+  position: relative;
+}
+
+.images-with-text__images {
+  position: relative;
+  width: 54.5%;
+  max-width: 30rem;
+  margin: auto;
+}
+
+.images-with-text__image {
+  overflow: hidden;
+  position: absolute;
+  border-radius: 0.8rem;
+  box-shadow: 0 0.2rem 0.6rem 0 rgba(var(--color-foreground), 0.1);
+}
+
+.images-with-text__image:nth-child(1) {
+  z-index: 1;
+  position: relative;
+  box-shadow: 0 0 4rem rgba(var(--color-foreground), 0.2);
+}
+
+[data-lazy-image] .images-with-text__image.loading {
+  position: absolute;
+}
+
+[data-lazy-image] .images-with-text__image:nth-child(1).loading {
+  position: relative;
+}
+
+.images-with-text__image:nth-child(2) {
+  width: 73%;
+  top: -19%;
+  right: -43%;
+}
+
+.images-with-text__image:nth-child(3) {
+  width: 73%;
+  top: -34%;
+  left: -57%;
+}
+
+.images-with-text__image:nth-child(4) {
+  width: 57%;
+  bottom: -10%;
+  left: -33%;
+}
+
+.images-with-text__image,
+.images-with-text__image[data-gang-option] {
+  display: none;
+}
+
+.images-with-text__image[data-gang-option] {
+  display: none;
+}
+
+.images-with-text__image:nth-child(1),
+.images-with-text__image:nth-child(2),
+.images-with-text__image:nth-child(3),
+.images-with-text__image:nth-child(4),
+.images-with-text__image.gang__active[data-gang-option]:nth-child(1),
+.images-with-text__image.gang__active[data-gang-option]:nth-child(2),
+.images-with-text__image.gang__active[data-gang-option]:nth-child(3),
+.images-with-text__image.gang__active[data-gang-option]:nth-child(4) {
+  display: block;
+}
+
+.images-with-text__image img,
+.images-with-text__image svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.8rem;
+}
+
+[data-animate-image] .images-with-text__image {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-delay: calc(var(--duration-long) - 100ms);
+}
+
+[data-animate-image] .images-with-text__image:nth-child(1) {
+  transition-delay: 0s;
+  transform: scale(0.6);
+}
+
+[data-animate-image] .images-with-text__image:nth-child(2) {
+  transform: translate3d(-5rem, 5rem, 0);
+}
+
+[data-animate-image] .images-with-text__image:nth-child(3) {
+  transform: translate3d(5rem, 5rem, 0);
+}
+
+[data-animate-image] .images-with-text__image:nth-child(4) {
+  transform: translate3d(5rem, -5rem, 0);
+}
+
+[data-animate-image] .images-with-text__image[animate],
+.no-js [data-animate-image] .images-with-text__image {
+  opacity: 1;
+  transform: translateZ(0);
+}

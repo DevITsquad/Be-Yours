@@ -1,0 +1,191 @@
+{
+  "sections": {
+    "empty-space": {
+      "type": "empty-space",
+      "settings": {
+        "desktop_height": 36,
+        "mobile_height": 0
+      }
+    },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "subtitle": {
+          "type": "text",
+          "settings": {
+            "icon": "none",
+            "text": "{{ product.metafields.descriptors.subtitle.value }}",
+            "text_style": "subtitle"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": "h2"
+          }
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {
+          }
+        },
+        "countdown": {
+          "type": "countdown",
+          "settings": {
+            "heading": "Hurry up ! Sale end in:",
+            "number_size": "compact",
+            "colors_heading": "#da3f3f",
+            "colors_text": "#da3f3f",
+            "colors_background": "#ffeeee"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "show_variant_labels": true,
+            "picker_type": "button",
+            "enable_color_swatches": true,
+            "swatch_type": "round",
+            "size_chart": ""
+          }
+        },
+        "inventory_status": {
+          "type": "inventory_status",
+          "settings": {
+            "inventory_threshold": 20,
+            "show_inventory_transfer": true,
+            "color_scheme": "accent-3"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "show_dynamic_checkout": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+          }
+        },
+        "sticky_cart": {
+          "type": "sticky_cart",
+          "settings": {
+            "show_quantity_selector": false
+          }
+        }
+      },
+      "block_order": [
+        "subtitle",
+        "title",
+        "rating",
+        "countdown",
+        "price",
+        "variant_picker",
+        "inventory_status",
+        "buy_buttons",
+        "description",
+        "share",
+        "sticky_cart"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "media_size": "large",
+        "gallery_layout": "stacked",
+        "image_ratio": "adapt",
+        "show_thumbnails": true,
+        "hide_variants": true,
+        "enable_image_zoom": true,
+        "enable_video_looping": false,
+        "mobile_image_ratio": "adapt_first",
+        "show_mobile_thumbnails": false,
+        "padding_top": 0,
+        "padding_bottom": 72
+      }
+    },
+    "product-details": {
+      "type": "product-details",
+      "disabled": true,
+      "blocks": {
+        "product-details-0": {
+          "type": "description",
+          "settings": {
+            "heading": ""
+          }
+        },
+        "product-details-1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "1. Collapsible tab",
+            "content": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "page": ""
+          }
+        },
+        "product-details-2": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "2. Collapsible tab",
+            "content": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "page": ""
+          }
+        },
+        "product-details-3": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "3. Collapsible tab",
+            "content": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "product-details-0",
+        "product-details-1",
+        "product-details-2",
+        "product-details-3"
+      ],
+      "settings": {
+        "heading": "Product Details",
+        "heading_size": "h2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {
+        "heading": "You May Also Like",
+        "heading_size": "h2",
+        "swipe_on_mobile": true,
+        "image_ratio": "portrait",
+        "image_position": "center center",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_buy": true,
+        "enable_quick_view": true,
+        "enable_color_swatches": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "empty-space",
+    "main",
+    "product-details",
+    "product-recommendations"
+  ]
+}

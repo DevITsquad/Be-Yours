@@ -1,0 +1,225 @@
+lookbook-component {
+  display: block;
+}
+
+lookbook-component .lookbook--placeholder.media--adapt {
+  font-size: 0;
+  height: auto;
+  padding-bottom: 0;
+}
+
+lookbook-component .quick-view__summary {
+  position: static;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  transform: none;
+  box-shadow: none;
+  transition: none;
+}
+
+lookbook-component .quick-view__summary::after {
+  content: none;
+}
+
+.lookbook--placeholder {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.look__hotspot {
+  z-index: 1;
+  position: absolute;
+  left: var(--hotspot-x);
+  top: var(--hotspot-y);
+  margin-left: -2.2rem;
+  margin-top: -2.2rem;
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.look__hotspot.is-active {
+  z-index: 2;
+}
+
+[data-animate-image] .lookbook use-animate .look__hotspot {
+  opacity: 0;
+}
+
+[data-animate-image] .lookbook use-animate[animate] .look__hotspot {
+  animation: fade-in var(--duration-long) ease calc(var(--duration-animate) - 250ms) forwards;
+}
+
+.no-js .lookbook use-animate .look__hotspot {
+  opacity: 1;
+}
+
+.lookbook .media::after {
+  content: '';
+  pointer-events: none;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(var(--color-overlay), var(--color-overlay-opacity));
+}
+
+.look__hotspot::before,
+.look__hotspot::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.look__hotspot::before {
+  width: 1.6rem;
+  height: 1.6rem;
+  background-color: rgb(var(--hotspot-color));
+  transition: transform var(--duration-default) ease;
+}
+
+.look__hotspot::after {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(var(--hotspot-color), 0.5);
+  animation: hotspot 1.5s ease infinite;
+}
+
+@media screen and (hover: hover) {
+  .look__hotspot:hover {
+    z-index: 2;
+  }
+
+  .look__hotspot:hover::before {
+    transform: scale(2);
+  }
+}
+
+.look__hotspot:empty {
+  display: flex;
+}
+
+@keyframes hotspot {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.07);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes hotspot-zoom-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes hotspot-zoom-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .look__hotspot.is-active .look__hotspot-product {
+    animation-name: hotspot-zoom-in;
+  }
+}
+
+@media screen and (hover: hover) {
+  .look__hotspot:hover .look__hotspot-product {
+    animation-name: hotspot-zoom-in;
+  }
+}
+
+.look__hotspot-product {
+  pointer-events: none;
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 18rem;
+  padding: 1.2rem 1.6rem;
+  border-radius: 1.2rem;
+  background-color: rgb(var(--color-background));
+  box-shadow: 0 1rem 2rem rgba(var(--color-foreground), 0.1), 0 2rem 4rem rgba(var(--color-foreground), 0.2);
+  top: calc(100% + 1rem);
+  opacity: 0;
+  animation: hotspot-zoom-out var(--duration-default) ease forwards;
+}
+
+.look__hotspot-product::after {
+  content: '';
+  display: block;
+  border-left: 0.6rem solid transparent;
+  border-right: 0.6rem solid transparent;
+  border-bottom: 0.6rem solid rgb(var(--color-background));
+  position: absolute;
+  top: -0.6rem;
+}
+
+.look__hotspot-product--left {
+  left: 0;
+}
+
+.look__hotspot-product--left::after {
+  left: 1.6rem;
+}
+
+.look__hotspot-product--right {
+  right: 0;
+}
+
+.look__hotspot-product--right::after {
+  right: 1.6rem;
+}
+
+.look__hotspot-product--bottom {
+  top: auto;
+  bottom: calc(100% + 1rem);
+}
+
+.look__hotspot-product--bottom::after {
+  top: auto;
+  bottom: -0.6rem;
+  border-bottom: none;
+  border-top: 0.6rem solid rgb(var(--color-background));
+}
+
+.look__hotspot-product > * {
+  align-self: flex-start;
+}
+
+.look__hotspot-product .h5 {
+  font-size: 1.4rem;
+}
+
+.look__hotspot-product .price {
+  margin-top: 0.5rem;
+  line-height: 1;
+}
+
+.look__hotspot-product .price bdi {
+  font-size: 1.6rem;
+}

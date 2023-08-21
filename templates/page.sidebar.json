@@ -1,0 +1,44 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page-sidebar",
+      "blocks": {
+        "text-0": {
+          "type": "text",
+          "settings": {
+            "heading": "Customer service",
+            "content": "<p>For assistance, please email us at <a href=\"mailto:info@yourstore.com\" title=\"mailto:info@yourstore.com\">info@yourstore.com<\/a><\/p>"
+          }
+        },
+        "separator": {
+          "type": "separator",
+          "settings": {
+          }
+        },
+        "text-1": {
+          "type": "text",
+          "settings": {
+            "heading": "",
+            "content": "<p>Happy to chat! Feel free to contact us using our <a href=\"\/pages\/contact\" target=\"_blank\" title=\"Contact Us\">form<\/a> or chat service.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "text-0",
+        "separator",
+        "text-1"
+      ],
+      "settings": {
+        "narrow": false,
+        "colors_text": "#1a1b18",
+        "colors_border": "#d2d5d9",
+        "colors_background": "#f6eedd",
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

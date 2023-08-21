@@ -1,0 +1,327 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  {%- if section.settings.hide_images -%} 
+    .testimonial__list-wrapper {
+      display: none;
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+{{ 'section-testimonials.css' | asset_url | stylesheet_tag }}
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+
+<div class="section--padding{% if section.settings.show_divider %} section--divider{% endif %}">
+  <div class="testimonials page-width">
+    <div class="title-wrapper{% if section.settings.heading == blank %} title-wrapper--no-heading{% endif %} {{ section.settings.heading_alignment }}">
+      <{{ section.settings.heading_tag }} class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag }}>
+    </div>
+
+    {%- assign block_count = section.blocks.size -%}
+    {%- if block_count > 0 -%}
+      <svg class="visually-hidden">
+        <defs>
+          <clipPath id="testimonial-clip-path" clipPathUnits="objectBoundingBox"><path d="M0.11,0.09 C0.014,0.174,-0.003,0.398,0,0.499 C-0.003,0.618,0.015,0.849,0.125,0.919 C0.235,0.989,0.413,0.997,0.504,0.999 C0.604,0.999,0.719,0.999,0.869,0.924 C0.974,0.849,0.994,0.704,0.999,0.499 C1,0.295,0.984,0.155,0.879,0.075 C0.796,0.011,0.593,-0.003,0.504,0 C0.413,-0.005,0.206,0.006,0.11,0.09"></path></clipPath>
+        </defs>
+      </svg>
+      <testimonials-component data-slider="{% if block_count > 1 %}true{% else %}false{% endif %}" data-autorotate="{{ section.settings.autorotate }}" data-autorotate-speed="{{ section.settings.autorotate_speed | times: 1000 }}" style="--block-count: {{ block_count | minus: 1 }};">
+        <div class="testimonial__list-wrapper">
+          <div class="testimonial__list" id="Testimonials-{{ section.id }}">
+            {%- for block in section.blocks -%}
+              <div class="testimonial__item{% if section.blocks.first == true or block_count == 1 %} is-selected{% endif %}" {{ block.shopify_attributes }}>
+                <div class="testimonial__image media-wrapper media-wrapper--small">
+                  {%- if block.settings.image != blank -%}
+                    <div class="media media--square">
+                      <img srcset="{{ block.settings.image | image_url: width: 70 }} 1x, {{ block.settings.image | image_url: width: 140 }} 2x"
+                        src="{{ block.settings.image | image_url: width: 70 }}"
+                        alt="{{ block.settings.image.alt | escape }}"
+                        loading="lazy"
+                        width="70"
+                        height="{{ 70 | divided_by: block.settings.image.aspect_ratio | ceil }}"
+                        is="lazy-image"
+                      />
+                    </div>
+                  {%- else -%}
+                    <div class="media media--square">
+                      {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+        <div class="testimonial__previews">
+          {%- for block in section.blocks -%}
+            <div class="testimonial__preview">
+              <blockquote class="testimonial__blockquote">
+                {%- if block.settings.icon != 'none' -%}
+                  {%- if block.settings.icon == 'quote' -%}
+                    <div class="quote-icon"><svg aria-hidden="true" focusable="false" class="icon icon-quote" viewBox="0 0 41 35"><path d="M10.208 17.711h6.124v16.332H0V21.684C0 8.184 5.444.956 16.332 0v6.125c-4.083 1.14-6.124 4.414-6.124 9.82v1.766zm24.498 0h6.124v16.332H24.498V21.684C24.498 8.184 29.942.956 40.83 0v6.125c-4.083 1.14-6.124 4.414-6.124 9.82v1.766z" fill="currentColor" fill-rule="evenodd"/></svg></div>
+                  {%- else -%}
+                    <div class="rating" role="img">
+                      <span aria-hidden="true" class="rating-star" style="--rating: {{ block.settings.icon }};--rating-max: 5;--rating-decimal: 0;"></span>
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                  <div class="rte typeset2">{{ block.settings.text }}</div>
+                {%- endif -%}
+
+                {%- if block.settings.author != blank -%}
+                  <cite class="testimonial__author">{{ block.settings.author | escape }}</cite>
+                {%- endif -%}
+              </blockquote>
+            </div>
+          {%- endfor -%}
+        </div>
+      </testimonials-component>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.testimonials.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "autorotate",
+      "default": false,
+      "label": "t:sections.testimonials.settings.autorotate.label"
+    },
+    {
+      "type": "range",
+      "id": "autorotate_speed",
+      "label": "t:sections.testimonials.settings.autorotate_speed.label",
+      "max": 9,
+      "min": 3,
+      "step": 2,
+      "unit": "t:sections.testimonials.settings.autorotate_speed.unit",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_images",
+      "default": false,
+      "label": "t:sections.testimonials.settings.hide_images.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "default": false,
+      "label": "t:sections.all.show_divider.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.heading.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Testimonials",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.all.heading_alignment.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.all.heading_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.all.heading_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.all.heading_alignment.options__3.label"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_tag.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_tag.options__2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_tag.options__3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_tag.options__4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_tag.options__5.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.all.heading_tag.options__6.label"
+        },
+        {
+          "value": "div",
+          "label": "t:sections.all.heading_tag.options__7.label"
+        },
+        {
+          "value": "span",
+          "label": "t:sections.all.heading_tag.options__8.label"
+        },
+        {
+          "value": "p",
+          "label": "t:sections.all.heading_tag.options__9.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_tag.label",
+      "info": "t:sections.all.heading_tag.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "t:sections.testimonials.blocks.testimonial.name",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.testimonials.blocks.testimonial.settings.icon.options__1.label"
+            },
+            {
+              "value": "quote",
+              "label": "t:sections.testimonials.blocks.testimonial.settings.icon.options__2.label"
+            },
+            {
+              "value": "5",
+              "label": "t:sections.testimonials.blocks.testimonial.settings.icon.options__3.label"
+            },
+            {
+              "value": "4",
+              "label": "t:sections.testimonials.blocks.testimonial.settings.icon.options__4.label"
+            },
+            {
+              "value": "3",
+              "label": "t:sections.testimonials.blocks.testimonial.settings.icon.options__5.label"
+            },
+            {
+              "value": "2",
+              "label": "t:sections.testimonials.blocks.testimonial.settings.icon.options__6.label"
+            },
+            {
+              "value": "1",
+              "label": "t:sections.testimonials.blocks.testimonial.settings.icon.options__7.label"
+            }
+          ],
+          "default": "5",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.icon.label"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>Add customer reviews and testimonials to showcase your store's happy customers.</p>",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.text.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "default": "Author",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.author.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.testimonials.presets.name",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  }
+}
+{% endschema %}

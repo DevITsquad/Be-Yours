@@ -1,0 +1,345 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "narrow": true,
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    },
+    "image-with-text-overlay": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "image-with-text-overlay-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image with text overlay",
+            "heading_size": "h0"
+          }
+        },
+        "image-with-text-overlay-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text_size": "typeset3",
+            "secondary_color": false
+          }
+        }
+      },
+      "block_order": [
+        "image-with-text-overlay-0",
+        "image-with-text-overlay-1"
+      ],
+      "settings": {
+        "image": "",
+        "image_position": "center center",
+        "text_box_position": "flex-start",
+        "text_alignment": "left",
+        "image_ratio": "650px",
+        "full_width": true,
+        "mobile_text_box_position": "image_first",
+        "mobile_text_alignment": "center",
+        "mobile_image_ratio": "auto",
+        "colors_text": "#ffffff",
+        "colors_overlay": "#ffa781",
+        "colors_overlay_opacity": 92,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "guarantees": {
+      "type": "guarantees",
+      "blocks": {
+        "guarantees-0": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "leaf",
+            "title": "1. Guarantee heading",
+            "text": "<p>Welcome to our store.<\/p>"
+          }
+        },
+        "guarantees-1": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "package",
+            "title": "2. Guarantee heading",
+            "text": "<p>Welcome to our store.<\/p>"
+          }
+        },
+        "guarantees-2": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "lock",
+            "title": "3. Guarantee heading",
+            "text": "<p>Welcome to our store.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "guarantees-0",
+        "guarantees-1",
+        "guarantees-2"
+      ],
+      "settings": {
+        "layout": "default",
+        "column_alignment": "center",
+        "heading": "Guarantees",
+        "heading_size": "h1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "countdown-timer": {
+      "type": "countdown-timer",
+      "blocks": {
+        "countdown-timer-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Countdown timer",
+            "heading_size": "h1"
+          }
+        },
+        "countdown-timer-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text_size": "typeset2"
+          }
+        },
+        "countdown-timer-2": {
+          "type": "countdown",
+          "settings": {
+            "date": "",
+            "number_size": "medium",
+            "message": "<p>New sales and discounts are added all the time<\/p>",
+            "message_size": "typeset2"
+          }
+        },
+        "countdown-timer-3": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "countdown-timer-0",
+        "countdown-timer-1",
+        "countdown-timer-2",
+        "countdown-timer-3"
+      ],
+      "settings": {
+        "image": "",
+        "image_position": "center center",
+        "layout": "image_first",
+        "text_box_position": "middle",
+        "text_alignment": "left",
+        "image_ratio": "650px",
+        "full_width": true,
+        "mobile_layout": "text_first",
+        "mobile_text_alignment": "center",
+        "mobile_image_ratio": "auto",
+        "colors_text": "#ffffff",
+        "colors_background": "#25958f",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich-text": {
+      "type": "rich-text",
+      "blocks": {
+        "rich-text-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Talk about your brand",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "rich-text-0"
+      ],
+      "settings": {
+        "text_alignment": "center",
+        "narrow": false,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "featured-product": {
+      "type": "featured-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": "h2"
+          }
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {
+          }
+        },
+        "countdown": {
+          "type": "countdown",
+          "settings": {
+            "heading": "Hurry up ! Sale end in:",
+            "number_size": "compact",
+            "colors_heading": "#da3f3f",
+            "colors_text": "#da3f3f",
+            "colors_background": "#ffeeee"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "show_variant_labels": true,
+            "picker_type": "button",
+            "enable_color_swatches": true,
+            "swatch_type": "round"
+          }
+        },
+        "inventory_status": {
+          "type": "inventory_status",
+          "settings": {
+            "inventory_threshold": 20,
+            "show_inventory_transfer": true,
+            "color_scheme": "accent-3"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "show_dynamic_checkout": true
+          }
+        },
+        "collapsible_tab-0": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "heading": "Shipping information",
+            "content": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.<\/p><p>Ex: Shipping and return policies, size guides, and other common questions.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_tab-1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "heading": "Returns information",
+            "content": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.<\/p><p>Ex: Shipping and return policies, size guides, and other common questions.<\/p>",
+            "page": ""
+          }
+        },
+        "read_more": {
+          "type": "read_more",
+          "settings": {
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "rating",
+        "countdown",
+        "price",
+        "variant_picker",
+        "inventory_status",
+        "buy_buttons",
+        "collapsible_tab-0",
+        "collapsible_tab-1",
+        "read_more",
+        "share"
+      ],
+      "settings": {
+        "product": "",
+        "layout": "media_first",
+        "full_width": false,
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "image_ratio": "square",
+        "image_position": "center center",
+        "enable_layered_images": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image-banner": {
+      "type": "image-banner",
+      "settings": {
+        "image": "",
+        "image_2": "",
+        "image_position": "center center",
+        "text_box_position": "center",
+        "text_alignment": "center",
+        "image_ratio": "450px",
+        "full_width": false,
+        "mobile_text_alignment": "center",
+        "mobile_image_ratio": "auto",
+        "stack_images_on_mobile": true,
+        "show_text_below": true,
+        "colors_text": "#ffffff",
+        "colors_overlay": "#000000",
+        "colors_overlay_opacity": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "163723966541f3e8f1-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Subscribe to our emails"
+          }
+        },
+        "163723966541f3e8f1-1": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "<p>Be the first to know about new collections and exclusive offers.<\/p>"
+          }
+        },
+        "163723966541f3e8f1-2": {
+          "type": "email_form",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "163723966541f3e8f1-0",
+        "163723966541f3e8f1-1",
+        "163723966541f3e8f1-2"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding_top": 36,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image-with-text-overlay",
+    "guarantees",
+    "countdown-timer",
+    "rich-text",
+    "featured-product",
+    "image-banner",
+    "newsletter"
+  ]
+}

@@ -1,0 +1,374 @@
+{%- liquid
+  assign show_banner = true
+
+  if section.settings.mode == 'disabled'
+    assign show_banner = false
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .cookie-banner {
+    --gradient-background: {% if section.settings.gradient_background != blank %}{{ section.settings.gradient_background }}{% else %}{{ section.settings.colors_background }}{% endif %};
+    --color-background: {{ section.settings.colors_background.red }}, {{ section.settings.colors_background.green }}, {{ section.settings.colors_background.blue }};
+    --color-foreground: {{ section.settings.colors_text.red }}, {{ section.settings.colors_text.green }}, {{ section.settings.colors_text.blue }};
+    --color-border: {{ section.settings.colors_border.red }}, {{ section.settings.colors_border.green }}, {{ section.settings.colors_border.blue }};
+    --color-shadow: {{ section.settings.colors_shadow.red }}, {{ section.settings.colors_shadow.green }}, {{ section.settings.colors_shadow.blue }};
+    --color-link: var(--color-foreground);
+    --color-heading: var(--color-foreground);
+    --color-button-background: {{ section.settings.colors_button_background.red }}, {{ section.settings.colors_button_background.green }}, {{ section.settings.colors_button_background.blue }};
+    --color-button-text: {{ section.settings.colors_button_label.red }}, {{ section.settings.colors_button_label.green }}, {{ section.settings.colors_button_label.blue }};
+    --color-button-border: var(--color-button-background);
+  }
+
+  #shopify-section-{{ section.id }} .button--tertiary {
+    --color-button-text: var(--color-foreground);
+    --color-button-border: var(--color-border);
+    --color-button-background: var(--color-background);
+  }
+{%- endstyle -%}
+
+<link rel="stylesheet" href="{{ 'section-cookie-banner.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-cookie-banner.css' | asset_url | stylesheet_tag }}</noscript>
+<script src="{{ 'cookie-banner.js' | asset_url }}" defer="defer"></script>
+
+<cookie-banner data-section-id="{{ section.id }}" class="hidden" data-delay="{{ section.settings.delay }}" data-test-mode="{% if section.settings.mode == 'testing' %}true{% else %}false{% endif %}">
+  <div class="cookie-banner" data-position="{{ section.settings.text_box_position }}">
+    <div class="cookie__card {{ section.settings.text_alignment }}">
+      <div class="cookie__content">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'heading' -%}
+              <{{ block.settings.heading_tag }} class="cookie__heading {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</{{ block.settings.heading_tag }}>
+            {%- when 'subheading' -%}
+              <p class="cookie__subheading {{ block.settings.subheading_size }}" {{ block.shopify_attributes }}>{{ block.settings.subheading | escape }}</p>
+            {%- when 'text' -%}
+              <div class="cookie__text{% if block.settings.secondary_color %} cookie__text--colored{% endif %} {{ block.settings.text_size }} rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {%- endcase %}
+        {%- endfor %}
+      </div>
+      
+      {%- assign buttons = section.blocks | where: "type", "buttons" | first -%}
+      {%- if buttons -%}
+        <div class="cookie__buttons" {{ buttons.shopify_attributes }}>
+          {%- if buttons.settings.button_label_1 != blank -%}
+            <button type="button" name="accept" class="button button--small">{{ buttons.settings.button_label_1 | escape }}</button>
+          {%- endif -%}
+          {%- if buttons.settings.button_label_2 != blank -%}
+            <button type="button" name="decline" class="button button--tertiary button--small">{{ buttons.settings.button_label_2 | escape }}</button>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</cookie-banner>
+
+{% schema %}
+{
+  "name": "t:sections.cookie-banner.name",
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:sections.cookie-banner.blocks.heading.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "We care about your privacy",
+          "label": "t:sections.all.heading.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h3",
+              "label": "t:sections.all.heading_size.options__1.label"
+            },
+            {
+              "value": "h2",
+              "label": "t:sections.all.heading_size.options__2.label"
+            },
+            {
+              "value": "h1",
+              "label": "t:sections.all.heading_size.options__3.label"
+            }
+          ],
+          "default": "h2",
+          "label": "t:sections.all.heading_size.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "options": [
+            {
+              "value": "h1",
+              "label": "t:sections.all.heading_tag.options__1.label"
+            },
+            {
+              "value": "h2",
+              "label": "t:sections.all.heading_tag.options__2.label"
+            },
+            {
+              "value": "h3",
+              "label": "t:sections.all.heading_tag.options__3.label"
+            },
+            {
+              "value": "h4",
+              "label": "t:sections.all.heading_tag.options__4.label"
+            },
+            {
+              "value": "h5",
+              "label": "t:sections.all.heading_tag.options__5.label"
+            },
+            {
+              "value": "h6",
+              "label": "t:sections.all.heading_tag.options__6.label"
+            },
+            {
+              "value": "div",
+              "label": "t:sections.all.heading_tag.options__7.label"
+            },
+            {
+              "value": "span",
+              "label": "t:sections.all.heading_tag.options__8.label"
+            },
+            {
+              "value": "p",
+              "label": "t:sections.all.heading_tag.options__9.label"
+            }
+          ],
+          "default": "p",
+          "label": "t:sections.all.heading_tag.label",
+          "info": "t:sections.all.heading_tag.info"
+        }
+      ]
+    },
+    {
+      "type": "subheading",
+      "name": "t:sections.cookie-banner.blocks.subheading.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "subheading",
+          "default": "We care about your privacy",
+          "label": "t:sections.all.subheading.label"
+        },
+        {
+          "type": "select",
+          "id": "subheading_size",
+          "options": [
+            {
+              "value": "h5",
+              "label": "t:sections.all.subheading_size.options__1.label"
+            },
+            {
+              "value": "h4",
+              "label": "t:sections.all.subheading_size.options__2.label"
+            },
+            {
+              "value": "h3",
+              "label": "t:sections.all.subheading_size.options__3.label"
+            }
+          ],
+          "default": "h5",
+          "label": "t:sections.all.subheading_size.label"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "t:sections.cookie-banner.blocks.text.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>We use cookies and similar technologies to provide the best experience on our website. <a href=\"/policies/privacy-policy\">Privacy Policy</a></p>",
+          "label": "t:sections.all.text.label"
+        },
+        {
+          "type": "select",
+          "id": "text_size",
+          "options": [
+            {
+              "value": "typeset0",
+              "label": "t:sections.all.text_size.options__1.label"
+            },
+            {
+              "value": "typeset",
+              "label": "t:sections.all.text_size.options__2.label"
+            },
+            {
+              "value": "typeset2",
+              "label": "t:sections.all.text_size.options__3.label"
+            }
+          ],
+          "default": "typeset",
+          "label": "t:sections.all.text_size.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "secondary_color",
+          "default": false,
+          "label": "t:sections.all.secondary_color.label"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "t:sections.cookie-banner.blocks.buttons.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "default": "Accept",
+          "label": "t:sections.cookie-banner.blocks.buttons.settings.button_label_1.label",
+          "info": "t:sections.cookie-banner.blocks.buttons.settings.button_label_1.info"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "default": "No",
+          "label": "t:sections.cookie-banner.blocks.buttons.settings.button_label_2.label",
+          "info": "t:sections.cookie-banner.blocks.buttons.settings.button_label_2.info"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:sections.cookie-banner.settings.paragraph.content"
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "options": [
+        {
+          "value": "enabled",
+          "label": "t:sections.cookie-banner.settings.mode.options__1.label"
+        },
+        {
+          "value": "testing",
+          "label": "t:sections.cookie-banner.settings.mode.options__2.label"
+        }
+      ],
+      "default": "enabled",
+      "label": "t:sections.cookie-banner.settings.mode.label",
+      "info": "t:sections.cookie-banner.settings.mode.info"
+    },
+    {
+      "type": "range",
+      "id": "delay",
+      "max": 60,
+      "min": 2,
+      "step": 1,
+      "unit": "t:sections.cookie-banner.settings.delay.unit",
+      "label": "t:sections.cookie-banner.settings.delay.label",
+      "info": "t:sections.cookie-banner.settings.delay.info",
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.cookie-banner.settings.text_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.cookie-banner.settings.text_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.cookie-banner.settings.text_alignment.options__3.label"
+        }
+      ],
+      "default": "left",
+      "label": "t:sections.cookie-banner.settings.text_alignment.label"
+    },
+    {
+      "type": "select",
+      "id": "text_box_position",
+      "options": [
+        {
+          "value": "bottom",
+          "label": "t:sections.cookie-banner.settings.text_box_position.options__1.label"
+        },
+        {
+          "value": "bottom-left",
+          "label": "t:sections.cookie-banner.settings.text_box_position.options__2.label"
+        },
+        {
+          "value": "bottom-right",
+          "label": "t:sections.cookie-banner.settings.text_box_position.options__3.label"
+        }
+      ],
+      "default": "bottom",
+      "label": "t:sections.cookie-banner.settings.text_box_position.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.colors.header.content"
+    },
+    {
+      "type": "color",
+      "id": "colors_button_label",
+      "label": "t:sections.all.colors.colors_button_label.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "colors_button_background",
+      "label": "t:sections.all.colors.colors_button_background.label",
+      "default": "#1a1b18"
+    },
+    {
+      "type": "color",
+      "id": "colors_text",
+      "label": "t:sections.all.colors.colors_text.label",
+      "default": "#1a1b18"
+    },
+    {
+      "type": "color",
+      "id": "colors_border",
+      "label": "t:sections.all.colors.colors_border.label",
+      "default": "#d2d5d9"
+    },
+    {
+      "type": "color",
+      "id": "colors_background",
+      "label": "t:sections.all.colors.colors_background.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "t:sections.all.colors.gradient_background.label"
+    },
+    {
+      "type": "color",
+      "id": "colors_shadow",
+      "label": "t:sections.all.colors.colors_shadow.label",
+      "default": "#a8e8e2"
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "text"
+      },
+      {
+        "type": "buttons"
+      }
+    ]
+  },
+  "enabled_on": {
+    "groups": ["custom.overlay"]
+  }
+}
+{% endschema %}

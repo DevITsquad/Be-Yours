@@ -1,0 +1,255 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --image-position: {{ section.settings.image_position }};
+  }
+{%- endstyle -%}
+
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+
+{%- paginate blog.articles by section.settings.per_page -%}
+  <div class="main-blog page-width section--padding">
+    <header class="blog-header">
+      <h1 class="title--primary">{{ blog.title | escape }}</h1>
+
+      {%- if section.settings.show_tag_filter and blog.tags.size > 0 -%}
+        <div class="small-hide medium-hide">
+          <ul class="list-unstyled blog-filter">
+            <li><a href="/blogs/{{ blog.handle }}" class="link{% if current_tags == blank %} is-selected{% endif %}">{{ 'blogs.article.all_tags' | t }}</a></li>
+            {%- for tag in blog.all_tags -%}
+              {%- liquid
+                if tag contains "_"
+                  assign tag_starts_with = tag | slice: 0
+
+                  if tag_starts_with == "_"
+                    if tag_count
+                      assign tag_count = tag_count | minus: 1 | at_least: 0
+                    endif
+
+                    continue
+                  endif
+                endif
+              -%}
+              <li><a href="/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}" class="link{% if current_tags contains tag %} is-selected{% endif %}">{{ tag }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div class="large-up-hide">
+          <blog-filter class="select">
+            <select class="select__select">
+              <option value="/blogs/{{ blog.handle }}">{{ 'blogs.article.all_tags' | t }}</option>
+              {%- for tag in blog.all_tags -%}
+                {%- liquid
+                  if tag contains "_"
+                    assign tag_starts_with = tag | slice: 0
+  
+                    if tag_starts_with == "_"
+                      if tag_count
+                        assign tag_count = tag_count | minus: 1 | at_least: 0
+                      endif
+  
+                      continue
+                    endif
+                  endif
+                -%}
+                <option value="/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}" {% if current_tags contains tag %}selected{% endif %}>{{ tag }}</option>
+              {%- endfor -%}
+            </select>
+            {% render 'icon', icon: 'caret' %}
+          </blog-filter>
+        </div>
+      {%- endif -%}
+    </header>
+
+    <div class="blog-articles grid grid--1-col grid--2-col-tablet grid--3-col-desktop grid--one-third-max">
+      {%- for article in blog.articles -%}
+        <div class="blog-articles__article article grid__item">
+          {%- render 'card-article', article: article, show_image: section.settings.show_image, image_ratio: section.settings.image_ratio -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      {%- render 'pagination', paginate: paginate -%}
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+<script src="{{ 'blog.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.main-blog.settings.header.content"
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "min": 6,
+      "max": 48,
+      "step": 3,
+      "label": "t:sections.main-blog.settings.per_page.label",
+      "default": 15
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tag_filter",
+      "default": true,
+      "label": "t:sections.main-blog.settings.show_tag_filter.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "t:sections.main-blog.settings.show_image.label"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.all.card_image_ratio.options__1.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.all.card_image_ratio.options__2.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.all.card_image_ratio.options__3.label"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.all.card_image_ratio.options__4.label"
+        },
+        {
+          "value": "wide",
+          "label": "t:sections.all.card_image_ratio.options__5.label"
+        }
+      ],
+      "default": "landscape",
+      "label": "t:sections.all.card_image_ratio.label",
+      "info": "t:sections.main-blog.settings.image_ratio.info"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "options": [
+        {
+          "value": "20% 0",
+          "label": "t:sections.all.image_position.options__1.label"
+        },
+        {
+          "value": "top center",
+          "label": "t:sections.all.image_position.options__2.label"
+        },
+        {
+          "value": "80% 0",
+          "label": "t:sections.all.image_position.options__3.label"
+        },
+        {
+          "value": "20% 50%",
+          "label": "t:sections.all.image_position.options__4.label"
+        },
+        {
+          "value": "center center",
+          "label": "t:sections.all.image_position.options__5.label"
+        },
+        {
+          "value": "80% 50%",
+          "label": "t:sections.all.image_position.options__6.label"
+        },
+        {
+          "value": "20% 100%",
+          "label": "t:sections.all.image_position.options__7.label"
+        },
+        {
+          "value": "bottom center",
+          "label": "t:sections.all.image_position.options__8.label"
+        },
+        {
+          "value": "80% 100%",
+          "label": "t:sections.all.image_position.options__9.label"
+        }
+      ],
+      "default": "center center",
+      "label": "t:sections.all.image_position.label",
+      "info": "t:sections.all.image_position.info"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.main-blog.settings.paragraph.content"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "t:sections.main-blog.blocks.title.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_date",
+          "default": true,
+          "label": "t:sections.main-blog.blocks.title.settings.show_date.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_author",
+          "default": false,
+          "label": "t:sections.main-blog.blocks.title.settings.show_author.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_comment_count",
+          "default": false,
+          "label": "t:sections.main-blog.blocks.title.settings.show_comment_count.label"
+        }
+      ]
+    },
+    {
+      "type": "summary",
+      "name": "t:sections.main-blog.blocks.summary.name",
+      "limit": 1
+    },
+    {
+      "type": "read_more",
+      "name": "t:sections.main-blog.blocks.read_more.name",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}

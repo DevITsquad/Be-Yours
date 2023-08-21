@@ -1,0 +1,44 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --spacing-section-desktop: {{ section.settings.desktop_height }}px;
+    --spacing-section-mobile: {{ section.settings.mobile_height }}px;
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "t:sections.empty-space.name",
+  "tag": "section",
+  "class": "section spacing-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "t:sections.empty-space.settings.desktop_height.label",
+      "default": 40,
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "t:sections.empty-space.settings.desktop_height.unit"
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "t:sections.empty-space.settings.mobile_height.label",
+      "default": 28,
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "t:sections.empty-space.settings.mobile_height.unit"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.empty-space.presets.name"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["custom.overlay"]
+  }
+}
+{% endschema %}

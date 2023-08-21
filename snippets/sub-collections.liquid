@@ -1,0 +1,37 @@
+{%- liquid
+  assign grid_class = 'grid grid--2-col'
+  if section.settings.columns_mobile == '1'
+    assign grid_class = grid_class | append: ' grid--1-col-mobile'
+  endif
+
+  if section.settings.per_row == 3
+    assign grid_class = grid_class | append: ' grid--3-col-tablet grid--3-col-desktop'
+  elsif section.settings.per_row == 4
+    assign grid_class = grid_class | append: ' grid--3-col-tablet grid--4-col-desktop'
+  else
+    assign grid_class = grid_class | append: ' grid--3-col-tablet grid--5-col-desktop'
+  endif
+-%}
+
+<slider-component class="collection slider-mobile-gutter">
+  <ul id="Slider-{{ section.id }}" class="collection-list {{ grid_class }}{% if section.settings.apply_overlay %} collection-list--contrast{% endif %}{% if section.settings.horizontal_on_mobile %} collection-list--horizontal-mobile{% endif %} slider slider--tablet slider--tablet-up" role="list">
+    {%- for sub_collection_link in sub_collection_links -%}
+      {%- if sub_collection_link.type == 'collection_link' -%}
+        {%- unless parent_url == sub_collection_link.url -%}
+          <li id="Slide-{{ section.id }}-{{ forloop.index }}"
+            class="grid__item collection-list__item slider__slide"
+          >
+            {% render 'card-collection',
+              collection: sub_collection_link.object,
+              collection_url: sub_collection_link.url,
+              collection_title: sub_collection_link.title,
+              grid_image: section.settings.grid_image,
+              image_ratio: section.settings.image_ratio,
+              image_position: section.settings.image_position
+            -%}
+          </li>
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</slider-component>

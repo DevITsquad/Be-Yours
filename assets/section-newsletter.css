@@ -1,0 +1,71 @@
+.newsletter {
+  color: rgba(var(--color-foreground), 0.75);
+  background: var(--gradient-background);
+  background-color: rgb(var(--color-background));
+  border-radius: min(var(--button-radius), 0.8rem);
+}
+
+.newsletter__wrapper {
+  margin: 0 auto;
+  padding: 5rem 3rem 6rem;
+}
+
+@media screen and (min-width: 750px) {
+  .newsletter__wrapper {
+    padding: 8rem 9rem 9rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .newsletter__wrapper {
+    max-width: 72.6rem;
+  }
+}
+
+.newsletter__wrapper > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.newsletter__wrapper > * + * {
+  margin-top: 1rem;
+}
+
+.newsletter__wrapper > * + form-state {
+  display: block;
+  margin-top: 2rem;
+}
+
+.newsletter__subheading {
+  max-width: 70rem;
+  font-size: 1.4rem;
+}
+
+.newsletter__wrapper .newsletter-form__field-wrapper {
+  width: 36rem;
+  max-width: 100%;
+  display: inline-block;
+}
+
+.newsletter__wrapper .form__message {
+  margin-top: 1.5rem;
+}
+
+.newsletter__wrapper .newsletter-form .field__input {
+  font-size: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .newsletter__wrapper .newsletter-form .field__input {
+    font-size: 1.6rem;
+  }
+}
+
+.newsletter__wrapper .newsletter-form .field__input::placeholder {
+  color: rgb(var(--color-foreground));
+}
+
+.newsletter__wrapper .newsletter-form .field__button .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}

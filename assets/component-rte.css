@@ -1,0 +1,77 @@
+
+.rte > p:first-child {
+  margin-top: 0;
+}
+
+.rte > p:last-child {
+  margin-bottom: 0;
+}
+
+.rte > p[data-spam-detection-disclaimer] {
+  margin: 2rem 0;
+}
+
+.rte table {
+  table-layout: fixed;
+}
+
+@media screen and (min-width: 750px) {
+  .rte table td {
+    padding-inline-start: 1.2rem;
+    padding-inline-end: 1.2rem;
+  }
+}
+
+.rte img {
+  height: auto;
+  max-width: 100%;
+}
+
+.rte cite {
+  display: block;
+}
+
+.rte ul {
+  padding-inline-start: 2rem;
+}
+
+.rte li {
+  margin-bottom: 0.5rem;
+  list-style: inherit;
+}
+
+.rte li:last-child {
+  margin-bottom: 0;
+}
+
+.rte a {
+  color: rgb(var(--color-link));
+  font-size: inherit;
+  position: relative;
+  cursor: pointer;
+  padding-bottom: 0.2rem;
+  text-decoration: none;
+  background-color: transparent;
+  background-image: linear-gradient(to top, rgb(var(--color-link)) 0px, rgb(var(--color-link)) 0px), linear-gradient(to top, rgb(var(--color-border)) 0px, rgb(var(--color-border)) 0px);
+  background-repeat: no-repeat;
+  background-position: right bottom, right bottom;
+  background-size: 0% 0.1rem, 100% 0.1rem;
+  transition-property: background-size;
+  transition-timing-function: ease;
+  transition-duration: var(--duration-default);
+}
+
+@media screen and (hover: hover) {
+  .rte a:hover {
+    background-position: left bottom, left bottom;
+    background-size: 100% 0.1rem, 100% 0.1rem;
+  }
+}
+
+.rte blockquote {
+  display: inline-flex;
+}
+
+.rte blockquote > * {
+  margin: -0.5rem 0 -0.5rem 0;
+}

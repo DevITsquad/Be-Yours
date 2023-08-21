@@ -1,0 +1,186 @@
+{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+{% comment %}
+  Renders a product image with a modal-opener
+
+  Accepts:
+  - media: {Object} Product Media object
+  - position: {String} Position of the media. Used for accessible label.
+  - loop: {Boolean} Enable video looping (optional)
+  - modal_id: {String} The product modal that will be shown by clicking the image
+  - xr_button: {Boolean} Renders the "View in your space" button (shopify-xr-button) if the media is a 3D Model
+  - media_width: {Float} The width percentage that the media column occupies on desktop.
+  - image_ratio: {String} The setting either show the article image ratio
+  - mobile_image_ratio: {String} The setting either show the article image ratio on mobile
+  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+
+  Usage:
+  {% render 'product-image',
+    media: media,
+    position: forloop.index,
+    zoom: section.settings.enable_image_zoom,
+    loop: section.settings.enable_video_looping,
+    modal_id: section.id
+  %}
+{% endcomment %}
+
+{%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | times: media_width | round }}px, (min-width: 990px) calc({{ media_width | times: 100 }}vw - 10rem), (min-width: 750px) calc((100vw - 10rem) / 2), calc(100vw - 3rem){%- endcapture -%}
+{%- liquid
+  assign image_loading = 'eager'
+  if lazy_load
+    assign image_loading = 'lazy'
+  endif
+
+  assign alt = media.alt | escape | split: '#' | first
+  assign widths = '165, 360, 535, 750, 1100, 1500'
+-%}
+
+<noscript>
+  {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+    <a href="{% if media.media_type == 'video' %}{{ media.sources[1].url }}{% else %}{{ media | external_video_url }}{% endif %}" aria-label="{{ 'products.product.video_exit_message' | t: title: product.title | escape }}">
+      {%- if zoom -%}
+        <span class="product__media-icon motion-reduce">
+          {% render 'icon', icon: 'play' %}
+        </span>
+      {%- endif -%}
+      <div class="media-wrapper">
+        <div class="product__media media media--{{ image_ratio }}{% if mobile_image_ratio %} media-mobile--{{ mobile_image_ratio }}{% endif %}"
+          {%- if image_ratio == 'adapt' or mobile_image_ratio == 'adapt' %} style="--image-ratio-percent: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%;"{% endif -%}
+        >
+          {{ media.preview_image | image_url: width: 1500 | image_tag:
+            loading: image_loading,
+            sizes: sizes,
+            widths: widths,
+            alt: alt
+          }}
+        </div>
+      </div>
+    </a>
+  {%- else -%}
+    <div class="media-wrapper">
+      <div class="product__media media media--{{ image_ratio }}{% if mobile_image_ratio %} media-mobile--{{ mobile_image_ratio }}{% endif %}"
+        {%- if image_ratio == 'adapt' or mobile_image_ratio == 'adapt' %} style="--image-ratio-percent: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%;"{% endif -%}
+      >
+        {{ media.preview_image | image_url: width: 1500 | image_tag:
+          loading: image_loading,
+          sizes: sizes,
+          widths: widths,
+          alt: alt,
+          is: 'lazy-image'
+        }}
+      </div>
+    </div>
+  {%- endif -%}
+</noscript>
+
+<modal-opener class="product__modal-opener product__modal-opener--{{ media.media_type }} no-js-hidden" data-modal="#ProductModal-{{ modal_id }}">
+  {%- if zoom -%}
+    <span class="product__media-icon motion-reduce" aria-hidden="true">
+      {%- liquid
+        case media.media_type
+        when 'video' or 'external_video'
+          render 'icon', icon: 'play'
+        when 'model'
+          render 'icon', icon: '3d-model'
+        else
+          render 'icon', icon: 'zoom'
+        endcase
+      -%}
+    </span>
+  {%- endif -%}
+
+  <use-animate data-animate="{% if position == 'featured' %}zoom-fade-small{% else %}fade-up{% endif %}" class="media-wrapper">
+    <div class="product__media image-animate media media--{{ image_ratio }}{% if mobile_image_ratio %} media-mobile--{{ mobile_image_ratio }}{% endif %}"
+      {%- if image_ratio == 'adapt' or mobile_image_ratio == 'adapt' %} style="--image-ratio-percent: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%;"{% endif -%}
+    >
+      {{ media.preview_image | image_url: width: 1500 | image_tag:
+        loading: image_loading,
+        sizes: sizes,
+        widths: widths,
+        alt: alt,
+        is: 'lazy-image'
+      }}
+    </div>
+  </use-animate>
+  {%- if zoom -%}
+    <button class="product__media-toggle" type="button" aria-haspopup="dialog" data-media-id="{{ media.id }}">
+      <span class="visually-hidden">
+        {%- if position == 'featured' %}
+          {{ 'products.product.media.open_media' | t }}
+        {%- else -%}
+          {{ 'products.product.media.open_media' | t: index: position }}
+        {%- endif -%}
+      </span>
+    </button>
+  {%- endif -%}
+</modal-opener>
+
+{%- if media.media_type != 'image' -%}
+  <div class="media-wrapper">
+    {%- if media.media_type == 'model' -%}
+      <product-model class="deferred-media media media--{{ image_ratio }}{% if mobile_image_ratio %} media-mobile--{{ mobile_image_ratio }}{% endif %} no-js-hidden"
+        data-media-id="{{ media.id }}"
+        {%- if image_ratio == 'adapt' or mobile_image_ratio == 'adapt' %} style="--image-ratio-percent: 100%;"{% endif -%}
+      >
+    {%- else -%}
+      <deferred-media class="deferred-media media media--{{ image_ratio }}{% if mobile_image_ratio %} media-mobile--{{ mobile_image_ratio }}{% endif %} no-js-hidden"
+        data-media-id="{{ media.id }}"
+        {%- if image_ratio == 'adapt' or mobile_image_ratio == 'adapt' %} style="--image-ratio-percent: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;"{% endif -%}
+      >
+    {%- endif -%}
+    {{ media.preview_image | image_url: width: 1500 | image_tag:
+      loading: image_loading,
+      class: 'deferred-media__poster',
+      sizes: sizes,
+      widths: widths,
+      alt: alt
+    }}
+    <button id="Deferred-Poster-{{ media.id }}" class="deferred-media__poster" type="button">
+      <span class="deferred-media__poster-button motion-reduce">
+        {%- if media.media_type == 'model' -%}
+          <span class="visually-hidden">{{ 'products.product.media.play_model' | t }}</span>
+          {%- render 'icon', icon: '3d-model' -%}
+        {%- else -%}
+          <span class="visually-hidden">{{ 'products.product.media.play_video' | t }}</span>
+          {%- render 'icon', icon: 'play' -%}
+        {%- endif -%}
+      </span>
+    </button>
+    <template>
+      {%- liquid
+        case media.media_type
+        when 'external_video'
+          assign video_class = 'js-' | append: media.host
+          if media.host == 'youtube'
+            echo media | external_video_url: autoplay: true, loop: loop, playlist: media.external_id | external_video_tag: class: video_class, loading: "lazy"
+          else
+            echo media | external_video_url: autoplay: true, loop: loop | external_video_tag: class: video_class, loading: "lazy"
+          endif
+        when 'video'
+          echo media | media_tag: image_size: "2048x", autoplay: true, loop: loop, controls: true, controlsList: "nodownload", preload: "none"
+        when 'model'
+          echo media | media_tag: image_size: "2048x", toggleable: true
+        endcase
+      -%}
+    </template>
+
+    {%- if media.media_type == 'model' -%}
+      </product-model>
+      {%- if xr_button -%}
+        <button
+          class="button button--full-width product__xr-button"
+          type="button"
+          aria-label="{{ 'products.product.xr_button_label' | t }}"
+          data-shopify-xr
+          data-shopify-model3d-id="{{ media.id }}"
+          data-shopify-title="title"
+          data-shopify-xr-hidden
+        >
+          {% render 'icon', icon: '3d-model' %}
+          {{ 'products.product.xr_button' | t }}
+        </button>
+      {%- endif -%}
+    {%- else -%}
+      </deferred-media>
+    {%- endif -%}
+  </div>
+{%- endif -%}

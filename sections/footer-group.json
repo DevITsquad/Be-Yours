@@ -1,0 +1,59 @@
+{
+  "name": "t:sections.footer-group.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "footer-0": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Shop",
+            "menu": "footer"
+          }
+        },
+        "footer-1": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Explore",
+            "menu": "explore-menu"
+          }
+        },
+        "footer-2": {
+          "type": "link_list",
+          "settings": {
+            "heading": "More",
+            "menu": "more-menu"
+          }
+        }
+      },
+      "block_order": [
+        "footer-0",
+        "footer-1",
+        "footer-2"
+      ],
+      "settings": {
+        "show_divider": true,
+        "newsletter_enable": true,
+        "newsletter_heading": "WE MAKE GOOD MAILS TOO",
+        "newsletter_text": "<p>Sign up to our newsletter for 10% off code, plus first dibs on deals<\/p>",
+        "show_social": true,
+        "social_heading": "",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": false,
+        "copyright_text": "All rights reserved.",
+        "colors_text": "#42474c",
+        "colors_heading": "#6b7177",
+        "colors_link": "#212326",
+        "colors_border": "#d2d5d9",
+        "colors_background": "#ffffff",
+        "gradient_background": ""
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

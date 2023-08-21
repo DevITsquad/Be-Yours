@@ -1,0 +1,55 @@
+{% comment %}
+  Renders an collection card.
+
+  Accepts:
+  - collection: {Object} Collection object
+  - collection_title: {String} Default collection title
+  - collection_url: {String} Default collection URL
+  - image_ratio: {String} The setting either show the article image ratio
+  - grid_image: {String} Use collection image or first product image
+
+  Usage:
+  {% render 'card-collection', collection: collection, image_ratio: section.settings.image_ratio %}
+{% endcomment %}
+
+{%- liquid
+  assign featured_image = collection.featured_image
+  if grid_image == 'product'
+    assign featured_image = collection.products.first.featured_media
+  endif
+-%}
+
+<a class="card-wrapper card{% if featured_image != blank %} card--media{% else %} card--text{% endif %}" href="{{ collection_url | default: collection.url }}">
+  {%- if featured_image != blank -%}
+    <div class="media-wrapper">
+      <div class="media media--{{ image_ratio }} media--hover-effect overflow-hidden"
+        {%- if image_ratio == 'adapt' %} style="--image-ratio-percent: {{ 1 | divided_by: featured_image.aspect_ratio | times: 100 }}%;"{% endif -%}
+      >
+        {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 10rem) / 4), (min-width: 750px) calc((100vw - 10rem) / 3), calc(100vw - 3rem){%- endcapture -%}
+        {{ featured_image | image_url: width: 1100 | image_tag:
+          is: 'lazy-image',
+          loading: 'lazy',
+          sizes: sizes,
+          widths: '165, 360, 535, 750, 940, 1100',
+          alt: collection_title | escape
+        }}
+      </div>
+    </div>
+    <div class="card__text card__text-spacing">
+      <h3 class="card-information__text h3">{{ collection_title | default: collection.title | escape }}</h3>
+    </div>
+  {%- else -%}
+    <div class="card__inner">
+      <div class="media media--{{ image_ratio }}{% if featured_image == blank %} placeholder{% endif %}">
+        <div class="card__content">
+          <div class="card-information">
+            <h3 class="card-information__text h3">{{ collection_title | default: collection.title | escape }}</h3>
+            {%- if collection.description != blank -%}
+              <p class="card__caption">{{ collection.description | strip_html | truncatewords: 12 }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</a>

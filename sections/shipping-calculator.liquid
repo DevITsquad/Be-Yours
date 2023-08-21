@@ -1,0 +1,189 @@
+{%- if cart != empty -%}
+  {%- style -%}
+    #shopify-section-{{ section.id }} {
+      --section-padding-top: {{ section.settings.padding_top }}px;
+      --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  {%- endstyle -%}
+
+  {{ 'section-shipping-calculator.css' | asset_url | stylesheet_tag }}
+
+  <div class="shipping-calculator page-width{% unless section.settings.secondary_background %} shipping-calculator--outline{% endunless %} section--padding">
+    <shipping-calculator>
+      <div class="title-wrapper{% if section.settings.heading == blank %} title-wrapper--no-heading{% endif %}">
+        <{{ section.settings.heading_tag }} class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag }}>
+      </div>
+
+      <form-state>
+        <div class="field">
+          <div class="select">
+            <select
+              id="ShippingCalculatorCountry"
+              class="select__select required"
+              data-default="{% if shop.customer_accounts_enabled and customer %}{{ customer.default_address.country }}{% elsif section.settings.default_country != '' %}{{ section.settings.default_country }}{% endif %}"
+              autocomplete="country"
+              data-empty="---"
+            >
+              {{ all_country_option_tags }}
+            </select>
+            {% render 'icon', icon: 'caret' %}
+          </div>
+          <label class="visually-hidden" for="ShippingCalculatorCountry">{{ 'customer.addresses.country' | t }}</label>
+        </div>
+        <div class="field" id="ShippingCalculatorProvinceContainer" style="display: none">
+          <div class="select">
+            <select
+              id="ShippingCalculatorProvince"
+              class="select__select"
+              data-default="{% if shop.customer_accounts_enabled and customer and customer.default_address.province != '' %}{{ customer.default_address.province }}{% endif %}"
+              autocomplete="address-level1"
+            >
+            </select>
+            {% render 'icon', icon: 'caret' %}
+          </div>
+          <label class="visually-hidden" for="ShippingCalculatorProvince">{{ 'customer.addresses.province' | t }}</label>
+        </div>
+        <div class="field">
+          <input id="ShippingCalculatorZip" class="field__input required" type="text"{% if shop.customer_accounts_enabled and customer %} value="{{ customer.default_address.zip }}"{% endif %} autocapitalize="characters" autocomplete="postal-code" placeholder="{{ 'customer.addresses.zip' | t }}"/>
+          <label class="visually-hidden" for="ShippingCalculatorZip">{{ 'customer.addresses.zip' | t }}</label>
+        </div>
+        <div>
+          <button class="button button--full-width" type="button">{{ 'general.cart.shipping_calculator.button' | t }}</button>
+        </div>
+      </form-state>
+      <div class="field form__message errors hidden" id="ShippingCalculatorErrors">
+        {% render 'icon', icon: 'error' %}
+        <div class="errors"></div>
+      </div>
+      <div class="field form__message hidden" id="ShippingCalculatorSuccess"></div>
+    </shipping-calculator>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.shipping-calculator.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "default_country",
+      "default": "United States",
+      "label": "t:sections.shipping-calculator.settings.default_country.label",
+      "info": "t:sections.shipping-calculator.settings.default_country.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "secondary_background",
+      "default": true,
+      "label": "t:sections.shipping-calculator.settings.secondary_background.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.heading.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Estimate shipping",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_tag.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_tag.options__2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_tag.options__3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_tag.options__4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_tag.options__5.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.all.heading_tag.options__6.label"
+        },
+        {
+          "value": "div",
+          "label": "t:sections.all.heading_tag.options__7.label"
+        },
+        {
+          "value": "span",
+          "label": "t:sections.all.heading_tag.options__8.label"
+        },
+        {
+          "value": "p",
+          "label": "t:sections.all.heading_tag.options__9.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_tag.label",
+      "info": "t:sections.all.heading_tag.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.shipping-calculator.presets.name"
+    }
+  ],
+  "templates": ["cart"]
+}
+{% endschema %}

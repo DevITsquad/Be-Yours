@@ -1,0 +1,181 @@
+{%- assign text_direction = 'localization.text_direction_trigger' | t | downcase -%}
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}"
+  {%- if text_direction == 'rtl' %} dir="rtl"{% endif -%}
+>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+
+    <script src="{{ 'vendor-v4.js' | asset_url | split: '?' | first }}" defer="defer"></script>
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+
+    {{ content_for_header }}
+
+    {%- liquid
+      render 'css-variables'
+      echo 'base.css' | asset_url | stylesheet_tag: preload: true
+      
+      if text_direction == 'rtl'
+        echo 'rtl.css' | asset_url | stylesheet_tag
+      endif
+    -%}
+
+    {%- unless settings.type_body_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+    {%- unless settings.type_header_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+    
+    {%- if settings.predictive_search_enabled -%}
+      <link rel="stylesheet" href="{{ 'component-predictive-search.css' | asset_url }}" media="print" onload="this.media='all'">
+    {%- endif -%}
+    {%- if settings.quick_view_enabled -%}
+      <link rel="stylesheet" href="{{ 'component-quick-view.css' | asset_url }}" media="print" onload="this.media='all'">
+    {%- endif -%}
+    {%- if settings.color_swatches_enabled -%}
+      <link rel="stylesheet" href="{{ 'component-color-swatches.css' | asset_url }}" media="print" onload="this.media='all'">
+    {%- endif -%}
+    {%- if linklists.gift-wrapping.links != blank and linklists.gift-wrapping.links.first.type == 'product_link' -%}
+      <link rel="stylesheet" href="{{ 'component-gift-wrapping.css' | asset_url }}" media="print" onload="this.media='all'">
+      <noscript>{{ 'component-gift-wrapping.css' | asset_url | stylesheet_tag }}</noscript>
+    {%- endif -%}
+
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+  </head>
+
+  <body class="template-{{ request.page_type }}{% if request.design_mode %} shopify-design-mode{% endif %}"
+    {%- if settings.image_zoom_effect_enabled %} data-animate-image{% endif -%}
+    {%- if settings.image_loading_bar_enabled %} data-lazy-image{% endif -%}
+    {%- if settings.heading_capitalize %} data-heading-capitalize{% endif -%}
+    {%- if settings.heading_center %} data-heading-center{% endif -%}
+    {%- if settings.price_superscript %} data-price-superscript{% endif -%}
+    {%- if settings.button_corner_radius > 0 %} data-button-round{% endif -%}
+  >
+    <a class="skip-to-content-link button button--small visually-hidden" href="#MainContent">
+      {{ "accessibility.skip_to_text" | t }}
+    </a>
+
+    {% render 'transition-cover' %}
+
+    <div class="transition-body">
+      {% sections 'header-group' %}
+
+      <div class="transition-content">
+        <main id="MainContent" class="content-for-layout focus-none shopify-section" role="main" tabindex="-1">
+          {{ content_for_layout }}
+        </main>
+
+        {% sections 'footer-group' %}
+      </div>
+    </div>
+
+    {% sections 'overlay-group' %}
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
+    </ul>
+    <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
+      <symbol id="icon-cart" fill="none" viewbox="0 0 18 19">
+        <path d="M3.09333 5.87954L16.2853 5.87945V5.87945C16.3948 5.8795 16.4836 5.96831 16.4836 6.07785V11.4909C16.4836 11.974 16.1363 12.389 15.6603 12.4714C11.3279 13.2209 9.49656 13.2033 5.25251 13.9258C4.68216 14.0229 4.14294 13.6285 4.0774 13.0537C3.77443 10.3963 2.99795 3.58502 2.88887 2.62142C2.75288 1.42015 0.905376 1.51528 0.283581 1.51478" stroke="currentColor"/>
+        <path d="M13.3143 16.8554C13.3143 17.6005 13.9183 18.2045 14.6634 18.2045C15.4085 18.2045 16.0125 17.6005 16.0125 16.8554C16.0125 16.1104 15.4085 15.5063 14.6634 15.5063C13.9183 15.5063 13.3143 16.1104 13.3143 16.8554Z" fill="currentColor"/>
+        <path d="M3.72831 16.8554C3.72831 17.6005 4.33233 18.2045 5.07741 18.2045C5.8225 18.2045 6.42651 17.6005 6.42651 16.8554C6.42651 16.1104 5.8225 15.5063 5.07741 15.5063C4.33233 15.5063 3.72831 16.1104 3.72831 16.8554Z" fill="currentColor"/>
+      </symbol>
+    </svg>
+
+    <script>
+      window.routes = {
+        root_url: '{{ routes.root_url }}',
+        cart_url: '{{ routes.cart_url }}',
+        cart_add_url: '{{ routes.cart_add_url }}',
+        cart_change_url: '{{ routes.cart_change_url }}',
+        cart_update_url: '{{ routes.cart_update_url }}',
+        search_url: '{{ routes.search_url }}',
+        predictive_search_url: '{{ routes.predictive_search_url }}'
+      };
+
+      window.cartStrings = {
+        error: `{{ 'sections.cart.cart_error' | t }}`,
+        quantityError: `{{ 'sections.cart.cart_quantity_error_html' | t: quantity: '[quantity]' }}`
+      };
+
+      window.variantStrings = {
+        addToCart: `{{ 'products.product.add_to_cart' | t }}`,
+        soldOut: `{{ 'products.product.sold_out' | t }}`,
+        unavailable: `{{ 'products.product.unavailable' | t }}`,
+        preOrder: `{{ 'products.product.pre_order' | t }}`
+      };
+
+      window.accessibilityStrings = {
+        imageAvailable: `{{ 'products.product.media.image_available' | t: index: '[index]' }}`,
+        shareSuccess: `{{ 'general.share.success_message' | t }}`
+      }
+
+      window.dateStrings = {
+        d: `{{ 'general.date.d' | t }}`,
+        day: `{{ 'general.date.day' | t }}`,
+        days: `{{ 'general.date.days' | t }}`,
+        hour: `{{ 'general.date.hour' | t }}`,
+        hours: `{{ 'general.date.hours' | t }}`,
+        minute: `{{ 'general.date.minute' | t }}`,
+        minutes: `{{ 'general.date.minutes' | t }}`,
+        second: `{{ 'general.date.second' | t }}`,
+        seconds: `{{ 'general.date.seconds' | t }}`
+      };
+
+      window.shopSettings = {
+        moneyFormat: {{ shop.money_format | json }},
+        isoCode: {{ cart.currency.iso_code | json }},
+        cartDrawer: {{ settings.cart_drawer_enabled }}
+      };
+
+      (function() {
+        // Fixed: Largest Contentful Paint image was lazily loaded
+        const first_image = document.querySelector('#MainContent .shopify-section .media img');
+        if (first_image) first_image.setAttribute('loading', 'auto');
+      })();
+    </script>
+
+    {%- if settings.image_loading_bar_enabled %}
+      <script src="{{ 'lazyimage.js' | asset_url }}" async></script>
+    {% endif -%}
+    {%- if settings.predictive_search_enabled -%}
+      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    {%- if settings.quick_view_enabled -%}
+      <script src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    {%- if settings.color_swatches_enabled -%}
+      <script src="{{ 'color-swatches.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    {%- if linklists.gift-wrapping.links != blank and linklists.gift-wrapping.links.first.type == 'product_link' -%}
+      <script src="{{ 'gift-wrapping.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+  </body>
+</html>

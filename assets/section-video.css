@@ -1,0 +1,32 @@
+.video-section__media {
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.video-section__media.deferred-media {
+  overflow: visible;
+}
+
+.video-section__poster.deferred-media__poster:focus {
+  outline-offset: 0.3rem;
+}
+
+.video-section__media iframe {
+  background-color: rgba(var(--color-foreground), 0.06);
+  border: 0;
+}
+
+.video-section__poster,
+.video-section__media iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.video-section__media.deferred-media[loading] .deferred-media__poster-button {
+  visibility: hidden;
+}
+
+.video-section__media.deferred-media[loaded] > .deferred-media__poster {
+  display: none;
+}

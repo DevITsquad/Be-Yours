@@ -1,0 +1,438 @@
+{%- liquid
+  assign before_image = section.blocks | first
+  assign after_image = section.blocks | last
+  assign image_ratio_percent = 38
+
+  if before_image != blank
+    assign image_ratio_percent = 1 | divided_by: before_image.settings.image.aspect_ratio | times: 100
+  elsif after_image != blank
+    assign image_ratio_percent = 1 | divided_by: after_image.settings.image.aspect_ratio | times: 100
+  endif
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --image-ratio-percent: {{ image_ratio_percent }}%;
+  }
+  {%- if before_image.settings.image_mobile != blank and section.settings.mobile_image_ratio == 'adapt' %}
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} {
+        --image-ratio-percent: {{ 1 | divided_by: before_image.settings.image_mobile.aspect_ratio | times: 100 }}%;
+      }
+    }  
+  {% endif -%}
+
+  #shopify-section-{{ section.id }} .image-comparison {
+    --color-border: {{ section.settings.colors_line.red }}, {{ section.settings.colors_line.green }}, {{ section.settings.colors_line.blue }};
+  }
+{%- endstyle -%}
+
+{{ 'section-image-comparison.css' | asset_url | stylesheet_tag }}
+
+<div class="section--padding{% if section.settings.show_divider %} section--divider{% endif %}">
+  <div class="page-width{% if section.settings.full_width %} page-width--full-width{% endif %}">
+    <div class="title-wrapper{% if section.settings.heading == blank %} title-wrapper--no-heading{% endif %}{% if section.settings.full_width %} page-width{% endif %} {{ section.settings.heading_alignment }}">
+      <{{ section.settings.heading_tag }} class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag }}>
+    </div>
+
+    <image-comparison class="image-comparison" data-layout="{{ section.settings.layout }}">
+      <span class="image-comparison__animate"></span>
+      {%- capture sizes -%}{% if section.settings.full_width %}100vw{% else %}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw{% endif %}{%- endcapture -%}
+      
+      {%- if before_image != blank -%}
+        <div class="image-comparison__before image-comparison__item--{{ before_image.settings.title_position }} media-wrapper" {{ before_image.shopify_attributes }}>
+          <p class="image-comparison__title h3 button button--{{ before_image.settings.title_size }} small-hide">{{ before_image.settings.title | escape }}</p>
+
+          {%- if before_image.settings.image != blank -%}
+            <div class="media media--{{ section.settings.image_ratio }} media-mobile--{{ section.settings.mobile_image_ratio }}">
+              {%- liquid
+                if before_image.settings.image_mobile == blank
+                  echo before_image.settings.image | image_url: width: 3840 | image_tag: loading: 'lazy', sizes: sizes, widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840', is: 'lazy-image'
+                else
+                  echo before_image.settings.image_mobile | image_url: width: 3840 | image_tag: loading: 'lazy', class: 'medium-hide large-up-hide', sizes: sizes, widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840', is: 'lazy-image'
+                  echo before_image.settings.image | image_url: width: 3840 | image_tag: loading: 'lazy', class: 'small-hide', sizes: sizes, widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840', is: 'lazy-image'
+                endif
+              -%}
+              </div>
+          {%- else -%}
+            <div class="media media--{{ section.settings.image_ratio }} media-mobile--{{ section.settings.mobile_image_ratio }} comparison-placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if after_image != blank -%}
+        <div class="image-comparison__after image-comparison__item--{{ after_image.settings.title_position }} media-wrapper" {{ after_image.shopify_attributes }}>
+          <p class="image-comparison__title h3 button button--{{ after_image.settings.title_size }} small-hide">{{ after_image.settings.title | escape }}</p>
+
+          {%- if after_image.settings.image != blank -%}
+            <div class="media media--{{ section.settings.image_ratio }} media-mobile--{{ section.settings.mobile_image_ratio }}">
+              {%- liquid
+                if after_image.settings.image_mobile == blank
+                  echo after_image.settings.image | image_url: width: 3840 | image_tag: loading: 'lazy', sizes: sizes, widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840', is: 'lazy-image'
+                else
+                  echo after_image.settings.image_mobile | image_url: width: 3840 | image_tag: loading: 'lazy', class: 'medium-hide large-up-hide', sizes: sizes, widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840', is: 'lazy-image'
+                  echo after_image.settings.image | image_url: width: 3840 | image_tag: loading: 'lazy', class: 'small-hide', sizes: sizes, widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840', is: 'lazy-image'
+                endif
+              -%}
+              </div>
+          {%- else -%}
+            <div class="media media--{{ section.settings.image_ratio }} media-mobile--{{ section.settings.mobile_image_ratio }} comparison-placeholder">
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder' }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if before_image != blank and after_image != blank -%}
+        <button type="button" class="image-comparison__button">
+          <span>
+            {% render 'icon', icon: 'drag' %}
+          </span>
+        </button>
+      {%- endif -%}
+    </image-comparison>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.image-comparison.name",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "t:sections.image-comparison.settings.layout.options__1.label"
+        },
+        {
+          "value": "vertical",
+          "label": "t:sections.image-comparison.settings.layout.options__2.label"
+        }
+      ],
+      "default": "horizontal",
+      "label": "t:sections.image-comparison.settings.layout.label"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "label": "t:sections.all.image_ratio.options__2.label",
+          "value": "400px"
+        },
+        {
+          "label": "t:sections.all.image_ratio.options__3.label",
+          "value": "450px"
+        },
+        {
+          "label": "t:sections.all.image_ratio.options__4.label",
+          "value": "500px"
+        },
+        {
+          "label": "t:sections.all.image_ratio.options__5.label",
+          "value": "550px"
+        },
+        {
+          "label": "t:sections.all.image_ratio.options__6.label",
+          "value": "600px"
+        },
+        {
+          "label": "t:sections.all.image_ratio.options__7.label",
+          "value": "650px"
+        },
+        {
+          "label": "t:sections.all.image_ratio.options__8.label",
+          "value": "700px"
+        },
+        {
+          "label": "t:sections.all.image_ratio.options__9.label",
+          "value": "750px"
+        },
+        {
+          "label": "t:sections.all.image_ratio.options__10.label",
+          "value": "100vh"
+        },
+        {
+          "label": "t:sections.all.image_ratio.options__11.label",
+          "value": "adapt"
+        }
+      ],
+      "default": "650px",
+      "label": "t:sections.all.image_ratio.label"
+    },
+    {
+      "type": "select",
+      "id": "mobile_image_ratio",
+      "options": [
+        {
+          "label": "t:sections.all.mobile_layout.mobile_image_ratio.options__1.label",
+          "value": "auto"
+        },
+        {
+          "label": "t:sections.all.mobile_layout.mobile_image_ratio.options__2.label",
+          "value": "200px"
+        },
+        {
+          "label": "t:sections.all.mobile_layout.mobile_image_ratio.options__3.label",
+          "value": "250px"
+        },
+        {
+          "label": "t:sections.all.mobile_layout.mobile_image_ratio.options__4.label",
+          "value": "300px"
+        },
+        {
+          "label": "t:sections.all.mobile_layout.mobile_image_ratio.options__5.label",
+          "value": "400px"
+        },
+        {
+          "label": "t:sections.all.mobile_layout.mobile_image_ratio.options__6.label",
+          "value": "500px"
+        },
+        {
+          "label": "t:sections.all.mobile_layout.mobile_image_ratio.options__7.label",
+          "value": "600px"
+        },
+        {
+          "label": "t:sections.all.mobile_layout.mobile_image_ratio.options__8.label",
+          "value": "100vh"
+        },
+        {
+          "label": "t:sections.all.mobile_layout.mobile_image_ratio.options__9.label",
+          "value": "adapt"
+        }
+      ],
+      "default": "auto",
+      "label": "t:sections.all.mobile_layout.mobile_image_ratio.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "t:sections.all.full_width.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "default": false,
+      "label": "t:sections.all.show_divider.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.heading.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Image comparison",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.all.heading_alignment.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.all.heading_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.all.heading_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.all.heading_alignment.options__3.label"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_tag.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_tag.options__2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_tag.options__3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_tag.options__4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_tag.options__5.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.all.heading_tag.options__6.label"
+        },
+        {
+          "value": "div",
+          "label": "t:sections.all.heading_tag.options__7.label"
+        },
+        {
+          "value": "span",
+          "label": "t:sections.all.heading_tag.options__8.label"
+        },
+        {
+          "value": "p",
+          "label": "t:sections.all.heading_tag.options__9.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_tag.label",
+      "info": "t:sections.all.heading_tag.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.colors.header.content"
+    },
+    {
+      "type": "color",
+      "id": "colors_line",
+      "label": "t:sections.all.colors.colors_line.label",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "look",
+      "name": "t:sections.image-comparison.blocks.look.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.all.image.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "t:sections.all.image_mobile.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.all.heading.label"
+        },
+        {
+          "type": "select",
+          "id": "title_size",
+          "options": [
+            {
+              "value": "small",
+              "label": "t:sections.all.heading_size.options__1.label"
+            },
+            {
+              "value": "default",
+              "label": "t:sections.all.heading_size.options__2.label"
+            },
+            {
+              "value": "large",
+              "label": "t:sections.all.heading_size.options__3.label"
+            }
+          ],
+          "default": "small",
+          "label": "t:sections.all.heading_size.label"
+        },
+        {
+          "type": "select",
+          "id": "title_position",
+          "options": [
+            {
+              "value": "start",
+              "label": "t:sections.image-comparison.blocks.look.settings.title_position.options__1.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.image-comparison.blocks.look.settings.title_position.options__2.label"
+            },
+            {
+              "value": "end",
+              "label": "t:sections.image-comparison.blocks.look.settings.title_position.options__3.label"
+            }
+          ],
+          "default": "start",
+          "label": "t:sections.image-comparison.blocks.look.settings.title_position.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.image-comparison.presets.name",
+      "blocks": [
+        {
+          "type": "look"
+        },
+        {
+          "type": "look"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  }
+}
+{% endschema %}

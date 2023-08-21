@@ -1,0 +1,31 @@
+<div class="slideshow__image-wrapper media-wrapper">
+  {%- if block.settings.image != blank -%}
+    <div class="slideshow__image media media--{{ section.settings.image_ratio }} media-mobile--{{ section.settings.mobile_image_ratio }}{% if image_behavior != 'none' %} animate--{{ image_behavior }}{% endif %}"
+      style="--image-position: {{ block.settings.image_position }}"
+    >
+      {%- if image_behavior == 'ambient' -%}
+        {%- assign widths = '450, 900, 1320, 1800, 2136, 2400, 3600, 4680' -%}
+        {%- capture sizes -%}calc(100vw / 1.667){%- endcapture -%}
+      {%- else -%}
+        {%- assign widths = '375, 750, 1100, 1500, 1780, 2000, 3000, 3840' -%}
+        {%- capture sizes -%}100vw{%- endcapture -%}
+      {%- endif -%}
+      {%- liquid
+        if block.settings.image_mobile == blank
+          echo block.settings.image | image_url: width: 3840 | image_tag: loading: 'lazy', sizes: sizes, widths: widths, is: 'lazy-image'
+        else
+          echo block.settings.image_mobile | image_url: width: 3840 | image_tag: loading: 'lazy', class: 'medium-hide large-up-hide', sizes: sizes, widths: widths, is: 'lazy-image'
+          echo block.settings.image | image_url: width: 3840 | image_tag: loading: 'lazy', class: 'small-hide', sizes: sizes, widths: widths, is: 'lazy-image'
+        endif
+      -%}
+      </div>
+  {%- else -%}
+    <div class="slideshow__image slideshow__image--placeholder media media--{{ section.settings.image_ratio }} media-mobile--{{ section.settings.mobile_image_ratio }}">
+      {%- assign current = position | modulo: 2 | plus: 1 -%}
+      {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder' }}
+    </div>
+  {%- endif -%}
+  {%- if block.settings.button_link != blank -%}
+    <a href="{{ block.settings.button_link }}" class="full-unstyled-link">&nbsp;</a>
+  {%- endif -%}
+</div>

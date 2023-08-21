@@ -1,0 +1,118 @@
+.collection-list {
+  margin-top: 0;
+  margin-bottom: 0;
+  row-gap: var(--grid-vertical-spacing);
+  --grid-vertical-spacing: 1rem;
+}
+
+@media screen and (min-width: 480px) {
+  .collection-list {
+    --grid-vertical-spacing: 2rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .collection-list {
+    --grid-vertical-spacing: 3rem;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .collection-list:not(.slider) {
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+  }
+}
+
+.collection-list__item:only-child {
+  max-width: 100%;
+  width: 100%;
+}
+
+.collection-list__item:only-child .media {
+  height: 35rem;
+}
+
+.collection-list__item {
+  padding-bottom: 0;
+}
+
+@media screen and (max-width: 749px) {
+  .slider.collection-list--1-items {
+    padding-bottom: 0;
+  }
+
+  .collection-list__item .card__text .h3 {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .slider.collection-list--1-items,
+  .slider.collection-list--2-items,
+  .slider.collection-list--3-items,
+  .slider.collection-list--4-items {
+    padding-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .collection-list__item:only-child > *:not(.card--media) {
+    height: 32rem;
+  }
+
+  .collection-list__item:only-child .media {
+    height: 47rem;
+  }
+
+  .collection-list__item a:hover {
+    box-shadow: none;
+  }
+
+  .collection-list.grid--3-col-tablet .grid__item {
+    max-width: calc(33.33% - var(--grid-horizontal-spacing) * 2 / 3);
+  }
+
+  .collection-list--4-items .grid__item,
+  .collection-list--7-items .grid__item:nth-child(n + 4),
+  .collection-list--10-items .grid__item:nth-child(n + 7) {
+    width: calc(50% - var(--grid-horizontal-spacing) / 2);
+  }
+}
+
+.collection-list__item .card-colored {
+  position: relative;
+}
+
+.collection-list .card--media .card__text-spacing .card-information__text {
+  color: #ffffff;
+}
+
+.collection-list .card--media .card__text-spacing::after {
+  background-image: none;
+}
+
+.collection-list--contrast .card--media .card__text-spacing::after {
+  background-image: linear-gradient(to top, rgba(4, 4, 4, 0.46) 0, rgba(54, 54, 54, 0.2) 40%, transparent 100%);
+}
+
+@media screen and (hover: hover) {
+  .collection-list__item .card-information__text {
+    display: inline;
+    background-image: linear-gradient(to top, currentColor 0px, currentColor 0px), linear-gradient(to top, transparent 0px, transparent 0px);
+    background-repeat: no-repeat;
+    background-position: right bottom, right bottom;
+    background-size: 0% 0.1rem, 100% 0.1rem;
+    transition-property: background-size;
+    transition-timing-function: ease;
+    transition-duration: var(--duration-default);
+  }
+
+  .collection-list__item .card:hover .card-information__text {
+    background-position: left bottom, left bottom;
+    background-size: 100% 0.1rem, 100% 0.1rem;
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "name": "t:sections.overlay-group.name",
+  "type": "custom.overlay",
+  "sections": {
+    "popup": {
+      "type": "popup",
+      "blocks": {
+        "popup-0": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "there's always a first",
+            "subheading_size": "h5"
+          }
+        },
+        "popup-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Sign up and get 10% off your first order<\/p>",
+            "text_size": "typeset3",
+            "secondary_color": false
+          }
+        },
+        "popup-2": {
+          "type": "newsletter",
+          "settings": {
+            "text": "<p>Subscribe to our newsletter and be the first to hear about our new arrivals, special promotions and online exclusives.<\/p>",
+            "button_style_secondary": true,
+            "button_full_width": false
+          }
+        },
+        "popup-3": {
+          "type": "social_media",
+          "settings": {
+            "mobile_disabled": false
+          }
+        },
+        "popup-4": {
+          "type": "floating",
+          "settings": {
+            "subheading": "Newsletter",
+            "show_social_media": "hover",
+            "text_box_position": "right",
+            "colors_text": "#1a1b18",
+            "mobile_disabled": true,
+            "mobile_hide_social_media": false,
+            "mobile_social_heading": "Follow us"
+          }
+        }
+      },
+      "block_order": [
+        "popup-0",
+        "popup-1",
+        "popup-2",
+        "popup-3",
+        "popup-4"
+      ],
+      "settings": {
+        "mode": "enabled",
+        "only_homepage": true,
+        "only_visitor": true,
+        "delay": 5,
+        "expiry": 30,
+        "width": 600,
+        "padding": 40,
+        "text_alignment": "center",
+        "text_box_position": "center",
+        "image": "shopify:\/\/shop_images\/IMG_7813.jpg",
+        "image_position": "left",
+        "colors_button_label": "#212326",
+        "colors_button_background": "#faeaa1",
+        "colors_text": "#1a1b18",
+        "colors_border": "#d2d5d9",
+        "colors_background": "#ffffff",
+        "gradient_background": "",
+        "colors_shadow": "#a8e8e2"
+      }
+    },
+    "cookie-banner": {
+      "type": "cookie-banner",
+      "disabled": true,
+      "blocks": {
+        "cookie-banner-0": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We use cookies and similar technologies to provide the best experience on our website. <a href=\"\/policies\/privacy-policy\">Privacy Policy<\/a><\/p>",
+            "text_size": "typeset",
+            "secondary_color": false
+          }
+        },
+        "cookie-banner-1": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Accept",
+            "button_label_2": "No"
+          }
+        }
+      },
+      "block_order": [
+        "cookie-banner-0",
+        "cookie-banner-1"
+      ],
+      "settings": {
+        "mode": "enabled",
+        "delay": 5,
+        "text_alignment": "left",
+        "text_box_position": "bottom",
+        "colors_button_label": "#ffffff",
+        "colors_button_background": "#1a1b18",
+        "colors_text": "#1a1b18",
+        "colors_border": "#d2d5d9",
+        "colors_background": "#ffffff",
+        "gradient_background": "",
+        "colors_shadow": "#a8e8e2"
+      }
+    },
+    "age-verifier": {
+      "type": "age-verifier",
+      "disabled": true,
+      "blocks": {
+        "age-verifier-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Confirm your age",
+            "heading_size": "h2",
+            "heading_tag": "p"
+          }
+        },
+        "age-verifier-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Are you 18 years old or older?<\/p>",
+            "text_size": "typeset2",
+            "secondary_color": false
+          }
+        },
+        "age-verifier-2": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Yes I am",
+            "button_label_2": "No I'm not",
+            "button_link_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "age-verifier-0",
+        "age-verifier-1",
+        "age-verifier-2"
+      ],
+      "settings": {
+        "mode": "enabled",
+        "expiry": 30,
+        "width": 480,
+        "padding": 40,
+        "text_alignment": "center",
+        "image_position": "right",
+        "colors_button_label": "#212326",
+        "colors_button_background": "#faeaa1",
+        "colors_text": "#1a1b18",
+        "colors_border": "#d2d5d9",
+        "colors_background": "#ffffff",
+        "gradient_background": "",
+        "colors_shadow": "#a8e8e2",
+        "colors_overlay": "#212326",
+        "colors_overlay_opacity": 80,
+        "blur_image": true
+      }
+    },
+    "mobile-dock": {
+      "type": "mobile-dock",
+      "blocks": {
+        "mobile-dock-0": {
+          "type": "home",
+          "disabled": true,
+          "settings": {
+            "custom_icon": "",
+            "title": "Home"
+          }
+        },
+        "mobile-dock-1": {
+          "type": "menu",
+          "settings": {
+            "custom_icon": "",
+            "title": "Menu"
+          }
+        },
+        "mobile-dock-2": {
+          "type": "search",
+          "settings": {
+            "custom_icon": "",
+            "title": "Search"
+          }
+        },
+        "mobile-dock-3": {
+          "type": "link",
+          "settings": {
+            "custom_icon": "",
+            "title": "Shop",
+            "link": "shopify:\/\/collections\/all"
+          }
+        },
+        "mobile-dock-4": {
+          "type": "cart",
+          "settings": {
+            "custom_icon": "",
+            "title": "Cart"
+          }
+        },
+        "mobile-dock-5": {
+          "type": "account",
+          "disabled": true,
+          "settings": {
+            "custom_icon": "",
+            "title": "Account"
+          }
+        }
+      },
+      "block_order": [
+        "mobile-dock-0",
+        "mobile-dock-1",
+        "mobile-dock-2",
+        "mobile-dock-3",
+        "mobile-dock-4",
+        "mobile-dock-5"
+      ],
+      "settings": {
+        "use_custom_colors": false,
+        "colors_text": "#1a1b18",
+        "colors_background": "#ffffff",
+        "gradient_background": "",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    }
+  },
+  "order": [
+    "popup",
+    "cookie-banner",
+    "age-verifier",
+    "mobile-dock"
+  ]
+}

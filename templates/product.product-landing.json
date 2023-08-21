@@ -1,0 +1,687 @@
+{
+  "sections": {
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "slide-0": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "image_position": "center center",
+            "subheading": "SUBHEADING",
+            "heading": "Image slide 1",
+            "text": "Give customers details about the slide image or content on the template.",
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "slide-1": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "image_position": "center center",
+            "subheading": "SUBHEADING",
+            "heading": "Image slide 2",
+            "text": "Give customers details about the slide image or content on the template.",
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "slide-3": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "image_position": "center center",
+            "subheading": "SUBHEADING",
+            "heading": "Image slide 3",
+            "text": "Give customers details about the slide image or content on the template.",
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "slide-0",
+        "slide-1",
+        "slide-3"
+      ],
+      "settings": {
+        "image_ratio": "650px",
+        "autorotate": false,
+        "autorotate_speed": 5,
+        "mobile_text_alignment": "left",
+        "mobile_image_ratio": "300px",
+        "colors_button_label": "#ffffff",
+        "colors_button_background": "#1a1b18",
+        "colors_text": "#1a1b18",
+        "colors_background": "#ffffff",
+        "colors_overlay": "#ffffff",
+        "colors_overlay_opacity": 92,
+        "colors_navigation_text": "#ffffff",
+        "colors_navigation_background": "#1a1b18",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "rich-text-0": {
+      "type": "rich-text",
+      "blocks": {
+        "rich-text-0-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Talk about your brand",
+            "heading_size": "h1"
+          }
+        },
+        "rich-text-0-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "text_size": "typeset2",
+            "secondary_color": false
+          }
+        }
+      },
+      "block_order": [
+        "rich-text-0-0",
+        "rich-text-0-1"
+      ],
+      "settings": {
+        "text_alignment": "left",
+        "mobile_text_alignment": "left",
+        "narrow": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "subtitle": {
+          "type": "text",
+          "settings": {
+            "icon": "none",
+            "text": "{{ product.metafields.descriptors.subtitle.value }}",
+            "text_style": "subtitle"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": "h1"
+          }
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {
+          }
+        },
+        "countdown": {
+          "type": "countdown",
+          "settings": {
+            "heading": "Hurry up ! Sale end in:",
+            "number_size": "compact",
+            "colors_heading": "#da3f3f",
+            "colors_text": "#da3f3f",
+            "colors_background": "#ffeeee"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "show_variant_labels": true,
+            "picker_type": "button",
+            "enable_color_swatches": true,
+            "swatch_type": "round"
+          }
+        },
+        "text-0": {
+          "type": "text",
+          "settings": {
+            "icon": "return",
+            "text": "30-day free trial",
+            "text_style": "body"
+          }
+        },
+        "text-1": {
+          "type": "text",
+          "settings": {
+            "icon": "truck",
+            "text": "Free worldwide shipping",
+            "text_style": "body"
+          }
+        },
+        "inventory_status": {
+          "type": "inventory_status",
+          "settings": {
+            "inventory_threshold": 20,
+            "show_inventory_transfer": true,
+            "color_scheme": "accent-3"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "show_dynamic_checkout": true
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+          }
+        },
+        "sticky_cart": {
+          "type": "sticky_cart",
+          "settings": {
+            "show_quantity_selector": false
+          }
+        }
+      },
+      "block_order": [
+        "subtitle",
+        "title",
+        "rating",
+        "countdown",
+        "price",
+        "variant_picker",
+        "text-0",
+        "text-1",
+        "inventory_status",
+        "buy_buttons",
+        "share",
+        "sticky_cart"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "media_size": "large",
+        "gallery_layout": "thumbnail_slider",
+        "image_ratio": "adapt",
+        "show_thumbnails": true,
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "mobile_image_ratio": "adapt_first",
+        "show_mobile_thumbnails": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "product-details": {
+      "type": "product-details",
+      "blocks": {
+        "product-details-0": {
+          "type": "description",
+          "settings": {
+            "heading": ""
+          }
+        },
+        "product-details-1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "1. Collapsible tab",
+            "content": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "page": ""
+          }
+        },
+        "product-details-2": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "2. Collapsible tab",
+            "content": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "page": ""
+          }
+        },
+        "product-details-3": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "3. Collapsible tab",
+            "content": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "product-details-0",
+        "product-details-1",
+        "product-details-2",
+        "product-details-3"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "padding_top": 36,
+        "padding_bottom": 16
+      }
+    },
+    "guarantees": {
+      "type": "guarantees",
+      "blocks": {
+        "guarantee-0": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "title": "Guarantee 1",
+            "text": ""
+          }
+        },
+        "guarantee-1": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "title": "Guarantee 1",
+            "text": ""
+          }
+        },
+        "guarantee-2": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "title": "Guarantee 1",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "guarantee-0",
+        "guarantee-1",
+        "guarantee-2"
+      ],
+      "settings": {
+        "layout": "default",
+        "column_alignment": "left",
+        "full_width": false,
+        "heading": "",
+        "heading_size": "h1",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "rich-text-1": {
+      "type": "rich-text",
+      "blocks": {
+        "rich-text-0-0": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "rich-text-0-0"
+      ],
+      "settings": {
+        "text_alignment": "left",
+        "mobile_text_alignment": "left",
+        "narrow": false,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {
+        "heading": "You May Also Like",
+        "heading_size": "h2",
+        "swipe_on_mobile": true,
+        "image_ratio": "portrait",
+        "image_position": "center center",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_buy": true,
+        "enable_quick_view": true,
+        "enable_color_swatches": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich-text-2": {
+      "type": "rich-text",
+      "blocks": {
+        "rich-text-2-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Talk about your brand",
+            "heading_size": "h1"
+          }
+        },
+        "rich-text-2-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "text_size": "typeset2",
+            "secondary_color": true
+          }
+        }
+      },
+      "block_order": [
+        "rich-text-2-0",
+        "rich-text-2-1"
+      ],
+      "settings": {
+        "text_alignment": "center",
+        "mobile_text_alignment": "left",
+        "narrow": false,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "tab-collage": {
+      "type": "tab-collage",
+      "blocks": {
+        "tab-collage-0": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "1. Image heading",
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "tab-collage-1": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "2. Image heading",
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "tab-collage-2": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "3. Image heading",
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "tab-collage-3": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "4. Image heading",
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "tab-collage-4": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "5. Image heading",
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "tab-collage-5": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "6. Image heading",
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "tab-collage-0",
+        "tab-collage-1",
+        "tab-collage-2",
+        "tab-collage-3",
+        "tab-collage-4",
+        "tab-collage-5"
+      ],
+      "settings": {
+        "layout": "text_first",
+        "text_box_position": "top",
+        "text_alignment": "left",
+        "image_ratio": "650px",
+        "full_width": false,
+        "heading": "",
+        "heading_size": "h1",
+        "mobile_layout": "text_first",
+        "mobile_text_alignment": "left",
+        "mobile_image_ratio": "250px",
+        "colors_text": "#1a1b18",
+        "colors_background": "#fafafa",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collage": {
+      "type": "collage",
+      "blocks": {
+        "collage-0": {
+          "type": "video",
+          "settings": {
+            "cover_image": "",
+            "video_url": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+            "description": "Describe the video for customers using screen readers",
+            "heading": "Video heading"
+          }
+        },
+        "collage-1": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "Image heading",
+            "link": ""
+          }
+        },
+        "collage-2": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "Image heading",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collage-0",
+        "collage-1",
+        "collage-2"
+      ],
+      "settings": {
+        "desktop_layout": "left",
+        "mobile_layout": "collage",
+        "apply_overlay": true,
+        "heading": "",
+        "heading_size": "h1",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonials-0": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "image": "",
+            "author": "Author's name"
+          }
+        },
+        "testimonials-1": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "image": "",
+            "author": "Author's name"
+          }
+        },
+        "testimonials-2": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "image": "",
+            "author": "Author's name"
+          }
+        },
+        "testimonials-3": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "image": "",
+            "author": "Author's name"
+          }
+        },
+        "testimonials-4": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "image": "",
+            "author": "Author's name"
+          }
+        }
+      },
+      "block_order": [
+        "testimonials-0",
+        "testimonials-1",
+        "testimonials-2",
+        "testimonials-3",
+        "testimonials-4"
+      ],
+      "settings": {
+        "autorotate": true,
+        "autorotate_speed": 5,
+        "heading": "Testimonials",
+        "heading_size": "h2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "newsletter-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Subscribe to our emails"
+          }
+        },
+        "newsletter-1": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "<p>Be the first to know about new collections and exclusive offers.<\/p>"
+          }
+        },
+        "newsletter-2": {
+          "type": "email_form",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "newsletter-0",
+        "newsletter-1",
+        "newsletter-2"
+      ],
+      "settings": {
+        "text_alignment": "left",
+        "mobile_text_alignment": "left",
+        "full_width": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "map": {
+      "type": "map",
+      "blocks": {
+        "map-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Store name",
+            "heading_size": "h1"
+          }
+        },
+        "map-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>620 King Street West<br\/>Toronto, Canada<\/p><p>Mon - Fri, 8:30am - 10:30pm<br\/>Saturday, 8:30am - 10:30pm<br\/>Sunday, 8:30am - 10:30pm<\/p>",
+            "text_size": "typeset",
+            "secondary_color": true
+          }
+        },
+        "map-2": {
+          "type": "button",
+          "settings": {
+            "button_label": "Get directions",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "map-0",
+        "map-1",
+        "map-2"
+      ],
+      "settings": {
+        "map_address": "620 King St W, Toronto, ON M5V 1M7, Canada",
+        "map_api_key": "",
+        "map_zoom": 14,
+        "map_style": "standard",
+        "image_position": "center center",
+        "text_box_position": "middle-left",
+        "text_alignment": "left",
+        "image_ratio": "550px",
+        "full_width": true,
+        "show_divider": false,
+        "mobile_text_box_position": "image_first",
+        "mobile_text_alignment": "left",
+        "mobile_image_ratio": "400px",
+        "colors_text": "#1a1b18",
+        "colors_overlay": "#ffffff",
+        "colors_overlay_opacity": 100,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "slideshow",
+    "rich-text-0",
+    "main",
+    "product-details",
+    "guarantees",
+    "rich-text-1",
+    "product-recommendations",
+    "rich-text-2",
+    "tab-collage",
+    "collage",
+    "testimonials",
+    "newsletter",
+    "map"
+  ]
+}

@@ -1,0 +1,104 @@
+.card__colors {
+  z-index: 2;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  pointer-events: visible;
+  gap: 0.6rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.card-article-info + .card__colors {
+  margin-inline-start: auto;
+}
+
+.cardcard-information__top .card__colors {
+  justify-content: flex-end;
+}
+
+.color-swatch {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  transition: transform var(--duration-default) ease;
+}
+
+.card__colors--large {
+  gap: 0.3rem;
+}
+
+.card__colors--medium .color-swatch {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.card__colors--large .color-swatch {
+  width: 2.6rem;
+  height: 2.6rem;
+}
+
+.color-swatch::before,
+.color-swatch::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform: scale(0.6);
+  background-size: cover;
+  background-color: var(--swatch-background-color);
+  background-image: var(--swatch-background-image);
+  transition: transform var(--duration-long) ease;
+}
+
+.color-swatch::before {
+  box-shadow: inset 0 0 0 0.1rem rgb(var(--color-border));
+}
+
+.color-swatch.is-active::before,
+.color-swatch.is-active::after {
+  transform: scale(1);
+}
+
+.color-swatch a {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-swatch a::before {
+  content: '';
+  z-index: 2;
+  position: absolute;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background-color: rgb(var(--color-background));
+  transform: scale(0);
+  transition: transform var(--duration-long) ease;
+}
+
+.card__colors--large .color-swatch a::before {
+  width: 0.6rem;
+  height: 0.6rem;
+}
+
+.color-swatch.is-active a::before {
+  transform: scale(1);
+}
+
+.card__colors .link {
+  line-height: 1;
+}

@@ -1,0 +1,285 @@
+{%- liquid
+  assign show_announcement_bar = true
+
+  if section.blocks.size == 0
+    assign show_announcement_bar = false
+  endif
+
+  if section.settings.only_homepage and request.page_type != 'index'
+    assign show_announcement_bar = false
+  endif
+
+  assign announcement_height = 36
+-%}
+
+{%- if show_announcement_bar -%}
+  {%- style -%}
+    #shopify-section-{{ section.id }} {
+      --section-padding-top: {{ section.settings.padding_top }}px;
+      --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+      --gradient-background: {% if section.settings.gradient_background != blank %}{{ section.settings.gradient_background }}{% else %}{{ section.settings.colors_background }}{% endif %};
+      --color-background: {{ section.settings.colors_background.red }}, {{ section.settings.colors_background.green }}, {{ section.settings.colors_background.blue }};
+      --color-foreground: {{ section.settings.colors_text.red }}, {{ section.settings.colors_text.green }}, {{ section.settings.colors_text.blue }};
+    }
+
+    :root {
+      --announcement-height: calc({{ announcement_height }}px + ({{ section.settings.padding_top | plus: section.settings.padding_bottom }}px * 0.75));
+    }
+
+    @media screen and (min-width: 990px) {
+      :root {
+        --announcement-height: {{ announcement_height | plus: section.settings.padding_top | plus: section.settings.padding_bottom }}px;
+      }
+    }
+  {%- endstyle -%}
+  {{ 'section-announcement-bar.css' | asset_url | stylesheet_tag }}
+
+  <div class="announcement-bar header-section--padding">
+    <div class="page-width">
+      <announcement-bar data-layout="{{ section.settings.layout }}" data-mobile-layout="{{ section.settings.mobile_layout }}" data-autorotate="{{ section.settings.autorotate }}" data-autorotate-speed="{{ section.settings.autorotate_speed }}" data-block-count="{{ section.blocks.size }}" data-speed="{{ section.settings.speed }}" data-direction="{{ section.settings.direction }}">
+        <div class="announcement-slider">
+          {%- for block in section.blocks -%}
+            <div class="announcement-slider__slide" style="--font-size: {{ block.settings.text_size }}px;" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.link != blank -%}
+                <a class="announcement-link" href="{{ block.settings.link }}">
+              {%- endif -%}
+                {%- if block.settings.text_on_mobile != blank -%}
+                  <span class="announcement-text small-hide medium-hide">{{ block.settings.text | escape }}</span>
+                  <span class="announcement-text large-up-hide">{{ block.settings.text_on_mobile | escape }}</span>
+                {%- else -%}
+                  <span class="announcement-text">{{ block.settings.text | escape }}</span>
+                {%- endif -%}
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        {%- if section.settings.show_navigation and section.blocks.size > 1 -%}
+          <div class="announcement__buttons">
+            <button class="announcement__button announcement__button--prev" name="previous" aria-label="{{ 'general.slider.previous_slide' | t }}">
+              {% render 'icon', icon: 'chevron-alt' %}
+            </button>
+            <button class="announcement__button announcement__button--next" name="next" aria-label="{{ 'general.slider.next_slide' | t }}">
+              {% render 'icon', icon: 'chevron-alt' %}
+            </button>
+          </div>
+        {%- endif -%}
+      </announcement-bar>
+    </div>
+  </div>
+  
+  {%- unless request.design_mode -%}
+    <script src="{{ 'announcement-bar.js' | asset_url }}" defer="defer"></script>
+  {%- endunless -%}
+{%- endif -%}
+
+{%- if request.design_mode -%}
+  <script src="{{ 'announcement-bar.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "class": "shopify-section-announcement-bar",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "only_homepage",
+      "label": "t:sections.announcement-bar.settings.only_homepage.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.announcement-bar.settings.layout.options__3.label"
+        },
+        {
+          "value": "marquee",
+          "label": "t:sections.announcement-bar.settings.layout.options__1.label"
+        },
+        {
+          "value": "carousel",
+          "label": "t:sections.announcement-bar.settings.layout.options__2.label"
+        }
+      ],
+      "default": "default",
+      "label": "t:sections.announcement-bar.settings.layout.label"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "options": [
+        {
+          "value": "marquee",
+          "label": "t:sections.announcement-bar.settings.layout.options__1.label"
+        },
+        {
+          "value": "carousel",
+          "label": "t:sections.announcement-bar.settings.layout.options__2.label"
+        }
+      ],
+      "default": "carousel",
+      "label": "t:sections.announcement-bar.settings.mobile_layout.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.announcement-bar.settings.header__1.content"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.announcement-bar.settings.paragraph__1.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "autorotate",
+      "default": false,
+      "label": "t:sections.announcement-bar.settings.autorotate.label"
+    },
+    {
+      "type": "range",
+      "id": "autorotate_speed",
+      "label": "t:sections.announcement-bar.settings.autorotate_speed.label",
+      "max": 9,
+      "min": 3,
+      "step": 2,
+      "unit": "t:sections.announcement-bar.settings.autorotate_speed.unit",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "default": false,
+      "label": "t:sections.announcement-bar.settings.show_navigation.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.announcement-bar.settings.header__2.content"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.announcement-bar.settings.paragraph__2.content"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.announcement-bar.settings.direction.options__1.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.announcement-bar.settings.direction.options__2.label"
+        }
+      ],
+      "default": "left",
+      "label": "t:sections.announcement-bar.settings.direction.label"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 0.5,
+      "max": 2.5,
+      "step": 0.1,
+      "label": "t:sections.announcement-bar.settings.speed.label",
+      "unit": "t:sections.announcement-bar.settings.speed.unit",
+      "default": 1.6
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.colors.header.content",
+      "info": "t:sections.all.colors.header.info"
+    },
+    {
+      "type": "color",
+      "id": "colors_text",
+      "label": "t:sections.all.colors.colors_text.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "colors_background",
+      "label": "t:sections.all.colors.colors_background.label",
+      "default": "#1a1b18"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "t:sections.all.colors.gradient_background.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "t:sections.announcement-bar.blocks.announcement.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Welcome to our store",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
+        },
+        {
+          "type": "text",
+          "id": "text_on_mobile",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text_on_mobile.label"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "default": 13,
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text_size.label",
+          "unit": "t:sections.announcement-bar.blocks.announcement.settings.text_size.unit"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "announcement"
+      }
+    ]
+  },
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

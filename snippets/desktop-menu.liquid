@@ -1,0 +1,148 @@
+{%- liquid
+  unless limit
+    assign limit = menu.links.size
+  endunless
+  unless offset
+    assign offset = 0
+  endunless
+-%}
+
+<nav class="header__inline-menu{% if offset > 0 %} header__inline-menu-split{% endif %}">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in menu.links limit: limit offset: offset -%}
+      {%- liquid
+        assign enable_mega_menu = false
+        if enable_dropdown_menu
+          assign link_title_handle = link.title | handle
+
+          for block in blocks
+            assign menu_title_handle = block.settings.menu_title | handle
+            if menu_title_handle == link_title_handle
+              assign enable_mega_menu = true
+              assign mega_menu_block = block
+              break
+            endif
+          endfor
+        endif
+      -%}
+      <li>
+        {%- if link.links != blank -%}
+          {%- if enable_dropdown_menu -%}
+            {%- if enable_mega_menu -%}
+              {% render 'mega-menu', link: link, block: mega_menu_block %}
+            {%- else -%}
+              <dropdown-menu>
+                <a href="{{ link.url }}" class="header__menu-item{% if link.active or link.child_active %} header__active-menu-item{% endif %} header__menu-item--top list-menu__item focus-inset">
+                  <span class="label">{{ link.title | escape }}</span>
+                  {% render 'icon', icon: 'caret' %}
+                </a>
+                <div class="list-menu-dropdown hidden">
+                  <ul class="list-menu" role="list" tabindex="-1">
+                    {%- for childlink in link.links -%}
+                      <li>
+                        {%- if childlink.links == blank -%}
+                          <dropdown-menu>
+                            <a href="{{ childlink.url }}" class="header__menu-item list-menu__item focus-inset{% if childlink.current %} list-menu__item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
+                              <span class="label">{{ childlink.title | escape }}</span>
+                            </a>
+                          </dropdown-menu>
+                        {%- else -%}
+                          <dropdown-menu>
+                            <a href="{{ childlink.url }}" class="header__menu-item{% if childlink.active or childlink.child_active %} header__active-menu-item{% endif %} list-menu__item focus-inset">
+                              <span class="label">{{ childlink.title | escape }}</span>
+                              {% render 'icon', icon: 'caret' %}
+                            </a>
+                            <div class="list-menu-dropdown hidden">
+                              <ul class="list-menu" role="list" tabindex="-1">
+                                {%- for grandchildlink in childlink.links -%}
+                                  <li>
+                                    <a href="{{ grandchildlink.url }}" class="header__menu-item list-menu__item focus-inset{% if grandchildlink.current %} list-menu__item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+                                      <span class="label">{{ grandchildlink.title | escape }}</span>
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            </div>
+                          </dropdown-menu>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              </dropdown-menu>
+            {%- endif -%}
+          {%- else -%}
+            <menu-drawer>
+              <details>
+                <summary class="header__menu-item{% if link.active or link.child_active %} header__active-menu-item{% endif %} header__menu-item--top list-menu__item focus-inset">
+                  <span class="label">{{ link.title | escape }}</span>
+                  {% render 'icon', icon: 'caret' %}
+                </summary>
+                <div class="list-menu-drawer motion-reduce">
+                  <ul class="header__submenu list-menu list-menu--disclosure" role="list" tabindex="-1">
+                    {%- for childlink in link.links -%}
+                      <li data-animate data-animate-delay-{{ forloop.index }}>
+                        {%- if childlink.links == blank -%}
+                          {%- if childlink.type == 'collection_link' -%}
+                            <list-menu-item data-title="{{ childlink.title | escape }}" data-url="{{ childlink.url }}" data-image="{% if childlink.object.image %}{{ childlink.object.image | image_url: width: 460 }}{% endif %}" data-description="{{ childlink.object.description | strip_html | truncatewords: 30 }}">
+                          {%- endif -%}
+                              <a href="{{ childlink.url }}" class="header__menu-item list-menu__item focus-inset{% if childlink.current %} list-menu__item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
+                                <span class="label">{{ childlink.title | escape }}</span>
+                              </a>
+                          {%- if childlink.type == 'collection_link' -%}
+                            </list-menu-item>
+                          {%- endif -%}
+                        {%- else -%}
+                          <details>
+                            <summary>
+                              {%- if childlink.type == 'collection_link' -%}
+                                <list-menu-item data-title="{{ childlink.title | escape }}" data-url="{{ childlink.url }}" data-image="{% if childlink.object.image %}{{ childlink.object.image | image_url: width: 460 }}{% endif %}" data-description="{{ childlink.object.description | strip_html | truncatewords: 30 }}">
+                              {%- endif -%}
+                                  <div class="header__menu-item{% if childlink.active or childlink.child_active %} header__active-menu-item{% endif %} list-menu__item focus-inset">
+                                    <span class="label">{{ childlink.title | escape }}</span>
+                                    {% render 'icon', icon: 'caret' %}
+                                  </div>
+                              {%- if childlink.type == 'collection_link' -%}
+                                </list-menu-item>
+                              {%- endif -%}
+                            </summary>
+                            <ul class="header__submenu list-menu list-chilmenu--disclosure motion-reduce">
+                              {%- for grandchildlink in childlink.links -%}
+                                <li>
+                                  {%- if grandchildlink.type == 'collection_link' -%}
+                                    <list-menu-item data-title="{{ grandchildlink.title | escape }}" data-url="{{ grandchildlink.url }}" data-image="{% if grandchildlink.object.image %}{{ grandchildlink.object.image | image_url: width: 460 }}{% endif %}" data-description="{{ grandchildlink.object.description | strip_html | truncatewords: 30 }}">
+                                  {%- endif -%}
+                                      <a href="{{ grandchildlink.url }}" class="header__menu-item list-menu__item focus-inset{% if grandchildlink.current %} list-menu__item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+                                        <span class="label">{{ grandchildlink.title | escape }}</span>
+                                      </a>
+                                  {%- if grandchildlink.type == 'collection_link' -%}
+                                    </list-menu-item>
+                                  {%- endif -%}
+                                </li>
+                              {%- endfor -%}
+                            </ul>
+                          </details>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                  <list-menu-hover class="list-menu__hover"></list-menu-hover>
+                </div>
+              </details>
+            </menu-drawer>
+          {%- endif -%}
+        {%- else -%}
+          {%- if enable_mega_menu -%}
+            {% render 'mega-menu', link: link, block: mega_menu_block %}
+          {%- else -%}
+            <dropdown-menu>
+              <a href="{{ link.url }}" class="header__menu-item{% if link.current %} header__active-menu-item{% endif %} header__menu-item--top list-menu__item focus-inset"{% if link.current %} aria-current="page"{% endif %}>
+                <span class="label">{{ link.title | escape }}</span>
+              </a>
+            </dropdown-menu>
+          {%- endif -%}
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>

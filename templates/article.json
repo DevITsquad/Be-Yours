@@ -1,0 +1,99 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "blocks": {
+        "featured_image": {
+          "type": "featured_image",
+          "settings": {
+            "image_height": "medium"
+          }
+        },
+        "breadcrumb": {
+          "type": "breadcrumb",
+          "settings": {
+            "text_style": "uppercase",
+            "show_divider": false
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "blog_show_date": true,
+            "blog_show_author": true,
+            "blog_show_comment_count": true
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+          }
+        },
+        "back_to_blog": {
+          "type": "back_to_blog",
+          "settings": {
+          }
+        },
+        "next_previous_posts": {
+          "type": "next_previous_posts",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "featured_image",
+        "breadcrumb",
+        "title",
+        "content",
+        "share",
+        "back_to_blog",
+        "next_previous_posts"
+      ],
+      "settings": {
+        "show_gravatar": true,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "featured-blog": {
+      "type": "featured-blog",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "show_date": true,
+            "show_author": false,
+            "show_comment_count": true
+          }
+        }
+      },
+      "block_order": [
+        "title"
+      ],
+      "settings": {
+        "blog": "news",
+        "post_limit": 3,
+        "show_view_all": true,
+        "show_divider": false,
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "show_image": true,
+        "image_ratio": "landscape",
+        "image_position": "center center",
+        "padding_top": 36,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "main",
+    "featured-blog"
+  ]
+}

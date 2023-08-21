@@ -1,0 +1,106 @@
+{%- for block in blocks -%}
+  {%- case block.type -%}
+    {%- when 'text' -%}
+      {%- capture block_content -%}
+        <div class="facets__list typeset rte" {{ block.shopify_attributes }}>
+          {{ block.settings.subtext }}
+        </div>
+      {%- endcapture -%}
+      {%- if block.settings.heading != blank -%}
+        <details open aria-expanded="false" {{ block.shopify_attributes }}>
+          <summary class="facets__header">
+            <span class="facets__selected">
+              {{ block.settings.heading | escape }}
+            </span>
+            {% render 'icon', icon: 'caret' %}
+          </summary>
+          {{ block_content }}
+        </details>
+      {%- else -%}
+        {{ block_content }}
+      {%- endif -%}
+      
+    {%- when 'link_list' -%}
+      {%- capture block_content -%}
+        {%- if block.settings.menu != blank -%}
+          <ul class="facets__list list-unstyled" role="list" {{ block.shopify_attributes }}>
+            {%- for link in block.settings.menu.links -%}
+              <li>
+                <a href="{{ link.url }}" class="link list-menu__item{% if link.active %} list-menu__item--active{% endif %} list-menu__item--top focus-inset">
+                  {{ link.title }}
+                </a>
+                {%- if link.links != blank -%}
+                  {%- if link.active or link.child_active -%}
+                    <ul class="list-menu" role="list" tabindex="-1">
+                      {%- for childlink in link.links -%}
+                        <li>
+                          {%- if childlink.links != blank -%}
+                            <a href="{{ childlink.url }}" class="link list-menu__item{% if childlink.active %} list-menu__item--active{% endif %} focus-inset">
+                              {{ childlink.title | escape }}
+                            </a>
+                            <ul class="list-menu">
+                              {%- for grandchildlink in childlink.links -%}
+                                <li>
+                                  <a href="{{ grandchildlink.url }}" class="link list-menu__item{% if grandchildlink.active %} list-menu__item--active{% endif %} focus-inset"{% if grandchildlink.active %} aria-current="page"{% endif %}>
+                                    {{ grandchildlink.title | escape }}
+                                  </a>
+                                </li>
+                              {%- endfor -%}
+                            </ul>
+                          {%- else -%}
+                            <a href="{{ childlink.url }}" class="link list-menu__item{% if childlink.active %} list-menu__item--active{% endif %} focus-inset"{% if childlink.active %} aria-current="page"{% endif %}>
+                              {{ childlink.title | escape }}
+                            </a>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      {%- endcapture -%}
+      {%- if block.settings.heading != blank -%}
+        <details open aria-expanded="false" {{ block.shopify_attributes }}>
+          <summary class="facets__header">
+            <span class="facets__selected">
+              {{ block.settings.heading | escape }}
+            </span>
+            {% render 'icon', icon: 'caret' %}
+          </summary>
+          {{ block_content }}
+        </details>
+      {%- else -%}
+        {{ block_content }}
+      {%- endif -%}
+
+    {%- when 'image' -%}
+      <div class="facets__list block-image" {{ block.shopify_attributes }}>
+        {%- if block.settings.link != blank -%}
+          <a href="{{ block.settings.link }}">
+        {%- endif -%}
+          {%- if block.settings.image != blank -%}
+            {%- liquid
+              assign image_width = block.settings.image_width
+              assign image_width_2x = block.settings.image_width | times: 2
+            -%}
+            <img
+              srcset= "{{ block.settings.image | image_url: width: image_width }}, {{ block.settings.image | image_url: width: image_width_2x }} 2x"
+              src="{{ block.settings.image | image_url: width: image_width }}"
+              alt="{{ block.settings.image.alt | escape }}"
+              loading="lazy"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              style="max-width: min(100%, {{ image_width }}px);"
+            />
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+          {%- endif -%}
+        {%- if block.settings.link != blank -%}
+          </a>
+        {%- endif -%}
+      </div>
+  {%- endcase -%}
+{%- endfor -%}

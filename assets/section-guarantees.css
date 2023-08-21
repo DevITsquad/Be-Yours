@@ -1,0 +1,121 @@
+.guarantees {
+  color: rgb(var(--color-foreground));
+  background: var(--gradient-background);
+  background-color: rgb(var(--color-background));
+}
+
+.page-width--full-width .guarantees {
+  padding-inline-start: 1.5rem;
+  padding-inline-end: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .page-width--full-width .guarantees {
+    padding-inline-start: 5rem;
+    padding-inline-end: 5rem;
+  }
+}
+
+.guarantees .grid {
+  row-gap: 3rem;
+  margin-bottom: 0;
+}
+
+.guarantees .grid .grid {
+  row-gap: 2rem;
+}
+
+.guarantee__item {
+  --icon-height: 2.6rem;
+}
+
+.guarantee-icon--small {
+  --icon-height: 2rem;
+}
+
+.guarantee-icon--large {
+  --icon-height: 3.2rem;
+}
+
+.guarantee__item svg,
+.guarantee__icon img {
+  width: auto;
+  height: var(--icon-height);
+  max-width: var(--icon-height);
+  fill: currentColor;
+}
+
+.guarantee__item .h3 {
+  margin: 0.7rem 0 0.5rem;
+}
+
+.guarantee__item .rte {
+  margin-top: 1rem;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.guarantees__title {
+  margin: 0;
+}
+
+.guarantees .grid__item {
+  padding-bottom: 0;
+}
+
+.guarantee__icon {
+  display: inline-flex;
+  line-height: 0;
+}
+
+.guarantees-icon--colored .guarantee__icon {
+  width: calc(var(--icon-height) + 3rem);
+  height: calc(var(--icon-height) + 3rem);
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(var(--color-icon));
+}
+
+.guarantees-icon--colored .guarantee__item .h3 {
+  margin-top: 1rem;
+}
+
+.guarantees--colored {
+  padding-inline-start: 1.5rem;
+  padding-inline-end: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .guarantees--colored {
+    padding-inline-start: 5rem;
+    padding-inline-end: 5rem;
+  }
+
+  .guarantees--horizontal .guarantee__item {
+    display: flex;
+    column-gap: 1.5rem;
+    text-align: start;
+  }
+
+  .guarantees--horizontal .guarantee__item.center {
+    justify-content: center;
+  }
+
+  .guarantees--horizontal .guarantee__item.right {
+    justify-content: flex-end;
+  }
+
+  .guarantees--horizontal .guarantee__item .h2,
+  .guarantees--horizontal .guarantee__item .h3 {
+    margin: 0;
+  }
+
+  .guarantees--horizontal .guarantee__item .h4 {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .guarantees--horizontal .guarantee__icon {
+    flex: 0 0 auto;
+  }
+}

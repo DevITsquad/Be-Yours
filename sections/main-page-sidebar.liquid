@@ -1,0 +1,143 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .page-sidebar {
+    --gradient-background: {% if section.settings.gradient_background != blank %}{{ section.settings.gradient_background }}{% else %}{{ section.settings.colors_background }}{% endif %};
+    --color-background: {{ section.settings.colors_background.red }}, {{ section.settings.colors_background.green }}, {{ section.settings.colors_background.blue }};
+    --color-foreground: {{ section.settings.colors_text.red }}, {{ section.settings.colors_text.green }}, {{ section.settings.colors_text.blue }};
+    --color-border: {{ section.settings.colors_border.red }}, {{ section.settings.colors_border.green }}, {{ section.settings.colors_border.blue }};
+    --color-heading: var(--color-foreground);
+    --color-link: var(--color-foreground);
+  }
+{%- endstyle -%}
+
+{{ 'section-main-page-sidebar.css' | asset_url | stylesheet_tag }}
+
+<link rel="stylesheet" href="{{ 'component-rte.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
+
+<div class="page-width{% if section.settings.narrow %} page-width--inner{% endif %} section--padding">
+  <h1 class="page-title">
+    {{ page.title | escape }}
+  </h1>
+  {%- unless section.blocks.size > 0 -%}
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  {%- else -%}
+  <div class="grid main-page-content">
+    <div class="grid__item grid__item--two-third">
+      <div class="rte">
+        {{ page.content }}
+      </div>
+    </div>
+    <div class="grid__item grid__item--one-third">
+      <div class="page-sidebar">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+          {%- when 'text' -%}
+            <div class="heading h4" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</div>
+            <div class="rte typeset">{{ block.settings.content }}</div>
+          {%- when 'separator' -%}
+            <hr/>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+  {%- endunless -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-page-sidebar.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "narrow",
+      "default": false,
+      "label": "t:sections.all.narrow.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.colors.header.content"
+    },
+    {
+      "type": "color",
+      "id": "colors_text",
+      "label": "t:sections.all.colors.colors_text.label",
+      "default": "#1a1b18"
+    },
+    {
+      "type": "color",
+      "id": "colors_border",
+      "label": "t:sections.all.colors.colors_border.label",
+      "default": "#d2d5d9"
+    },
+    {
+      "type": "color",
+      "id": "colors_background",
+      "label": "t:sections.all.colors.colors_background.label",
+      "default": "#efefef"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "t:sections.all.colors.gradient_background.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "t:sections.main-page-sidebar.blocks.text.name",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Customer service",
+          "label": "t:sections.main-page-sidebar.blocks.text.settings.heading.label"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.main-page-sidebar.blocks.text.settings.content.label"
+        }
+      ]
+    },
+    {
+      "type": "separator",
+      "name": "t:sections.main-page-sidebar.blocks.separator.name"
+    }
+  ]
+}
+{% endschema %}

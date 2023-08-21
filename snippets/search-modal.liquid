@@ -1,0 +1,91 @@
+{%- liquid
+  assign uniqueId = "now" | date: "%N" | modulo: 1000
+  assign sectionId = "Search-In-Modal-" | append: uniqueId
+  assign hasRecommendation = false
+
+  if settings.search_recommendation != blank and settings.search_recommendation.links != blank
+    assign hasRecommendation = true
+  endif
+-%}
+<div class="search-modal modal__content" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+  <div class="page-width">
+    <div class="search-modal__content" tabindex="-1">
+      {%- if settings.predictive_search_enabled -%}
+        <predictive-search data-loading-text="{{ 'accessibility.loading' | t }}" data-per-page="{{ settings.predictive_search_per_page }}">
+      {%- endif -%}
+        <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
+          <div class="field{% if hasRecommendation %} has-recommendation{% endif %}">
+            <button type="submit" class="search__button focus-inset" aria-label="{{ 'general.search.search' | t }}" tabindex="-1">
+              {% render 'icon', icon: 'search' %}
+            </button>
+            <input
+              id="{{ sectionId }}"
+              class="search__input field__input"
+              type="search"
+              name="q"
+              value="{{ search.terms | escape }}"
+              placeholder="{{ 'general.search.placeholder' | t }}"
+              {%- if settings.predictive_search_enabled %}
+                role="combobox"
+                aria-expanded="false"
+                aria-owns="predictive-search-results-list"
+                aria-controls="predictive-search-results-list"
+                aria-haspopup="listbox"
+                aria-autocomplete="list"
+                autocorrect="off"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false" 
+              {% endif -%}
+            />
+            <label class="visually-hidden" for="{{ sectionId }}">{{ 'general.search.search' | t }}</label>
+            <input type="hidden" name="type" value="{{ settings.search_results }}"/>
+            <input type="hidden" name="options[prefix]" value="last"/>
+            {%- if settings.predictive_search_enabled -%}
+              <div class="predictive-search__loading-state">
+                {% render 'icon', icon: 'spinner' %}
+              </div>
+            {%- endif -%}
+            {%- if hasRecommendation -%}
+              <ul class="search__recommendation list-unstyled">
+                {%- for link in settings.search_recommendation.links -%}
+                  <li class="menu-item{% if link.links != blank %} is-parent{% endif %}">
+                    <a href="{{ link.url }}">
+                      {{ link.title }}
+                    </a>
+                    {%- if link.links != blank -%}
+                      <ul class="list-unstyled">
+                        {%- for childlink in link.links -%}
+                          <li>
+                            <a href="{{ childlink.url }}">
+                              {{ childlink.title }}
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            {%- if settings.predictive_search_enabled -%}
+              <button type="reset" class="search__button focus-inset">{{ 'general.search.clear' | t }}</button>
+            {%- endif -%}
+            <button type="button" class="search__button focus-inset" aria-label="{{ 'accessibility.close' | t }}" tabindex="-1">
+              {% render 'icon', icon: 'close-alt' %}
+            </button>
+          </div>
+          {%- if settings.predictive_search_enabled -%}
+            <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search></div>
+            <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+          {%- endif -%}
+        </form>
+      {%- if settings.predictive_search_enabled -%}
+        </predictive-search>
+      {%- endif -%} 
+    </div>
+  </div>
+
+  <div class="modal-overlay"></div>
+</div>

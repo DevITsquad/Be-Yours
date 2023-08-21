@@ -1,0 +1,573 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    {%- if section.settings.use_custom_colors %}
+      --color-icon: {{ section.settings.colors_icon.red }}, {{ section.settings.colors_icon.green }}, {{ section.settings.colors_icon.blue }};
+      --gradient-background: {% if section.settings.gradient_background != blank %}{{ section.settings.gradient_background }}{% else %}{{ section.settings.colors_background }}{% endif %};
+      --color-background: {{ section.settings.colors_background.red }}, {{ section.settings.colors_background.green }}, {{ section.settings.colors_background.blue }};
+      --color-foreground: {{ section.settings.colors_text.red }}, {{ section.settings.colors_text.green }}, {{ section.settings.colors_text.blue }};
+      --color-heading: var(--color-foreground);
+    {% endif -%}
+  }
+{%- endstyle -%}
+
+{{ 'section-guarantees.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'component-slider.css' | asset_url }}" media="print" onload="this.media='all'">
+
+{%- liquid
+  assign custom_class = ''
+  if section.settings.use_custom_colors
+    if section.settings.colors_background != settings.colors_background
+      assign custom_class = custom_class | append: ' guarantees--colored'
+    endif
+
+    if section.settings.colors_icon != section.settings.colors_background
+      assign custom_class = custom_class | append: ' guarantees-icon--colored'
+    endif
+  endif
+
+  if section.settings.horizontal_content
+    assign custom_class = custom_class | append: ' guarantees--horizontal'
+  endif
+-%}
+
+{%- if section.settings.show_divider %}<div class="section--divider">{% endif -%}
+  <div class="page-width{% if section.settings.full_width %} page-width--full-width{% endif %}">
+    <div class="guarantees section--padding{{ custom_class }}">
+      {%- if section.settings.heading != blank and section.settings.layout == 'default' -%}
+        <div class="title-wrapper{% if section.settings.heading == blank %} title-wrapper--no-heading{% endif %} {{ section.settings.column_alignment }}">
+          <{{ section.settings.heading_tag }} class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag }}>
+        </div>
+      {%- endif -%}
+      
+      <div class="grid grid--1-col-mobile">
+        {%- if section.settings.heading != blank and section.settings.layout == 'sidebar' -%}
+          <div class="grid__item grid__item--one-quarter">
+            <{{ section.settings.heading_tag }} class="guarantees__title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag }}>
+          </div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <slider-component class="slider-mobile-gutter grid__item{% if section.settings.heading == blank or section.settings.layout == 'default' %} grid__item--full-width{% else %} grid__item--three-quarter{% endif %}">
+            <ul id="Guarantees-{{ section.id }}"
+              class="grid grid--2-col{% if section.settings.columns_mobile == '1' %} grid--1-col-mobile{% endif %}{% if section.settings.heading == blank or section.settings.layout == 'default' %}{% if section.blocks.size == 4 %} grid--2-col-tablet{% else %} grid--3-col-tablet{% endif %} grid--4-col-desktop{% else %} grid--2-col-tablet{% endif %}{% if section.settings.swipe_on_mobile %} slider slider--tablet{% endif %}"
+              role="list"
+            >
+              {%- for block in section.blocks -%}
+                <li id="Slide-{{ section.id }}-{{ forloop.index }}"
+                  class="grid__item{% if section.settings.swipe_on_mobile %} slider__slide{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
+                  <use-animate data-animate="zoom-fade" class="guarantee__item {{ section.settings.column_alignment }} guarantee-icon--{{ block.settings.icon_size }}">
+                    {%- if block.settings.custom_icon != blank -%}
+                      <span class="image-animate guarantee__icon">
+                        {{ block.settings.custom_icon }}
+                      </span>
+                    {%- elsif block.settings.icon != 'none' -%}
+                      <span class="image-animate guarantee__icon">
+                        {% render 'icon-guarantee', icon: block.settings.icon %}
+                      </span>
+                    {%- endif -%}
+                    <div>
+                      <p class="{{ block.settings.title_size }}">{{ block.settings.title | escape }}</p>
+                      <div class="rte typeset">{{ block.settings.text }}</div>
+                    </div>
+                  </use-animate>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </slider-component>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- if section.settings.show_divider %}</div>{% endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.guarantees.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.guarantees.settings.layout.options__1.label"
+        },
+        {
+          "value": "sidebar",
+          "label": "t:sections.guarantees.settings.layout.options__2.label"
+        }
+      ],
+      "default": "default",
+      "label": "t:sections.guarantees.settings.layout.label"
+    },
+    {
+      "type": "select",
+      "id": "column_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.guarantees.settings.column_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.guarantees.settings.column_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.guarantees.settings.column_alignment.options__3.label"
+        }
+      ],
+      "default": "left",
+      "label": "t:sections.guarantees.settings.column_alignment.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "horizontal_content",
+      "default": false,
+      "label": "t:sections.rich-text.settings.horizontal_content.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "t:sections.all.full_width.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "default": false,
+      "label": "t:sections.all.show_divider.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.heading.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Guarantees",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_tag.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_tag.options__2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_tag.options__3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_tag.options__4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_tag.options__5.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.all.heading_tag.options__6.label"
+        },
+        {
+          "value": "div",
+          "label": "t:sections.all.heading_tag.options__7.label"
+        },
+        {
+          "value": "span",
+          "label": "t:sections.all.heading_tag.options__8.label"
+        },
+        {
+          "value": "p",
+          "label": "t:sections.all.heading_tag.options__9.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_tag.label",
+      "info": "t:sections.all.heading_tag.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.mobile_layout.header.content"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.all.mobile_layout.columns_mobile.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.all.mobile_layout.columns_mobile.options__2.label"
+        }
+      ],
+      "default": "1",
+      "label": "t:sections.all.mobile_layout.columns_mobile.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe_on_mobile",
+      "default": true,
+      "label": "t:sections.all.mobile_layout.swipe_on_mobile.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.colors.header.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_custom_colors",
+      "default": false,
+      "label": "t:sections.all.colors.use_custom_colors.label"
+    },
+    {
+      "type": "color",
+      "id": "colors_icon",
+      "label": "t:sections.all.colors.colors_icon.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "colors_text",
+      "label": "t:sections.all.colors.colors_text.label",
+      "default": "#1a1b18"
+    },
+    {
+      "type": "color",
+      "id": "colors_background",
+      "label": "t:sections.all.colors.colors_background.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "t:sections.all.colors.gradient_background.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "guarantee",
+      "name": "t:sections.guarantees.blocks.guarantee.name",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__1.label"
+            },
+            {
+              "value": "apple",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__2.label"
+            },
+            {
+              "value": "banana",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__3.label"
+            },
+            {
+              "value": "bottle",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__4.label"
+            },
+            {
+              "value": "carrot",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__5.label"
+            },
+            {
+              "value": "chat_bubble",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__6.label"
+            },
+            {
+              "value": "check_mark",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__7.label"
+            },
+            {
+              "value": "clipboard",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__8.label"
+            },
+            {
+              "value": "dolly",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__9.label"
+            },
+            {
+              "value": "download",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__10.label"
+            },
+            {
+              "value": "dryer",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__11.label"
+            },
+            {
+              "value": "eye",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__12.label"
+            },
+            {
+              "value": "fire",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__13.label"
+            },
+            {
+              "value": "globe",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__14.label"
+            },
+            {
+              "value": "gluten_free",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__15.label"
+            },
+            {
+              "value": "headset",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__16.label"
+            },
+            {
+              "value": "heart",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__17.label"
+            },
+            {
+              "value": "leaf",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__18.label"
+            },
+            {
+              "value": "light",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__19.label"
+            },
+            {
+              "value": "lightning_bolt",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__20.label"
+            },
+            {
+              "value": "link",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__21.label"
+            },
+            {
+              "value": "lock",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__22.label"
+            },
+            {
+              "value": "map_pin",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__23.label"
+            },
+            {
+              "value": "music",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__24.label"
+            },
+            {
+              "value": "package",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__25.label"
+            },
+            {
+              "value": "paw_print",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__26.label"
+            },
+            {
+              "value": "pepper",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__27.label"
+            },
+            {
+              "value": "phone",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__28.label"
+            },
+            {
+              "value": "plane",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__29.label"
+            },
+            {
+              "value": "plant",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__30.label"
+            },
+            {
+              "value": "price_tag",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__31.label"
+            },
+            {
+              "value": "question_mark",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__32.label"
+            },
+            {
+              "value": "recycle",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__33.label"
+            },
+            {
+              "value": "return",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__34.label"
+            },
+            {
+              "value": "ruler",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__35.label"
+            },
+            {
+              "value": "shield",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__36.label"
+            },
+            {
+              "value": "ship",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__37.label"
+            },
+            {
+              "value": "shop",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__38.label"
+            },
+            {
+              "value": "silhouette",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__39.label"
+            },
+            {
+              "value": "snowflake",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__40.label"
+            },
+            {
+              "value": "star",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__41.label"
+            },
+            {
+              "value": "stopwatch",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__42.label"
+            },
+            {
+              "value": "truck",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__43.label"
+            },      
+            {
+              "value": "washing",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon.options__44.label"
+            }
+          ],
+          "label": "t:sections.guarantees.blocks.guarantee.settings.icon.label",
+          "default": "truck"
+        },
+        {
+          "type": "select",
+          "id": "icon_size",
+          "options": [
+            {
+              "value": "small",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon_size.options__1.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon_size.options__2.label"
+            },
+            {
+              "value": "large",
+              "label": "t:sections.guarantees.blocks.guarantee.settings.icon_size.options__3.label"
+            }
+          ],
+          "default": "medium",
+          "label": "t:sections.guarantees.blocks.guarantee.settings.icon_size.label"
+        },
+        {
+          "type": "html",
+          "id": "custom_icon",
+          "label": "t:sections.guarantees.blocks.guarantee.settings.custom_icon.label",
+          "info": "t:sections.guarantees.blocks.guarantee.settings.custom_icon.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Guarantee heading",
+          "label": "t:sections.guarantees.blocks.guarantee.settings.title.label"
+        },
+        {
+          "type": "select",
+          "id": "title_size",
+          "options": [
+            {
+              "value": "h4",
+              "label": "t:sections.all.heading_size.options__1.label"
+            },
+            {
+              "value": "h3",
+              "label": "t:sections.all.heading_size.options__2.label"
+            },
+            {
+              "value": "h2",
+              "label": "t:sections.all.heading_size.options__3.label"
+            }
+          ],
+          "default": "h3",
+          "label": "t:sections.all.heading_size.label"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.guarantees.blocks.guarantee.settings.text.label",
+          "default": "<p>Welcome to our store.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.guarantees.presets.name",
+      "blocks": [
+        {
+          "type": "guarantee"
+        },
+        {
+          "type": "guarantee"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  }
+}
+{% endschema %}

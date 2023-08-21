@@ -1,0 +1,238 @@
+.announcement-bar {
+  overflow: hidden;
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  position: relative;
+  z-index: 30;
+  text-align: center;
+  color: rgb(var(--color-foreground));
+  background: var(--gradient-background);
+  background-color: rgb(var(--color-background));
+}
+
+.announcement-bar--withBorder {
+  border-bottom: 0.1rem solid rgb(var(--color-border));
+}
+
+announcement-bar {
+  position: relative;
+  display: block;
+}
+
+.announcement-slider {
+  height: 36px;
+}
+
+.announcement-slider__slide {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.announcement-slider__slide span:empty {
+  display: none;
+}
+
+.announcement-link {
+  display: block;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (hover: hover) {
+  .announcement-link:active,
+  .announcement-link:hover {
+    color: rgb(var(--color-foreground));
+  }
+}
+
+.announcement-text {
+  display: block;
+  font-size: var(--font-size);
+}
+
+@media screen and (min-width: 750px) {
+  announcement-bar[data-layout=carousel] .announcement-slider__slide {
+    display: none;
+  }
+
+  announcement-bar[data-layout=carousel] .announcement-slider__slide:first-child {
+    display: flex;
+  }
+
+  announcement-bar[data-layout=carousel] .announcement-text {
+    display: inline;
+  }
+
+  announcement-bar[data-layout=carousel] .flickity-enabled .announcement-slider__slide {
+    display: flex;
+  }
+
+  announcement-bar:not([data-layout=carousel]) {
+    display: flex;
+    justify-content: center;
+  }
+
+  announcement-bar:not([data-layout=carousel]) .announcement__buttons {
+    display: none;
+  }
+
+  announcement-bar:not([data-layout=carousel]) .announcement-slider {
+    display: flex;
+    flex: 1 1 auto;
+    column-gap: 5rem;
+  }
+
+  announcement-bar:not([data-layout=carousel]) .announcement-slider__slide {
+    white-space: nowrap;
+  }
+
+  announcement-bar:not([data-layout=carousel]).marquee .announcement-slider {
+    padding: 0 2.5rem;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-duration: var(--duration);
+    animation-play-state: running;
+    width: max-content;
+  }
+
+  announcement-bar:not([data-layout=carousel])[data-direction=left].marquee .announcement-slider {
+    animation-name: marquee-left;
+  }
+
+  announcement-bar:not([data-layout=carousel])[data-direction=right].marquee .announcement-slider {
+    animation-name: marquee-right;
+  }
+
+  announcement-bar:not([data-layout=carousel]).marquee:hover .announcement-slider,
+  announcement-bar:not([data-layout=carousel]).marquee--paused .announcement-slider {
+    animation-play-state: paused;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  announcement-bar:not([data-layout=carousel]) .announcement-slider {
+    column-gap: 7rem;
+  }
+
+  announcement-bar:not([data-layout=carousel]).marquee .announcement-slider {
+    padding: 0 3.5rem;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  announcement-bar[data-mobile-layout=carousel] .announcement-slider__slide {
+    display: none;
+  }
+
+  announcement-bar[data-mobile-layout=carousel] .announcement-slider__slide:first-child {
+    display: flex;
+  }
+
+  announcement-bar[data-mobile-layout=carousel] .flickity-enabled .announcement-slider__slide {
+    display: flex;
+  }
+
+  announcement-bar[data-mobile-layout=marquee] {
+    display: flex;
+    justify-content: center;
+  }
+
+  announcement-bar[data-mobile-layout=marquee] .announcement__buttons {
+    display: none;
+  }
+
+  announcement-bar[data-mobile-layout=marquee] .announcement-slider {
+    display: flex;
+    flex: 1 1 auto;
+    column-gap: 5rem;
+    padding: 0 2.5rem;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-duration: var(--duration);
+    animation-play-state: running;
+    width: max-content;
+  }
+
+  announcement-bar[data-mobile-layout=marquee][data-direction=left] .announcement-slider {
+    animation-name: marquee-left;
+  }
+
+  announcement-bar[data-mobile-layout=marquee][data-direction=right] .announcement-slider {
+    animation-name: marquee-right;
+  }
+
+  announcement-bar[data-mobile-layout=marquee] .announcement-slider__slide {
+    white-space: nowrap;
+  }
+
+  announcement-bar[data-mobile-layout=marquee].marquee--paused .announcement-slider {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.announcement__buttons {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.announcement__button {
+  color: rgba(var(--color-foreground), 0.75);
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  width: 3.4rem;
+  height: 100%;
+  cursor: pointer;
+  pointer-events: visible;
+}
+
+@media screen and (hover: hover) {
+  .announcement__button:hover {
+    color: rgb(var(--color-foreground));
+  }
+}
+
+.announcement__button .icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  pointer-events: none;
+}
+
+.announcement__button--next .icon {
+  transform: scaleX(-1);
+}
+
+announcement-bar .flickity-enabled:not(:only-child) {
+  padding: 0 3.4rem;
+}

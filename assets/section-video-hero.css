@@ -1,0 +1,57 @@
+.video-interactable .banner__content {
+  pointer-events: none;
+}
+
+.video-interactable .banner__content .button {
+  pointer-events: visible;
+}
+
+.video-interactable .banner__media {
+  z-index: 1;
+}
+
+.video-interactable:not(.banner--mobile-bottom) .banner__media::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  pointer-events: none;
+  background-color: rgba(var(--color-overlay),var(--color-overlay-opacity));
+}
+
+.video-interactable .banner__media video,
+.video-interactable .banner__media iframe {
+  pointer-events: visible;
+}
+
+.banner__media video,
+.banner__media iframe {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.banner__media video {
+  position: relative;
+  object-fit: cover;
+}
+
+.banner__media iframe {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 300%;
+  max-width: none;
+}
+
+@media screen and (min-width: 1200px) {
+  .banner__media iframe {
+    width: 100%;
+    height: 300%;
+    left: auto;
+    top: -100%;
+  }
+}

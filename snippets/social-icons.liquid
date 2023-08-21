@@ -1,0 +1,98 @@
+{%- if settings.social_facebook_link != blank -%}
+<li class="list-social__item">
+  <a target="_blank" rel="noopener" href="{{ settings.social_facebook_link }}" class="list-social__link link link--text link-with-icon">
+    {% render 'icon-brand', icon: 'facebook' %}
+    <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
+  </a>
+</li>
+{%- endif -%}
+
+{%- if settings.social_twitter_link != blank -%}
+  <li class="list-social__item">
+    <a target="_blank" rel="noopener" href="{{ settings.social_twitter_link }}" class="list-social__link link link--text link-with-icon">
+      {% render 'icon-brand', icon: 'twitter' %}
+      <span class="visually-hidden">{{ 'general.social.links.twitter' | t }}</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{%- if settings.social_pinterest_link != blank -%}
+  <li class="list-social__item">
+    <a target="_blank" rel="noopener" href="{{ settings.social_pinterest_link }}" class="list-social__link link link--text link-with-icon">
+      {% render 'icon-brand', icon: 'pinterest' %}
+      <span class="visually-hidden">{{ 'general.social.links.pinterest' | t }}</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{%- if settings.social_instagram_link != blank -%}
+  <li class="list-social__item">
+    <a target="_blank" rel="noopener" href="{{ settings.social_instagram_link }}" class="list-social__link link link--text link-with-icon">
+      {% render 'icon-brand', icon: 'instagram' %}
+      <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{%- if settings.social_tiktok_link != blank -%}
+  <li class="list-social__item">
+    <a target="_blank" rel="noopener" href="{{ settings.social_tiktok_link }}" class="list-social__link link link--text link-with-icon">
+      {% render 'icon-brand', icon: 'tiktok' %}
+      <span class="visually-hidden">{{ 'general.social.links.tiktok' | t }}</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{%- if settings.social_tumblr_link != blank -%}
+  <li class="list-social__item">
+    <a target="_blank" rel="noopener" href="{{ settings.social_tumblr_link }}" class="list-social__link link link--text link-with-icon">
+      {% render 'icon-brand', icon: 'tumblr' %}
+      <span class="visually-hidden">{{ 'general.social.links.tumblr' | t }}</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{%- if settings.social_linkedin_link != blank -%}
+  <li class="list-social__item">
+    <a target="_blank" rel="noopener" href="{{ settings.social_linkedin_link }}" class="list-social__link link link--text link-with-icon">
+      {% render 'icon-brand', icon: 'linkedin' %}
+      <span class="visually-hidden">{{ 'general.social.links.linkedin' | t }}</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{%- if settings.social_snapchat_link != blank -%}
+  <li class="list-social__item">
+    <a target="_blank" rel="noopener" href="{{ settings.social_snapchat_link }}" class="list-social__link link link--text link-with-icon">
+      {% render 'icon-brand', icon: 'snapchat' %}    
+      <span class="visually-hidden">{{ 'general.social.links.snapchat' | t }}</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{%- if settings.social_youtube_link != blank -%}
+  <li class="list-social__item">
+    <a target="_blank" rel="noopener" href="{{ settings.social_youtube_link }}" class="list-social__link link link--text link-with-icon">
+      {% render 'icon-brand', icon: 'youtube' %}
+      <span class="visually-hidden">{{ 'general.social.links.youtube' | t }}</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{%- if settings.social_vimeo_link != blank -%}
+  <li class="list-social__item">
+    <a target="_blank" rel="noopener" href="{{ settings.social_vimeo_link }}" class="list-social__link link link--text link-with-icon">
+      {% render 'icon-brand', icon: 'vimeo' %}
+      <span class="visually-hidden">{{ 'general.social.links.vimeo' | t }}</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{%- if show_rss -%}
+  <li class="list-social__item">
+    <a target="_blank" rel="noopener" href="{{ request.origin }}{{ blog.url }}.atom">
+      {% render 'icon-brand', icon: 'rss' %}
+      <span class="visually-hidden">RSS</span>
+    </a>
+  </li>
+{%- endif -%}

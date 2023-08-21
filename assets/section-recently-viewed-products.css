@@ -1,0 +1,21 @@
+.recently-viewed-products {
+  display: block;
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .recently-viewed-products .product-grid:not(.slider) .grid__item:nth-child(4) {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .recently-viewed-products .product-grid.grid--3-col-tablet > .grid__item {
+    max-width: 33.33%;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .recently-viewed-products .product-grid.grid--4-col-desktop > .grid__item {
+    max-width: 25%;
+  }
+}

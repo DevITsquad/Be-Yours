@@ -1,0 +1,177 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div class="customer login page-width section--padding">
+  <h1 id="recover" class="h2" tabindex="-1">{{ 'customer.recover_password.title' | t }}</h1>
+  <div>
+    <p>{{ 'customer.recover_password.subtext' | t }}</p>
+
+    <form-state>
+      {%- form 'recover_customer_password' -%}
+        {% assign recover_success = form.posted_successfully? %}
+        <div class="field">
+          <input
+            required="required"
+            class="required{% if form.errors %} invalid{% endif %}"
+            type="email"
+            value=""
+            name="email"
+            id="RecoverEmail"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            {% if form.errors %}
+              aria-invalid="true"
+              aria-describedby="RecoverEmail-email-error"
+              autofocus
+            {% endif %}
+            placeholder="{{ 'customer.login_page.email' | t }}"
+          >
+          <label class="visually-hidden" for="RecoverEmail">{{ 'customer.login_page.email' | t }}</label>
+        </div>
+        {%- if form.errors -%}
+          <small id="RecoverEmail-email-error" class="form__message errors">
+            {% render 'icon', icon: 'error' %}
+            {{ form.errors.messages['form'] }}
+          </small>
+        {%- endif -%}
+
+        <button class="button" type="submit">
+          {{ 'customer.login_page.submit' | t }}
+        </button>
+
+        <a class="link link--underline" href="#login">
+          {{ 'customer.login_page.cancel' | t }}
+        </a>
+      {%- endform -%}
+    </form-state>
+  </div>
+
+  <h1 id="login" class="h2" tabindex="-1">{{ 'customer.login_page.title' | t }}</h1>
+  <div>
+    <p class="typeset">{{ 'customer.login_page.dont_have_account' | t }}
+      <a href="{{ routes.account_register_url }}" class="link">
+        {{ 'customer.login_page.create_account' | t }}
+      </a>
+    </p>
+    {%- if recover_success == true -%}
+      <small class="form__message" tabindex="-1" autofocus>
+        {% render 'icon', icon: 'success' %}
+        {{ 'customer.recover_password.success' | t }}
+      </small>
+    {%- endif -%}
+    <form-state>
+      {%- form 'customer_login' -%}
+        {%- if form.errors -%}
+          <p>
+            <small class="form__message errors" tabindex="-1" autofocus>
+              {% render 'icon', icon: 'error' %}
+              {{ form.errors.messages['form'] }}
+            </small>
+          </p>
+        {%- endif -%}
+        
+        <div class="field">        
+          <input
+            required="required"
+            class="required{% if form.errors contains 'form' %} invalid{% endif %}"
+            type="email"
+            name="customer[email]"
+            id="CustomerEmail"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            {% if form.errors contains 'form' %}
+              aria-invalid="true"
+            {% endif %}
+            placeholder="{{ 'customer.login_page.email' | t }}"
+          >
+          <label class="visually-hidden" for="CustomerEmail">{{ 'customer.login_page.email' | t }}</span>
+          {%- if form.errors contains 'form' -%}
+            <small>
+              <span class="form__message errors">
+                {% render 'icon', icon: 'error' %}
+                {{ form.errors.messages['form'] }}
+              </span>
+            </small>
+          {%- endif -%}
+        </div>
+
+        {%- if form.password_needed -%}
+          <div class="field">          
+            <input
+              required="required"
+              class="required{% if form.errors contains 'form' %} invalid{% endif %}"
+              type="password"
+              value=""
+              name="customer[password]"
+              id="CustomerPassword"
+              autocomplete="current-password"
+              {% if form.errors contains 'form' %}
+                aria-invalid="true"
+              {% endif %}
+              placeholder="{{ 'customer.login_page.password' | t }}"
+            >
+            <label class="visually-hidden" for="CustomerPassword">{{ 'customer.login_page.password' | t }}</label>
+          </div>
+
+          <a class="link" href="#recover">{{ 'customer.login_page.forgot_password' | t }}</a>
+        {%- endif -%}
+
+        <button class="button" type="submit">{{ 'customer.login_page.sign_in' | t }}</button>
+        <a class="link link--underline" href="{{ routes.root_url }}">{{ 'customer.login_page.return' | t }}</a>
+      {%- endform -%}
+    </form-state>
+  </div>
+  
+  {%- if shop.checkout.guest_login -%}
+    <div>
+      <hr>
+      <h2>{{ 'customer.login_page.guest_title' | t }}</h2>
+
+      {%- form 'guest_login' -%}
+        <button class="button" type="submit">
+          {{ 'customer.login_page.guest_continue' | t }}
+        </button>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-login.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 80
+    }
+  ]
+}
+{% endschema %}

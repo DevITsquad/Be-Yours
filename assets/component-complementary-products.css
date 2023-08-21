@@ -1,0 +1,48 @@
+.complementary-products li + li {
+  margin-top: 2rem;
+}
+
+.complementary-products .card__badge {
+  display: none;
+}
+
+.complementary-products .card-wrapper {
+  display: flex;
+}
+
+.complementary-products .card {
+  width: 7rem;
+  line-height: 0;
+  overflow: hidden;
+  border-radius: min(var(--card-radius),0.3rem);
+}
+
+.complementary-products .card__media {
+  background: none;
+  padding-bottom: 0;
+}
+
+.complementary-products .card + .card-information {
+  flex: 1 1 auto;
+  padding-top: 0;
+  padding-inline-start: 2rem;
+}
+
+.complementary-products .product__accordion > .summary__title {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.accordion + .complementary-products .accordion,
+.complementary-products.is-accordion + .accordion {
+  margin-top: 0;
+  border-top: 0;
+}
+
+.complementary-products:not(.is-accordion) .accordion {
+  border-bottom: 0;
+}
+
+.complementary-products:not(.is-accordion) .accordion__content {
+  padding-bottom: 0;
+}

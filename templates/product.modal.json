@@ -1,0 +1,119 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product-modal",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "icon": "none",
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": "h2"
+          }
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {
+          }
+        },
+        "countdown": {
+          "type": "countdown",
+          "settings": {
+            "heading": "Hurry up ! Sale end in:",
+            "number_size": "compact",
+            "colors_heading": "#da3f3f",
+            "colors_text": "#da3f3f",
+            "colors_background": "#ffeeee"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "show_variant_labels": true,
+            "picker_type": "button",
+            "enable_color_swatches": true,
+            "swatch_type": "round"
+          }
+        },
+        "inventory_status": {
+          "type": "inventory_status",
+          "settings": {
+            "inventory_threshold": 20,
+            "show_inventory_transfer": true,
+            "color_scheme": "accent-3"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "show_dynamic_checkout": true
+          }
+        },
+        "collapsible_tab-0": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "heading": "Shipping information",
+            "content": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.<\/p><p>Ex: Shipping and return policies, size guides, and other common questions.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_tab-1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "heading": "Returns information",
+            "content": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.<\/p><p>Ex: Shipping and return policies, size guides, and other common questions.<\/p>",
+            "page": ""
+          }
+        },
+        "read_more": {
+          "type": "read_more",
+          "settings": {
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "rating",
+        "countdown",
+        "price",
+        "variant_picker",
+        "inventory_status",
+        "buy_buttons",
+        "collapsible_tab-0",
+        "collapsible_tab-1",
+        "read_more",
+        "share"
+      ],
+      "settings": {
+        "hide_variants": true,
+        "enable_image_zoom": true,
+        "enable_video_looping": false,
+        "enable_image_fill": true,
+        "mobile_image_ratio": "adapt_first"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

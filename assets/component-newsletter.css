@@ -1,0 +1,75 @@
+.newsletter-form {
+  width: 100%;
+  position: relative;
+  --color-keyboard-focus: var(--color-border);
+}
+
+.newsletter-form .form__message {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+
+.newsletter-form .field__input {
+  font-size: 1.4rem;
+  box-shadow: none;
+  outline: 0;
+  padding: 0;
+  padding-inline-start: 1.2rem;
+  border: 0.1rem solid transparent;
+  border-bottom-color: rgb(var(--color-border));
+  transition-property: border;
+}
+
+.newsletter-form .field__input.invalid {
+  border-color: var(--color-critical);
+  box-shadow: none;
+}
+
+.newsletter-form .field:hover .field__input,
+.newsletter-form .field__input:focus,
+.newsletter-form .field__input:focus-visible {
+  border-color: rgb(var(--color-border));
+}
+
+.newsletter-form .field__button {
+  box-shadow: none;
+  background: none;
+  width: fit-content;
+  min-width: auto;
+  padding-inline-end: 1rem;
+  transition: padding var(--duration-default) ease;
+}
+
+.newsletter-form .field:hover .field__button,
+.newsletter-form .field__input:focus ~ .field__button,
+.newsletter-form .field__input:focus-visible ~ .field__button {
+  padding-inline-end: 1.3rem;
+}
+
+.newsletter-form .field__button::after {
+  content: none;
+}
+
+.newsletter-form .field__button:not([disabled]) {
+  box-shadow: none;
+}
+
+.newsletter-form .field__button .icon {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.newsletter-form .typeset {
+  font-size: 1.3rem;
+  letter-spacing: .05rem;
+  margin-top: 1.5rem;
+  line-height: calc(1 + 0.4 / var(--font-body-scale));
+}
+
+.newsletter-form .typeset p {
+  margin: 0;
+}
+
+.newsletter-form .typeset p + p {
+  margin-top: 1rem;
+}

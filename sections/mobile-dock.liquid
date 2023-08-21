@@ -1,0 +1,302 @@
+{%- style -%}
+  {%- if section.settings.use_custom_colors -%}
+    #shopify-section-{{ section.id }} {
+      --gradient-background: {% if section.settings.gradient_background != blank %}{{ section.settings.gradient_background }}{% else %}{{ section.settings.colors_background }}{% endif %};
+      --color-background: {{ section.settings.colors_background.red }}, {{ section.settings.colors_background.green }}, {{ section.settings.colors_background.blue }};
+      --color-foreground: {{ section.settings.colors_text.red }}, {{ section.settings.colors_text.green }}, {{ section.settings.colors_text.blue }};
+    }
+  {%- endif -%}
+  
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<link rel="stylesheet" href="{{ 'section-mobile-dock.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-mobile-dock.css' | asset_url | stylesheet_tag }}</noscript>
+<script src="{{ 'mobile-dock.js' | asset_url }}" defer="defer"></script>
+
+{%- if section.blocks.size > 0 -%}
+  <mobile-dock class="mobile-dock mobile-dock--{{ section.blocks.size }}-col section-{{ section.id }}-padding hidden">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'account' -%}
+          <a class="dock__item" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" {{ block.shopify_attributes }}>
+            {%- liquid
+              if block.settings.custom_icon != blank
+                echo block.settings.custom_icon
+              else
+                render 'icon', icon: 'account'
+              endif
+            -%}
+            <span>{{ block.settings.title | escape }}</span>
+          </a>
+        {%- when 'cart' -%}
+          {%- if settings.cart_drawer_enabled -%}
+            <div class="dock__item" data-action="cart" {{ block.shopify_attributes }}>
+              <p>
+                {%- if block.settings.custom_icon != blank-%}
+                  {{ block.settings.custom_icon }}
+                {%- else -%}
+                  <svg class="icon icon-cart" aria-hidden="true" focusable="false">
+                    <use href="#icon-cart"></use>
+                  </svg>
+                {%- endif -%}
+                <span id="mobile-cart-icon-bubble">
+                  {%- if cart != empty -%}
+                    <span class="cart-count-bubble{% if cart.item_count >= 100 %} cart-count-bubble--dot{% endif %}">
+                      {%- if cart.item_count < 100 -%}
+                        <span aria-hidden="true">{{ cart.item_count }}</span>
+                      {%- endif -%}
+                      <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+                    </span>
+                  {%- endif -%}
+                </span>
+              </p>
+              <span>{{ block.settings.title | escape }}</span>
+            </div>
+          {%- else -%}
+            <a class="dock__item" href="{{ routes.cart_url }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.custom_icon != blank-%}
+                {{ block.settings.custom_icon }}
+              {%- else -%}
+                <svg class="icon icon-cart" aria-hidden="true" focusable="false">
+                  <use href="#icon-cart"></use>
+                </svg>
+              {%- endif -%}
+              <span>{{ block.settings.title | escape }}</span>
+            </a>
+          {%- endif -%}
+        {%- when 'home' -%}
+          <a class="dock__item" href="{{ routes.root_url }}" {{ block.shopify_attributes }}>
+            {%- liquid
+              if block.settings.custom_icon != blank
+                echo block.settings.custom_icon
+              else
+                render 'icon', icon: 'house'
+              endif
+            -%}
+            <span>{{ block.settings.title | escape }}</span>
+          </a>
+        {%- when 'menu' -%}
+          <div class="dock__item" data-action="menu" {{ block.shopify_attributes }}>
+            {%- liquid
+              if block.settings.custom_icon != blank
+                echo block.settings.custom_icon
+              else
+                render 'icon', icon: 'hamburger'
+              endif
+            -%}
+            <span>{{ block.settings.title | escape }}</span>
+          </div>
+        {%- when 'search' -%}
+          <div class="dock__item" data-action="search" {{ block.shopify_attributes }}>
+            {%- liquid
+              if block.settings.custom_icon != blank
+                echo block.settings.custom_icon
+              else
+                render 'icon', icon: 'search'
+              endif
+            -%}
+            <span>{{ block.settings.title | escape }}</span>
+          </div>
+        {%- when 'link' -%}
+          <a class="dock__item" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+            {%- liquid
+              if block.settings.custom_icon != blank
+                echo block.settings.custom_icon
+              else
+                render 'icon', icon: 'grid'
+              endif
+            -%}
+            <span>{{ block.settings.title | escape }}</span>
+          </a>
+      {%- endcase %}
+    {%- endfor %}
+  </mobile-dock>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.mobile-dock.name",
+  "class": "shopify-section-mobile-dock",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.colors.header.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_custom_colors",
+      "default": false,
+      "label": "t:sections.all.colors.use_custom_colors.label"
+    },
+    {
+      "type": "color",
+      "id": "colors_text",
+      "label": "t:sections.all.colors.colors_text.label",
+      "default": "#1a1b18"
+    },
+    {
+      "type": "color",
+      "id": "colors_background",
+      "label": "t:sections.all.colors.colors_background.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "t:sections.all.colors.gradient_background.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 6
+    }
+  ],
+  "blocks": [
+    {
+      "type": "account",
+      "name": "t:sections.mobile-dock.blocks.account.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "html",
+          "id": "custom_icon",
+          "label": "t:sections.mobile-dock.blocks.all.custom_icon.label",
+          "info": "t:sections.mobile-dock.blocks.all.custom_icon.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Account",
+          "label": "t:sections.mobile-dock.blocks.all.title.label"
+        }
+      ]
+    },
+    {
+      "type": "cart",
+      "name": "t:sections.mobile-dock.blocks.cart.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "html",
+          "id": "custom_icon",
+          "label": "t:sections.mobile-dock.blocks.all.custom_icon.label",
+          "info": "t:sections.mobile-dock.blocks.all.custom_icon.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Cart",
+          "label": "t:sections.mobile-dock.blocks.all.title.label"
+        }
+      ]
+    },
+    {
+      "type": "home",
+      "name": "t:sections.mobile-dock.blocks.home.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "html",
+          "id": "custom_icon",
+          "label": "t:sections.mobile-dock.blocks.all.custom_icon.label",
+          "info": "t:sections.mobile-dock.blocks.all.custom_icon.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Home",
+          "label": "t:sections.mobile-dock.blocks.all.title.label"
+        }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "t:sections.mobile-dock.blocks.menu.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "html",
+          "id": "custom_icon",
+          "label": "t:sections.mobile-dock.blocks.all.custom_icon.label",
+          "info": "t:sections.mobile-dock.blocks.all.custom_icon.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Menu",
+          "label": "t:sections.mobile-dock.blocks.all.title.label"
+        }
+      ]
+    },
+    {
+      "type": "search",
+      "name": "t:sections.mobile-dock.blocks.search.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "html",
+          "id": "custom_icon",
+          "label": "t:sections.mobile-dock.blocks.all.custom_icon.label",
+          "info": "t:sections.mobile-dock.blocks.all.custom_icon.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Search",
+          "label": "t:sections.mobile-dock.blocks.all.title.label"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "t:sections.mobile-dock.blocks.link.name",
+      "settings": [
+        {
+          "type": "html",
+          "id": "custom_icon",
+          "label": "t:sections.mobile-dock.blocks.all.custom_icon.label",
+          "info": "t:sections.mobile-dock.blocks.all.custom_icon.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Link",
+          "label": "t:sections.mobile-dock.blocks.all.title.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.mobile-dock.blocks.link.settings.link.label"
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["custom.overlay"]
+  }
+}
+{% endschema %}

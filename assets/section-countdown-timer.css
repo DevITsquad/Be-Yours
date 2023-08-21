@@ -1,0 +1,96 @@
+.no-js .countdown {
+  display: none;
+}
+
+.countdown {
+  width: 100%;
+  max-width: 57rem;
+  display: flex;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1.3rem;
+  border: 0.1rem solid rgba(var(--color-border), 0.2);
+  border-radius: min(var(--button-radius), 0.8rem);
+}
+
+.countdown__item {
+  width: 25%;
+  padding: 1rem;
+  flex-grow: 1;
+  flex-shrink: 0;
+  font-family: var(--font-heading-family);
+  font-size: 1.2rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(var(--color-foreground), 0.5);
+}
+
+.countdown__item + .countdown__item {
+  border-inline-start: 0.1rem solid rgba(var(--color-border), 0.2);
+}
+
+.countdown__item span {
+  display: block;
+  color: rgb(var(--color-foreground));
+}
+
+.countdown--small span {
+  font-size: calc(var(--font-heading-scale) * 1.7rem);
+}
+
+.countdown--medium span {
+  font-size: calc(var(--font-heading-scale) * 2rem);
+}
+
+.countdown--large span {
+  font-size: calc(var(--font-heading-scale) * 3rem);
+}
+
+@media screen and (min-width: 750px) {
+  .countdown--small span {
+    font-size: calc(var(--font-heading-scale) * 2rem);
+  }
+  
+  .countdown--medium span {
+    font-size: calc(var(--font-heading-scale) * 2.8rem);
+  }
+  
+  .countdown--large span {
+    font-size: calc(var(--font-heading-scale) * 4rem);
+  }
+}
+
+.countdown-timer__message {
+  display: none;
+}
+
+.countdown.hidden + .countdown-timer__message {
+  display: block;
+}
+
+@media screen and (min-width: 990px) {
+  .image-with-text.countdown-timer .image-with-text__content {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .image-with-text__grid-mobile--overlap .countdown {
+    border: none;
+    background-color: rgba(var(--color-button-background), 0.85);
+  }
+
+  .image-with-text__grid-mobile--overlap .countdown__item {
+    color: rgba(var(--color-button-text), 0.5);
+  }
+
+  .image-with-text__grid-mobile--overlap .countdown__item span {
+    color: rgb(var(--color-button-text));
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .image-with-text__grid-mobile--overlap .countdown ~ :last-child:is(.button) {
+    margin-top: 1.5rem;
+  }
+}

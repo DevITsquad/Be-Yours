@@ -1,0 +1,24 @@
+.discounts {
+  font-size: 1.2rem;
+  margin-top: 0.6rem;
+}
+
+.discounts__discount {
+  display: flex;
+  align-items: center;
+  line-height: calc(1 + 0.5 / var(--font-body-scale));
+  font-family: var(--font-heading-family);
+  color: rgba(var(--color-foreground), 0.7);
+}
+
+.discounts__discount .icon {
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-inline-end: 0.6rem;
+  position: relative;
+  top: -0.1rem;
+}
+
+.discounts__discount--end {
+  justify-content: flex-end;
+}

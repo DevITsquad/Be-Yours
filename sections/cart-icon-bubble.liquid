@@ -1,0 +1,12 @@
+<svg class="icon icon-cart" aria-hidden="true" focusable="false">
+  <use href="#icon-cart"></use>
+</svg>
+<span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+{%- if cart != empty -%}
+  <span class="cart-count-bubble{% if cart.item_count >= 100 %} cart-count-bubble--dot{% endif %}">
+    {%- if cart.item_count < 100 -%}
+      <span aria-hidden="true">{{ cart.item_count }}</span>
+    {%- endif -%}
+    <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+  </span>
+{%- endif -%}

@@ -1,0 +1,45 @@
+.logo-bar {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.logo-bar__item:not(.loading) {
+  background-color: transparent;
+}
+
+.logo-bar__item {
+  flex: 0 1 11rem;
+  vertical-align: middle;
+  opacity: var(--logo-opacity);
+  transition: opacity var(--duration-default) ease;
+}
+
+@media screen and (min-width: 750px) {
+  .logo-bar {
+    gap: 3rem;
+  }
+
+  .logo-bar__item {
+    flex: 0 1 16rem;
+  }
+}
+
+@media screen and (hover: hover) {
+  .logo-bar__item:hover {
+    opacity: 1;
+  }
+}
+
+.logo-bar__link {
+  display: block;
+}
+
+.logo-bar__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}

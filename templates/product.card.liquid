@@ -1,0 +1,143 @@
+{%- liquid
+  layout none
+
+  assign max_count = settings.color_swatches_max_items
+  assign has_color_option = false
+  assign swatch_trigger = 'products.product.color_swatch_trigger' | t | downcase
+
+  for option in product.options_with_values
+    assign option_name = option.name | downcase
+    if option_name contains swatch_trigger
+      assign has_color_option = true
+      break
+    elsif swatch_trigger == 'color' and option_name contains 'colour'
+      assign has_color_option = true
+      break
+    endif
+  endfor
+
+  assign options_count = product.options.size
+  assign use_variant = false
+  if options_count == 1 and has_color_option
+    assign use_variant = true
+  endif
+
+  assign uniqueId = "now" | date: "%N" | modulo: 1000
+-%}
+
+{% render 'css-variables' %}
+
+{{ 'base.css' | asset_url | stylesheet_tag }}
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-grid.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width">
+  <br>
+  <div class="product-grid grid grid--2-col grid--3-col-tablet grid--3-col-desktop">
+    <div class="grid__item">
+      <div class="card-wrapper">
+        <div class="card card--product card--text">
+          <div class="card__inner">
+            <a href="{{ product.url | within: collection }}" class="media media--adapt" tabindex="-1">
+              <div class="card__content">
+                <h3 class="card-information__text h3">{{ product.title | escape }}</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="card-information">
+          <div class="card-information__wrapper">
+            <div class="card-article-info caption-with-letter-spacing">{{ product.vendor }}</div>
+      
+            {% render 'price', product: product, use_variant: use_variant %}
+          </div>
+      
+          <div class="card-information__button{% if options_count == 2 and has_color_option %} is-expanded{% endif %}">
+            {%- if options_count == 1 -%}
+              {%- if product.selected_variant.available -%}
+                <add-to-cart class="button button--small" data-variant-id="{{ product.selected_variant.id }}" tabindex="-1">
+                  {%- liquid
+                    if product.template_suffix != 'pre-order'
+                      echo 'products.product.add_to_cart' | t
+                    else
+                      echo 'products.product.pre_order' | t
+                    endif
+                  -%}
+                </add-to-cart>
+              {%- else -%}
+                <button class="button button--small button--soldout" type="button" disabled="disabled">{{ 'products.product.sold_out' | t }}</button>
+              {%- endif -%}
+            {%- else -%}
+              {%- if options_count == 2 and has_color_option -%}
+                <color-swatch-radios class="card__swatches button">
+                  {%- for option in product.options_with_values -%}
+                    {%- liquid
+                      assign is_color = false
+                      assign swatch_trigger = 'products.product.color_swatch_trigger' | t | downcase
+                      assign downcased_option = option.name | downcase
+                      if downcased_option contains swatch_trigger
+                        assign is_color = true
+                      elsif swatch_trigger == 'color' and downcased_option contains 'colour'
+                        assign is_color = true
+                      endif
+      
+                      assign option_idx = forloop.index
+                      assign color_count = 0
+                    -%}
+                    <fieldset class="js variant-input-wrapper{% if is_color %} hidden{% endif %}"
+                      data-option-index="option{{ option_idx }}"
+                      data-option-slug="{{ option.name | handleize }}"
+                    >
+                      {%- for value in option.values -%}
+                        {%- assign color_count = color_count | plus: 1 -%}
+                        {%- if color_count <= max_count -%}
+                          <label class="swatch">
+                            <input
+                              type="radio"
+                              name="{{ option.name }}-{{ product.id }}-{{ uniqueId }}"
+                              value="{{ value | escape }}"
+                              {%- if option.selected_value == value %}checked="checked"{% endif -%}
+                              data-option-value="{{ value | escape }}"
+                              class="visually-hidden"
+                            />
+                            {{ value }}
+                          </label>
+                        {%- endif -%}
+                      {%- endfor -%}
+                      {%- if color_count > max_count -%}
+                        {%- if settings.quick_view_enabled -%}
+                          <quick-view-button class="link link--text" data-product-url="{{ product.url | within: collection }}">
+                            <small>+{{ color_count | minus: max_count }}</small>
+                          </quick-view-button>
+                        {%- else -%}
+                          <a class="link link--text" href="{{ product.url | within: collection }}" tabindex="-1">
+                            <small>+{{ color_count | minus: max_count }}</small>
+                          </a>
+                        {%- endif -%}
+                      {%- endif -%}
+                    </fieldset>
+                  {%- endfor -%}
+                  
+                  <script type="application/json">
+                    {{ product.variants | json }}
+                  </script>
+                </color-swatch-radios>
+              {%- else -%}
+                {%- if settings.quick_view_enabled -%}
+                  <quick-view-button class="button button--small" data-product-url="{{ product.url | within: collection }}">
+                    {{ 'products.product.choose_options' | t }}
+                  </quick-view-button>
+                {%- else -%}
+                  <a href="{{ product.url | within: collection }}" class="button button--small" tabindex="-1">{{ 'products.product.view' | t }}</a>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

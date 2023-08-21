@@ -1,0 +1,460 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+{{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+
+{%- assign custom_fields = section.blocks | where: "type", "custom_field" -%}
+<div class="section--padding{% if section.settings.show_divider %} section--divider{% endif %}">
+  <div class="contact page-width{% unless section.blocks.size > 0 and section.blocks.size > custom_fields.size %} page-width--inner{% endunless %}">
+    {%- if section.blocks.size > 0 and section.blocks.size > custom_fields.size -%}
+      <div class="grid">
+        <div class="grid__item grid__item--two-third">
+    {%- endif -%}
+
+      <div class="title-wrapper{% if section.settings.heading == blank %} title-wrapper--no-heading{% endif %}">
+        <{{ section.settings.heading_tag }} class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag }}>
+      </div>
+      
+      <form-state>
+        {%- assign form_id = 'ContactForm-' | append: section.id -%}
+        {%- form 'contact', id: form_id -%}
+          {%- if form.posted_successfully? -%}
+            <div class="form-status form-status-list form__message" tabindex="-1" autofocus>
+              {% render 'icon', icon: 'success' %}
+              {{ 'templates.contact.form.post_success' | t }}
+            </div>
+          {%- endif -%}
+
+          <div class="contact__fields">
+            <div class="field">
+              <input id="{{ form_id }}-name" class="field__input" autocomplete="name" type="text" name="contact[{{ 'templates.contact.form.name' | t }}]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="{{ 'templates.contact.form.name' | t }}"/>
+              <label class="visually-hidden" for="{{ form_id }}-name">{{ 'templates.contact.form.name' | t }}</label>
+            </div>
+            <div class="field field--with-error">
+              <input
+                id="{{ form_id }}-email"
+                autocomplete="email"
+                type="email"
+                id="ContactForm-email-{{ section.id }}"
+                class="field__input required{% if form.errors contains 'email' %} invalid{% endif %}"
+                name="contact[email]"
+                spellcheck="false"
+                autocapitalize="off"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                aria-required="true"
+                {% if form.errors contains 'email' %}
+                  aria-invalid="true"
+                  aria-describedby="ContactForm-email-error-{{ section.id }}"
+                {% endif %}
+                placeholder="{{ 'templates.contact.form.email' | t }}"
+                required="required"
+              />
+              <label class="visually-hidden" for="{{ form_id }}-email">{{ 'templates.contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+              {%- if form.errors contains 'email' -%}
+                <small id="ContactForm-email-error-{{ section.id }}">
+                  <span class="form__message errors">
+                    {% render 'icon', icon: 'error' %}
+                    {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+                  </span>
+                </small>
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- if section.settings.show_phone -%}
+            <div class="field">
+              <input id="{{ form_id }}-phone" type="tel" class="field__input" autocomplete="tel" name="contact[{{ 'templates.contact.form.phone' | t }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="{{ 'templates.contact.form.phone' | t }}"/>
+              <label class="visually-hidden" for="{{ form_id }}-phone">{{ 'templates.contact.form.phone' | t }}</label>
+            </div>
+          {%- endif -%}
+
+          {%- if custom_fields.size > 0 -%}
+            {%- for block in custom_fields -%}
+              <div class="field contact-form__input" {{ block.shopify_attributes }}>
+                {%- if block.settings.type == 'checkbox' -%}
+                  <label for="line-item-{{ section.id }}-{{ block.id }}" class="form__facet-checkbox">
+                    <input type="hidden" name="contact[{{ block.settings.label | escape }}]" value="{{ block.settings.unchecked_value | escape }}" />
+                    <input id="line-item-{{ section.id }}-{{ block.id }}" type="checkbox" name="contact[{{ block.settings.label | escape }}]" value="{{ block.settings.checked_value | escape }}"{% if block.settings.required %} required{% endif %} />
+                    {% render 'icon', icon: 'checkmark' %}
+                    {{ block.settings.label | escape }}
+                  </label>
+                {%- else -%}
+                  <label class="form__label{% if block.settings.type == 'text' or block.settings.type == 'textarea' or block.settings.type == 'select' %} visually-hidden{% endif %}" for="line-item-{{ section.id }}-{{ block.id }}">{{ block.settings.label | escape }}</label>
+                  {%- case block.settings.type -%}
+                    {%- when 'text' -%}
+                      <input class="field__input" id="line-item-{{ section.id }}-{{ block.id }}" type="text" name="contact[{{ block.settings.label | escape }}]"{% if block.settings.required %} required{% endif %} placeholder="{{ block.settings.label | escape }}" />
+                    {%- when 'textarea' -%}
+                      <textarea class="text-area field__input" id="line-item-{{ section.id }}-{{ block.id }}" name="contact[{{ block.settings.label | escape }}]"{% if block.settings.required %} required{% endif %} placeholder="{{ block.settings.label | escape }}"></textarea>
+                    {%- when 'radio' -%}
+                      {%- assign options = block.settings.radio_options | split: ',' -%}
+                      {%- if options.size > 1 -%}
+                        <fieldset class="contact-form__input">
+                          {%- for option in options -%}
+                            <label class="form__facet-radio" for="line-item-{{ section.id }}-{{ block.id }}-{{ forloop.index0 }}">
+                              <input id="line-item-{{ section.id }}-{{ block.id }}-{{ forloop.index0 }}" type="radio" name="contact[{{ block.settings.label | escape }}]" value="{{ option | strip | escape }}"{% if block.settings.required %} required{% endif %} />
+                              <span class="icon"></span>
+                              {{ option | strip | escape }}
+                            </label>
+                          {%- endfor -%}
+                        </fieldset>
+                      {%- endif -%}
+                    {%- when 'select' -%}
+                      {%- assign options = block.settings.select_options | split: ',' -%}
+                      {%- if options.size > 1 -%}
+                        <select-wrapper class="select">
+                          <select class="select__select" id="line-item-{{ section.id }}-{{ block.id }}" name="contact[{{ block.settings.label | escape }}]"{% if block.settings.required %} required{% endif %}>
+                            <option value="" disabled selected hidden>{{ block.settings.label | escape }}</option>
+                            <optgroup label="{{ block.settings.label | escape }}">
+                              {%- for option in options -%}
+                                <option value="{{ option | strip | escape }}">
+                                  {{ option | strip | escape }}
+                                </option>
+                              {%- endfor -%}
+                            </optgroup>
+                          </select>
+                          {% render 'icon', icon: 'caret' %}
+                        </select-wrapper>
+                      {%- endif -%}
+                  {%- endcase-%}
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+
+          <div class="field">
+            <textarea
+              id="{{ form_id }}-body"
+              rows="10"
+              class="text-area field__input"
+              name="contact[{{ 'templates.contact.form.comment' | t }}]"
+              placeholder="{{ 'templates.contact.form.comment' | t }}"
+            >
+              {{- form.body -}}
+            </textarea>
+            <label class="visually-hidden" for="{{ form_id }}-body">{{ 'templates.contact.form.comment' | t }}</label>
+          </div>
+          <div class="contact__button">
+            <button type="submit" class="button">
+              {{ 'templates.contact.form.send' | t }}
+            </button>
+          </div>
+
+          {% comment %}
+            Remove the following three lines of code to remove the note
+            about being protected by Google's reCAPTCHA service.
+            By removing it, the small reCAPTCHA widget will appear in the
+            bottom right corner of the page.
+          {% endcomment %}
+          <div class="rte">
+            {{ 'shopify.online_store.spam_detection.disclaimer_html' | t }}
+          </div>
+        {%- endform -%}
+      </form-state>
+
+    {%- if section.blocks.size > 0 and section.blocks.size > custom_fields.size -%}
+        </div>
+        <div class="grid__item grid__item--one-third">
+          <ul class="contact__list list-unstyled">
+            {%- for block in section.blocks -%}
+              {%- if block.type != 'custom_field' -%}
+                <li {{ block.shopify_attributes }}>
+                  <p class="h3">{{ block.settings.heading | escape }}</p>
+
+                  {%- case block.type -%}
+                    {%- when 'contact' -%}
+                      {%- if block.settings.link != blank -%}
+                        <a class="link" href="{{ block.settings.link }}">
+                      {%- endif -%}
+                        {{ block.settings.text | escape }}
+                      {%- if block.settings.link != blank -%}
+                        </a>
+                      {%- endif -%}
+
+                    {%- when 'media' -%}
+                      <ul class="list-unstyled list-social" role="lsit">
+                        {%- render 'social-icons' -%}
+                      </ul>
+                  {%- endcase -%}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.contact-form.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "default": true,
+      "label": "t:sections.contact-form.settings.show_phone.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "default": false,
+      "label": "t:sections.all.show_divider.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.heading.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Get in touch",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_tag.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_tag.options__2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_tag.options__3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_tag.options__4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_tag.options__5.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.all.heading_tag.options__6.label"
+        },
+        {
+          "value": "div",
+          "label": "t:sections.all.heading_tag.options__7.label"
+        },
+        {
+          "value": "span",
+          "label": "t:sections.all.heading_tag.options__8.label"
+        },
+        {
+          "value": "p",
+          "label": "t:sections.all.heading_tag.options__9.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_tag.label",
+      "info": "t:sections.all.heading_tag.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "contact",
+      "name": "t:sections.contact-form.blocks.contact.name",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Customer service",
+          "label": "t:sections.contact-form.blocks.contact.settings.heading.label"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "default": "shop@yourstore.com",
+          "label": "t:sections.contact-form.blocks.contact.settings.text.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.contact-form.blocks.contact.settings.link.label"
+        }
+      ]
+    },
+    {
+      "type": "media",
+      "name": "t:sections.contact-form.blocks.media.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:sections.contact-form.blocks.media.settings.paragraph.content"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Follow us",
+          "label": "t:sections.contact-form.blocks.media.settings.heading.label"
+        }
+      ]
+    },
+    {
+      "type": "custom_field",
+      "name": "t:sections.contact-form.blocks.custom_field.name",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:sections.contact-form.blocks.custom_field.settings.paragraph.content"
+        },
+        {
+          "type": "select",
+          "id": "type",
+          "options": [
+            {
+              "value": "text",
+              "label": "t:sections.contact-form.blocks.custom_field.settings.type.options__1.label"
+            },
+            {
+              "value": "textarea",
+              "label": "t:sections.contact-form.blocks.custom_field.settings.type.options__2.label"
+            },
+            {
+              "value": "checkbox",
+              "label": "t:sections.contact-form.blocks.custom_field.settings.type.options__3.label"
+            },
+            {
+              "value": "radio",
+              "label": "t:sections.contact-form.blocks.custom_field.settings.type.options__4.label"
+            },
+            {
+              "value": "select",
+              "label": "t:sections.contact-form.blocks.custom_field.settings.type.options__5.label"
+            }
+          ],
+          "default": "text",
+          "label": "t:sections.contact-form.blocks.custom_field.settings.type.label"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.contact-form.blocks.custom_field.settings.label.label",
+          "default": "Your label"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "t:sections.contact-form.blocks.custom_field.settings.required.label",
+          "info": "t:sections.contact-form.blocks.custom_field.settings.required.info",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "t:sections.contact-form.blocks.custom_field.settings.header__1.content",
+          "info": "t:sections.contact-form.blocks.custom_field.settings.header__1.info"
+        },
+        {
+          "type": "text",
+          "id": "checked_value",
+          "label": "t:sections.contact-form.blocks.custom_field.settings.checked_value.label",
+          "default": "Yes"
+        },
+        {
+          "type": "text",
+          "id": "unchecked_value",
+          "label": "t:sections.contact-form.blocks.custom_field.settings.unchecked_value.label",
+          "default": "No"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.contact-form.blocks.custom_field.settings.header__2.content",
+          "info": "t:sections.contact-form.blocks.custom_field.settings.header__2.info"
+        },
+        {
+          "type": "text",
+          "id": "radio_options",
+          "label": "t:sections.contact-form.blocks.custom_field.settings.options.label",
+          "info": "t:sections.contact-form.blocks.custom_field.settings.options.info"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.contact-form.blocks.custom_field.settings.header__3.content",
+          "info": "t:sections.contact-form.blocks.custom_field.settings.header__3.info"
+        },
+        {
+          "type": "text",
+          "id": "select_options",
+          "label": "t:sections.contact-form.blocks.custom_field.settings.options.label",
+          "info": "t:sections.contact-form.blocks.custom_field.settings.options.info"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.contact-form.presets.name",
+      "blocks": [
+        {
+          "type": "contact"
+        },
+        {
+          "type": "media"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  }
+}
+{% endschema %}

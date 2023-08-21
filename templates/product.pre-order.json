@@ -1,0 +1,364 @@
+{
+  "sections": {
+    "empty-space": {
+      "type": "empty-space",
+      "settings": {
+        "desktop_height": 36,
+        "mobile_height": 0
+      }
+    },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "subtitle": {
+          "type": "text",
+          "settings": {
+            "icon": "none",
+            "text": "{{ product.metafields.descriptors.subtitle.value }}",
+            "text_style": "subtitle"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": "h2"
+          }
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {
+          }
+        },
+        "countdown": {
+          "type": "countdown",
+          "settings": {
+            "heading": "Hurry up ! Sale end in:",
+            "number_size": "compact",
+            "colors_heading": "#da3f3f",
+            "colors_text": "#da3f3f",
+            "colors_background": "#ffeeee"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "show_variant_labels": true,
+            "picker_type": "button",
+            "enable_color_swatches": true,
+            "swatch_type": "round"
+          }
+        },
+        "inventory_status": {
+          "type": "inventory_status",
+          "settings": {
+            "inventory_threshold": 20,
+            "show_inventory_transfer": true,
+            "color_scheme": "accent-3"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "show_dynamic_checkout": true
+          }
+        },
+        "collapsible_tab-0": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "heading": "Shipping information",
+            "content": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.<\/p><p>Ex: Shipping and return policies, size guides, and other common questions.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_tab-1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "heading": "Returns information",
+            "content": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.<\/p><p>Ex: Shipping and return policies, size guides, and other common questions.<\/p>",
+            "page": ""
+          }
+        },
+        "related_buttons": {
+          "type": "related_buttons",
+          "settings": {
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+          }
+        },
+        "sticky_cart": {
+          "type": "sticky_cart",
+          "settings": {
+            "show_quantity_selector": false
+          }
+        }
+      },
+      "block_order": [
+        "subtitle",
+        "title",
+        "rating",
+        "countdown",
+        "price",
+        "variant_picker",
+        "inventory_status",
+        "buy_buttons",
+        "collapsible_tab-0",
+        "collapsible_tab-1",
+        "related_buttons",
+        "share",
+        "sticky_cart"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "media_size": "large",
+        "gallery_layout": "stacked",
+        "image_ratio": "adapt",
+        "show_thumbnails": true,
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "mobile_image_ratio": "adapt_first",
+        "show_mobile_thumbnails": false,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "product-details": {
+      "type": "product-details",
+      "blocks": {
+        "product-details-0": {
+          "type": "description",
+          "settings": {
+            "heading": ""
+          }
+        },
+        "product-details-1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "1. Collapsible tab",
+            "content": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "page": ""
+          }
+        },
+        "product-details-2": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "2. Collapsible tab",
+            "content": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "page": ""
+          }
+        },
+        "product-details-3": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "3. Collapsible tab",
+            "content": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "product-details-0",
+        "product-details-1",
+        "product-details-2",
+        "product-details-3"
+      ],
+      "settings": {
+        "heading": "Product Details",
+        "heading_size": "h2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You May Also Like",
+        "heading_size": "h2",
+        "swipe_on_mobile": true,
+        "image_ratio": "portrait",
+        "image_position": "center center",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_buy": true,
+        "enable_quick_view": true,
+        "enable_color_swatches": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "recently-viewed-products": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "heading": "Recently Viewed",
+        "heading_size": "h2",
+        "swipe_on_mobile": true,
+        "image_ratio": "portrait",
+        "image_position": "center center",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_buy": true,
+        "enable_quick_view": true,
+        "enable_color_swatches": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "tab-collage": {
+      "type": "tab-collage",
+      "blocks": {
+        "tab-collage-0": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "1. Image heading",
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "tab-collage-1": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "2. Image heading",
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "tab-collage-2": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "3. Image heading",
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "tab-collage-3": {
+          "type": "image",
+          "settings": {
+            "image": "",
+            "heading": "4. Image heading",
+            "description": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "tab-collage-0",
+        "tab-collage-1",
+        "tab-collage-2",
+        "tab-collage-3"
+      ],
+      "settings": {
+        "layout": "text_first",
+        "text_box_position": "top",
+        "text_alignment": "left",
+        "image_ratio": "550px",
+        "full_width": true,
+        "heading": "Tab collage",
+        "heading_size": "h1",
+        "mobile_layout": "text_first",
+        "mobile_text_alignment": "left",
+        "mobile_image_ratio": "auto",
+        "colors_text": "#ffffff",
+        "colors_background": "#25958f",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonials-0": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "image": "",
+            "author": "Author's name"
+          }
+        },
+        "testimonials-1": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "image": "",
+            "author": "Author's name"
+          }
+        },
+        "testimonials-2": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "image": "",
+            "author": "Author's name"
+          }
+        },
+        "testimonials-3": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "image": "",
+            "author": "Author's name"
+          }
+        },
+        "testimonials-4": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "image": "",
+            "author": "Author's name"
+          }
+        }
+      },
+      "block_order": [
+        "testimonials-0",
+        "testimonials-1",
+        "testimonials-2",
+        "testimonials-3",
+        "testimonials-4"
+      ],
+      "settings": {
+        "autorotate": false,
+        "autorotate_speed": 5,
+        "heading": "Testimonials",
+        "heading_size": "h2",
+        "padding_top": 36,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "empty-space",
+    "main",
+    "product-details",
+    "product-recommendations",
+    "recently-viewed-products",
+    "tab-collage",
+    "testimonials"
+  ]
+}

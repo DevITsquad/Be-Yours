@@ -1,0 +1,243 @@
+.image-with-text__grid {
+  background: var(--gradient-background);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (min-width: 750px) {
+  .image-with-text__grid--reverse {
+    flex-direction: row-reverse;
+  }
+
+  .image-with-text--alt .image-with-text__grid--reverse .image-with-text__content {
+    padding-inline-start: 0;
+  }
+
+  .image-with-text--alt .image-with-text__grid:not(.image-with-text__grid--reverse) .image-with-text__content {
+    padding-inline-end: 0;
+  }
+
+  .image-with-text--alt.page-width--full-width .image-with-text__grid--reverse .image-with-text__content {
+    padding-inline-start: 5rem;
+  }
+
+  .image-with-text--alt.page-width--full-width .image-with-text__grid:not(.image-with-text__grid--reverse) .image-with-text__content {
+    padding-inline-end: 5rem;
+  }
+}
+
+.image-with-text .media--placeholder {
+  background-color: rgba(var(--color-foreground), 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.image-with-text .media--placeholder.media--adapt {
+  height: 20rem;
+}
+
+@media screen and (min-width: 750px) {
+  .image-with-text .media--placeholder.media--adapt {
+    height: 30rem;
+  }
+}
+
+.image-with-text .media--placeholder > svg {
+  position: absolute;
+  left: 50%;
+  max-width: 80rem;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  fill: currentColor;
+}
+
+.image-with-text__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  padding-top: 3rem;
+}
+
+.image-with-text--colored .image-with-text__content {
+  padding: 3rem 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .image-with-text .image-with-text__content {
+    padding: 5rem;
+  }
+
+  .image-with-text__content.center {
+    align-items: center;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+  }
+
+  .image-with-text__content.center .card--product + .card-information .card-information__top {
+    justify-content: center;
+  }
+
+  .image-with-text__content.right {
+    align-items: flex-end;
+    margin-inline-start: auto;
+  }
+
+  .image-with-text__content.right .card--product + .card-information .card-information__top {
+    justify-content: flex-end;
+  }
+
+  .image-with-text__content.middle {
+    justify-content: center;
+  }
+
+  .image-with-text__content.bottom {
+    justify-content: flex-end;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .image-with-text .image-with-text__content {
+    max-width: 64rem;
+    padding-inline-start: 7rem;
+    padding-inline-end: 7rem;
+  }
+}
+
+@media screen and (min-width: 1320px) {
+  .image-with-text .image-with-text__content {
+    max-width: 66rem;
+    padding-inline-start: 10rem;
+    padding-inline-end: 10rem;
+  }
+
+  .image-with-text .image-with-text__grid--reverse .image-with-text__content {
+    max-width: 72rem;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .image-with-text__grid-mobile--reverse {
+    flex-direction: column-reverse;
+  }
+
+  .image-with-text__grid-mobile--no-image .grid__item:first-child {
+    display: none;
+  }
+
+  .image-with-text__content.mobile-center {
+    align-items: center;
+  }
+
+  .image-with-text__content.mobile-right {
+    align-items: flex-end;
+  }
+
+  .image-with-text__content.mobile-center .button {
+    min-width: 60%;
+  }
+
+  .page-width--full-width .image-with-text__content {
+    padding-inline-start: 1.5rem;
+    padding-inline-end: 1.5rem;
+  }
+
+  .image-with-text__grid-mobile--overlap {
+    position: relative;
+    background-color: transparent;
+  }
+
+  .image-with-text__grid-mobile--overlap .media-wrapper {
+    z-index: -1;
+  }
+
+  .image-with-text__grid-mobile--overlap .image-with-text__content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .image-with-text__content .button {
+    width: 100%;
+  }
+}
+
+.image-with-text__content > * + * {
+  margin-top: 2rem;
+}
+
+.image-with-text__content > * + :is(.image-with-text__heading) {
+  margin-top: 0.5rem;
+}
+
+.image-with-text__content > * + :is(.image-with-text__heading) + :is(.image-with-text__heading) {
+  margin-top: 0;
+}
+
+.image-with-text__content > .image-with-text__text:empty ~ a {
+  margin-top: 2rem;
+}
+
+.image-with-text__content > :first-child:is(.image-with-text__heading),
+.image-with-text__content > :first-child:is(.image-with-text__subheading) {
+  margin-top: 0;
+}
+
+.image-with-text__content :last-child:is(.image-with-text__heading) {
+  margin-bottom: 0;
+}
+
+.image-with-text__content :last-child:is(.button) {
+  margin-top: 3rem;
+  margin-bottom: 0.1rem;
+}
+
+.image-with-text__content .button + .image-with-text__text {
+  margin-top: 5rem;
+}
+
+.image-with-text__heading {
+  margin-bottom: 0;
+}
+
+.image-with-text__subheading {
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  margin-bottom: 0;
+}
+
+.image-with-text__subheading--colored {
+  color: rgba(var(--color-heading), 0.55);
+}
+
+.image-with-text__text--colored {
+  color: rgba(var(--color-foreground), 0.7);
+}
+
+.image-with-text__text--colored.rte a {
+  color: rgb(var(--color-link));
+  background-image: linear-gradient(to top, rgb(var(--color-border)) 0px, rgb(var(--color-border)) 0px), linear-gradient(to top, transparent 0px, transparent 0px);
+}
+
+.image-with-text__text p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .image-with-text__subheading.h5 {
+    font-size: calc(var(--font-heading-scale) * 1.2rem);
+  }
+
+  .image-with-text--enlarge .grid__item:first-child {
+    max-width: calc(33.33% - var(--grid-horizontal-spacing) / 2);
+  }
+}

@@ -1,0 +1,197 @@
+{% comment %}
+  Renders product variant-picker
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - update_url: {Boolean} whether or not to update url when changing variants. If false, the url isn't updated. Default: true (optional).
+  Usage:
+  {% render 'product-variant-picker', block: block, product: product %}
+{% endcomment %}
+{%- unless product.has_only_default_variant -%}
+  {%- if block.settings.picker_type == 'button' -%}
+    <variant-radios
+      class="no-js-hidden"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}data-update-url="false"{% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- assign color_count = 0 -%}
+      {%- for option in product.options_with_values -%}
+        {%- liquid
+          assign is_color = false
+          if block.settings.enable_color_swatches
+            assign swatch_file_extension = 'png'
+            assign swatch_trigger = 'products.product.color_swatch_trigger' | t | downcase
+            assign downcased_option = option.name | downcase
+            if downcased_option contains swatch_trigger
+              assign is_color = true
+            elsif swatch_trigger == 'color' and downcased_option contains 'colour'
+              assign is_color = true
+            endif
+          endif
+
+          assign is_size = false
+          if block.settings.size_chart != blank
+            assign size_trigger = 'products.product.size_chart_trigger' | t | downcase
+            assign downcased_option = option.name | downcase
+            if downcased_option contains size_trigger
+              assign is_size = true
+            endif
+          endif
+
+          assign option_idx = forloop.index
+        -%}
+        <fieldset class="js product-form__input variant-input-wrapper"
+          data-option-index="option{{ option_idx }}"
+          data-option-slug="{{ option.name | handleize }}"
+        >
+          {%- if block.settings.show_variant_labels -%}
+            <legend class="form__label">
+              {{ option.name }}
+              {%- if is_color -%}
+                {%- assign color_count = color_count | plus: 1 -%}
+                <span class="form__label-info" id="color-{{ section.id }}{% if color_count > 1 %}-{{ color_count }}{% endif %}">&ndash;&nbsp;{{ option.selected_value }}</span>
+              {%- endif -%}
+            </legend>
+          {%- endif -%}
+          {%- for value in option.values -%}
+            <input
+              type="radio"
+              id="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}"
+              name="{{ option.name }}"
+              value="{{ value | escape }}"
+              form="{{ product_form_id }}"
+              {%- if option.selected_value == value %}checked="checked"{% endif -%}
+              data-option-value="{{ value | escape }}"
+            />
+            {%- if is_color -%}
+              {%- liquid
+                assign color_file_name = value | handle | append: '.' | append: swatch_file_extension
+                assign color_image = color_file_name | file_img_url: '50x50' | prepend: 'https:' | split: '?' | first
+                assign color_swatch_fallback = value | split: ' ' | last | handle
+              -%}
+              <label
+                for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}"
+                class="color__swatch color__swatch--{{ block.settings.swatch_type }}"
+                style="--swatch-background-color: {{ color_swatch_fallback }};{% if images[color_file_name] != blank %} --swatch-background-image: url({{ color_image }});{% endif %}"
+                title="{{ value | escape }}"
+              >
+                <span class="color__swatch-dot"></span>
+              </label>
+            {%- else -%}
+              <label for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}">
+                {{ value }}
+              </label>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if is_size -%}
+            <div class="form__popup" id="size-{{ section.id }}">
+              <modal-opener class="no-js-hidden" data-modal="#PopupModal-{{ block.id }}" {{ block.shopify_attributes }}>
+                <button id="ProductPopup-{{ block.id }}" class="link link-with-icon" type="button" aria-haspopup="dialog">
+                  {% render 'icon', icon: 'ruler' %}
+                  <span class="label">{{ 'products.product.size_chart' | t | default: block.settings.size_chart.title }}</span>
+                </button>
+              </modal-opener>
+              <a href="{{ block.settings.size_chart.url }}" class="link link-with-icon no-js">
+                {% render 'icon', icon: 'ruler' %}
+                <span class="label">{{ 'products.product.size_chart' | t | default: block.settings.size_chart.title }}</span>
+              </a>
+            </div>
+          {%- endif -%}
+        </fieldset>
+      {%- endfor -%}
+
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-radios>
+  {%- else -%}
+    <variant-selects
+      class="no-js-hidden"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}data-update-url="false"{% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- for option in product.options_with_values -%}
+        {%- liquid
+          assign is_size = false
+          if block.settings.size_chart != blank
+            assign size_trigger = 'products.product.size_chart_trigger' | t | downcase
+            assign downcased_option = option.name | downcase
+            if downcased_option contains size_trigger
+              assign is_size = true
+            endif
+          endif
+
+          assign option_idx = forloop.index
+        -%}
+        <div class="product-form__input product-form__input--dropdown variant-input-wrapper"
+          data-option-index="option{{ option_idx }}"
+          data-option-slug="{{ option.name | handleize }}"
+        >
+          {%- if block.settings.show_variant_labels -%}
+            <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+              {{ option.name }}
+            </label>
+          {%- endif -%}
+          <div class="select">
+            <select id="Option-{{ section.id }}-{{ forloop.index0 }}"
+              class="select__select"
+              name="options[{{ option.name | escape }}]"
+              form="{{ product_form_id }}"
+            >
+              {%- for value in option.values -%}
+                <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                  {{ value }}
+                </option>
+              {%- endfor -%}
+            </select>
+            {% render 'icon', icon: 'caret' %}
+          </div>
+          {%- if is_size -%}
+            <div class="form__popup" id="size-{{ section.id }}">
+              <modal-opener class="no-js-hidden" data-modal="#PopupModal-{{ block.id }}" {{ block.shopify_attributes }}>
+                <button id="ProductPopup-{{ block.id }}" class="link link-with-icon" type="button" aria-haspopup="dialog">
+                  {% render 'icon', icon: 'ruler' %}
+                  <span class="label">{{ 'products.product.size_chart' | t | default: block.settings.size_chart.title }}</span>
+                </button>
+              </modal-opener>
+              <a href="{{ block.settings.size_chart.url }}" class="link link-with-icon no-js">
+                {% render 'icon', icon: 'ruler' %}
+                <span class="label">{{ 'products.product.size_chart' | t | default: block.settings.size_chart.title }}</span>
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-selects>
+  {%- endif -%}
+{%- endunless -%}
+
+<noscript>
+  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+    <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
+    <div class="select">
+      <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
+        {%- for variant in product.variants -%}
+          <option
+            {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+            {% if variant.available == false %}disabled="disabled"{% endif %}
+            value="{{ variant.id }}"
+          >
+            {{ variant.title }}
+            {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+            - {{ variant.price | money | strip_html }}
+          </option>
+        {%- endfor -%}
+      </select>
+      {% render 'icon', icon: 'caret' %}
+    </div>
+  </div>
+</noscript>

@@ -1,0 +1,106 @@
+{% comment %}
+  Renders product media
+
+  Accepts:
+  - media: {Object} Product Media object
+  - loop: {Boolean} Enable video looping (optional)
+  - variant_image: {Boolean} The media associated with a variant
+  - gang_exist: {Boolean} The gang fearure exist or not
+  - gang_media_active: {Boolean} The media is associated with current variant
+  - gang_option_name: {String} Option name used for gang variant
+  - gang_connect: {String} The string that setup in ALT of the media
+
+  Usage:
+  {% render 'product-media',
+    media: media,
+    loop: section.settings.enable_video_looping,
+    variant_image: true
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign alt = media.alt | escape | split: '#' | first
+  assign sizes = '(min-width: 750px) calc(100vw - 12rem), 100vw'
+  assign widths = '375, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+-%}
+
+{%- if media.media_type == 'image' -%}
+  <div class="media-wrapper{% if gang_media_active == true %} gang__active{% endif %}" data-media-id="{{ media.id }}"
+    {%- if gang_exist == true %} data-gang-option="{{ gang_option_name | escape }}" data-gang-connect="{{ gang_connect | escape }}"{% endif -%}
+  >
+    <div class="media media--adapt" style="--image-ratio-percent: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;">
+      {%- liquid
+        if variant_image
+          assign image_class = 'product__media-item--variant'
+        endif
+    
+        echo media.preview_image | image_url: width: 3840 | image_tag: loading: 'lazy', class: image_class, sizes: sizes, widths: widths, alt: alt, is: 'lazy-image'
+      -%}
+      </div>
+  </div>
+{%- else -%}
+  {%- if media.media_type == 'model' -%}
+    <div class="product-media-modal__model{% if gang_media_active == true %} gang__active{% endif %}" data-media-id="{{ media.id }}"
+      {% if gang_exist == true %}data-gang-option="{{ gang_option_name }}" data-gang-connect="{{ gang_connect }}"{% endif %}
+    >
+      <product-model class="deferred-media media" style="padding-top: min(calc(100vh - 12rem), 100%)">
+  {%- else -%}
+    <deferred-media class="deferred-media media{% if gang_media_active == true %} gang__active{% endif %}" style="padding-top: min(calc(100vh - 12rem), {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%)" data-media-id="{{ media.id }}"
+      {% if gang_exist == true %}data-gang-option="{{ gang_option_name }}" data-gang-connect="{{ gang_connect }}"{% endif %}
+    >
+  {%- endif -%}
+
+  {{ media.preview_image | image_url: width: 3840 | image_tag:
+    loading: 'lazy',
+    sizes: sizes,
+    widths: widths,
+    alt: alt
+  }}
+  <button id="Deferred-Poster-Modal-{{ media.id }}" class="deferred-media__poster" type="button">
+    <span class="deferred-media__poster-button motion-reduce">
+      {%- liquid
+        if media.media_type == 'model'
+          render 'icon', icon: '3d-model'
+        else
+          render 'icon', icon: 'play'
+        endif
+      -%}
+    </span>
+  </button>
+  <template>
+    {%- liquid
+      case media.media_type
+      when 'external_video'
+        assign video_class = 'js-' | append: media.host
+        if media.host == 'youtube'
+          echo media | external_video_url: autoplay: true, loop: section.settings.enable_video_looping, playlist: media.external_id | external_video_tag: class: video_class, loading: "lazy"
+        else
+          echo media | external_video_url: autoplay: true, loop: section.settings.enable_video_looping | external_video_tag: class: video_class, loading: "lazy"
+        endif
+      when 'video'
+        echo media | media_tag: image_size: "2200x", autoplay: true, loop: section.settings.enable_video_looping, controls: true, controlsList: "nodownload", preload: "none"
+      when 'model'
+        echo media | media_tag: image_size: "2200x", toggleable: true
+      endcase
+    -%}
+  </template>
+
+  {%- if media.media_type == 'model' -%}
+      </product-model>
+      <button
+        class="button button--full-width product__xr-button"
+        type="button"
+        aria-label="{{ 'products.product.xr_button_label' | t }}"
+        data-shopify-xr
+        data-shopify-model3d-id="{{ media.id }}"
+        data-shopify-title="title"
+        data-shopify-xr-hidden
+      >
+        {% render 'icon', icon: '3d-model' %}
+        {{ 'products.product.xr_button' | t }}
+      </button>
+    </div>
+  {%- else -%}
+    </deferred-media>
+  {%- endif -%}
+{%- endif -%}

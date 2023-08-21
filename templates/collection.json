@@ -1,0 +1,145 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "heading_size": "h0",
+        "show_description": true,
+        "show_image": true,
+        "apply_overlay": true,
+        "image_position": "center center",
+        "image_ratio": "550px",
+        "text_alignment": "left",
+        "mobile_text_alignment": "left",
+        "mobile_image_ratio": "250px",
+        "show_text_below": false,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "subs": {
+      "type": "main-collection-subs",
+      "disabled": true,
+      "settings": {
+        "menu": "sub-collections",
+        "per_row": 5,
+        "columns_mobile": "1",
+        "horizontal_on_mobile": true,
+        "grid_image": "product",
+        "image_ratio": "adapt",
+        "image_position": "center center",
+        "apply_overlay": true,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_row": 4,
+        "rows_per_page": 3,
+        "columns_mobile": "2",
+        "pagination": "paginated",
+        "enable_sticky_facet": true,
+        "enable_sorting": true,
+        "enable_viewing": true,
+        "enable_filtering": true,
+        "filter_type": "vertical",
+        "enable_filtering_color_swatches": false,
+        "filtering_color_swatches_add_label": false,
+        "filtering_max_items": 6,
+        "image_ratio": "portrait",
+        "image_position": "center center",
+        "enable_image_fill": true,
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": true,
+        "show_quick_buy": true,
+        "enable_quick_view": true,
+        "enable_color_swatches": true,
+        "enable_countdown": true,
+        "padding_top": 0,
+        "padding_bottom": 72
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "show_divider": true,
+        "heading": "Recently viewed",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "heading_tag": "h2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "image_ratio": "portrait",
+        "image_position": "center center",
+        "enable_image_fill": true,
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": true,
+        "show_quick_buy": true,
+        "enable_quick_view": true,
+        "enable_color_swatches": true,
+        "enable_countdown": true,
+        "padding_top": 60,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "column-0": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Site-wide promotion",
+            "title_size": "h2",
+            "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.<\/p>",
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        },
+        "column-1": {
+          "type": "column",
+          "settings": {
+            "image": "",
+            "title": "Site-wide promotion",
+            "title_size": "h2",
+            "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.<\/p>",
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "column-0",
+        "column-1"
+      ],
+      "settings": {
+        "image_ratio": "wide",
+        "image_position": "center center",
+        "text_alignment": "center",
+        "show_divider": false,
+        "heading": "More to Discover",
+        "heading_size": "h1",
+        "heading_alignment": "left",
+        "heading_tag": "h2",
+        "mobile_text_alignment": "center",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "subs",
+    "product-grid",
+    "recently-viewed",
+    "multicolumn"
+  ]
+}

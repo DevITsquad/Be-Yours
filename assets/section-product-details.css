@@ -1,0 +1,126 @@
+.product-details .grid {
+  margin-bottom: 0;
+}
+
+.product-details .product__description {
+  padding: 3rem 0;
+  border-top: 0.1rem solid rgb(var(--color-border));
+  border-bottom: 0.1rem solid rgb(var(--color-border));
+}
+
+@media screen and (min-width: 750px) {
+  .product-details .product__description {
+    padding: 5rem 0;
+  }
+}
+
+.product-details .product__description:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.product-details .accordion + .product__description,
+.product-details .product__description + .accordion {
+  border-top: 0;
+}
+
+.product-details .product__description li {
+  line-height: calc(1 + 0.4 / var(--font-body-scale));
+}
+
+.product-details__heading {
+  margin: 0;
+  margin-bottom: 3rem;
+}
+
+.product-details .accordion {
+  margin-top: 0;
+}
+
+.product-details .accordion:first-child {
+  border-top: 0;
+}
+
+.product-details .accordion summary {
+  padding: 0;
+  color: rgb(var(--color-heading));
+  transition: color var(--duration-default) ease;
+}
+
+.product-details .accordion summary .icon {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  margin-top: -0.7rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  transition: transform var(--duration-default) ease;
+}
+
+@media screen and (min-width: 750px) {
+  .product-details .accordion summary .icon {
+    margin-top: -1rem;
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.product-details .accordion summary .icon::after {
+  transition: height var(--duration-default) ease;
+}
+
+.product-details .accordion details[open] summary {
+  color: rgba(var(--color-foreground), 0.55);
+}
+
+.product-details .accordion details[open] summary .icon::after {
+  height: 0;
+}
+
+@media screen and (hover: hover) {
+  .product-details .accordion details:not([open]) summary:hover {
+    color: rgba(var(--color-foreground), 0.55);
+  }
+
+  .product-details .accordion details:not([open]) summary:hover .icon {
+    transform: rotate(90deg);
+  }
+}
+
+.product-details .accordion .summary__title {
+  padding: 1.5rem 0;
+  display: block;
+}
+
+.product-details .grid .accordion:first-child summary {
+  margin-top: -1.5rem;
+}
+
+.product-details .accordion .accordion__title {
+  color: currentColor;
+}
+
+.product-details .accordion__content {
+  padding: 0 0 3rem;
+}
+
+@media screen and (min-width: 750px) {
+  .product-details .accordion .summary__title {
+    padding: 3rem 0;
+  }
+
+  .product-details .grid .accordion:first-child summary {
+    margin-top: -3rem;
+  }
+
+  .product-details .accordion__content {
+    padding-bottom: 5rem;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .product-details .grid__item {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

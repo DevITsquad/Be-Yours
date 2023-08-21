@@ -1,0 +1,101 @@
+.quotes .slider {
+  margin: 0;
+  position: relative;
+  flex-wrap: inherit;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.quotes .slider__slide {
+  padding: 0;
+}
+
+.quotes .slider-buttons {
+  display: flex;
+}
+
+.no-js .quote__item {
+  opacity: 1;
+}
+
+.quote__item {
+  width: 100%;
+  max-width: 100%;
+  opacity: 0.1;
+  transition: opacity var(--duration-default) ease;
+}
+
+.quote__item[aria-current] {
+  opacity: 1;
+}
+
+@media screen and (min-width: 990px) {
+  .quote__item {
+    width: 75%;
+    max-width: 75%;
+  }
+
+  .quote__item:last-child {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.quote__blockquote {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-style: normal;
+  max-width: 72rem;
+}
+
+@media screen and (min-width: 990px) {
+  .quote__blockquote {
+    margin-inline-end: 6rem;
+  }
+}
+
+.quote__blockquote .quote-icon {
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.quote__blockquote .icon-quote {
+  width: 3rem;
+  height: 3rem;
+}
+
+.quote__blockquote .rating {
+  margin-bottom: 1rem;
+}
+
+.quote__blockquote .rating-star {
+  --letter-spacing: 0.2;
+  --font-size: 1.8;
+}
+
+.quote__author {
+  display: block;
+  margin-top: 1.5rem;
+}
+
+.quote__author::before {
+  content: '\2014 \0020';
+}
+
+.quote__author:empty {
+  display: none;
+}
+
+[data-heading-center] .quotes .title-wrapper:not(.title-wrapper--no-heading) + .slider-mobile-gutter {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+[data-heading-center] .quotes .title-wrapper:not(.title-wrapper--no-heading) + .slider-mobile-gutter .slider-buttons {
+  position: relative;
+  margin-top: -2rem;
+  justify-content: center;
+}

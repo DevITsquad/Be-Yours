@@ -1,0 +1,327 @@
+.collage {
+  display: grid;
+  row-gap: 1rem;
+  margin-inline-start: -1rem;
+}
+
+@media screen and (min-width: 480px) {
+  .collage {
+    row-gap: 2rem;
+    margin-inline-start: -2rem;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .collage--mobile {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .collage--mobile .collage__item--left:nth-child(3n - 2) {
+    grid-column: span 2;
+  }
+
+  .collage--mobile .collage__item--left:nth-child(3n - 2):nth-last-child(2) {
+    grid-column: span 1;
+  }
+
+  .collage--mobile .collage__item--left:nth-child(3n) {
+    grid-column-start: 2;
+  }
+
+  .collage--mobile .collage__item--right:nth-child(3n - 2) {
+    grid-column-start: 1;
+  }
+
+  .collage--mobile .collage__item--right:nth-child(3n - 2):last-child {
+    grid-column: span 2;
+  }
+
+  .collage--mobile .collage__item--right:nth-child(3n - 1) {
+    grid-column-start: 2;
+  }
+
+  .collage--mobile .collage__item--right:nth-child(3n) {
+    grid-column: 1 / span 2;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .collage {
+    grid-auto-flow: column;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 3rem;
+    margin-inline-start: -3rem;
+  }
+
+  .collage__item--left:nth-child(3n - 2) {
+    grid-column: 1 / span 2;
+    grid-row: span 2;
+  }
+
+  .collage__item--left:nth-child(3n - 2):last-child {
+    grid-column: 1 / span 3;
+  }
+
+  .collage__item--left:nth-child(3n - 1),
+  .collage__item--left:nth-child(3n) {
+    grid-column-start: 3;
+  }
+
+  .collage__item--left:nth-child(3n - 1):last-child {
+    grid-row: span 2;
+  }
+
+  .collage__item--right:nth-child(3n - 2) {
+    grid-column: 1 / span 1;
+    grid-row: span 1;
+  }
+
+  .collage__item--right:nth-child(3n - 2):last-child {
+    grid-column: 1 / span 3;
+  }
+
+  .collage__item--right:nth-child(3n - 1) {
+    grid-column-start: 1;
+  }
+
+  .collage__item--right:nth-child(3n-1):last-child {
+    grid-column: span 2;
+  }
+
+  .collage__item--right:nth-child(3n) {
+    grid-column: 2 / span 2;
+    grid-row: span 2;
+  }
+
+  .collage__item--collection:only-child,
+  .collage__item--product:only-child {
+    justify-self: center;
+    max-width: 73rem;
+    width: 100%;
+  }
+}
+
+.collage__item > * {
+  width: 100%;
+}
+
+.collage-card {
+  height: 100%;
+  position: relative;
+  padding-inline-start: 1rem;
+}
+
+@media screen and (min-width: 480px) {
+  .collage-card {
+    padding-inline-start: 2rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .collage-card {
+    padding-inline-start: 3rem;
+  }
+}
+
+.collage-card .media-wrapper {
+  width: 100%;
+}
+
+.collage-card .deferred-media,
+.collage-card .media,
+.collage-card .card-wrapper,
+.collage-card .card,
+.collage-card .media-wrapper {
+  height: 100%;
+}
+
+.collage-card .deferred-media__poster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.collage-video modal-opener {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.collage-card iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+}
+
+.collage-card__description {
+  overflow: hidden;
+}
+
+.collage-product .card-information__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.collage-product .price {
+  margin-inline-end: -0.6rem;
+  text-align: end;
+  line-height: calc(1 + 0.3 / max(1, var(--font-price-scale)));
+}
+
+@media screen and (min-width: 750px) {
+  .collage-product .card__badge {
+    margin-inline-start: 2.5rem;
+  }
+}
+
+.collage-content {
+  position: relative;
+  justify-content: center;
+  overflow: hidden;
+  text-align: start;
+}
+
+.collage-content h3 {
+  margin: 0;
+  word-break: break-word;
+}
+
+.collage-content .collage-content__info {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  color: #ffffff;
+  --color-foreground: 255, 255, 255;
+  --color-link: 255, 255, 255;
+  --color-border: 255, 255, 255;
+  --color-heading: 255, 255, 255;
+  --color-price: 255, 255, 255;
+  --color-sale-price: currentColor;
+}
+
+.collage--contrast .collage-content__info::after {
+  content: '';
+  pointer-events: none;
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to top, rgba(4, 4, 4, 0.46) 0, rgba(54, 54, 54, 0.2) 40%, transparent 100%);
+}
+
+.collage-content .collage-content__info .unit-price {
+  color: currentColor;
+}
+
+.collage-content__info {
+  padding: 1.5rem 2rem;
+  overflow: hidden;
+  border-radius: var(--card-radius);
+}
+
+@media screen and (min-width: 750px) {
+  .collage-content__info {
+    padding: 2rem 3rem;
+  }
+}
+
+.collage-content__info .card-information__text {
+  padding-bottom: 0;
+}
+
+/* Video modal testing */
+.collage-video__modal {
+  box-sizing: border-box;
+  opacity: 0;
+  position: fixed;
+  visibility: hidden;
+  z-index: -1;
+  margin: 0 auto;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  width: 100%;
+  background-color: rgba(var(--color-base-text), 0.2);
+  height: 100%;
+}
+
+.collage-video__modal[open] {
+  opacity: 1;
+  visibility: visible;
+  z-index: 101;
+}
+
+.collage-video__modal-content {
+  background-color: rgb(var(--color-base-background));
+  overflow: auto;
+  height: 100%;
+  margin: 0;
+  width: 100%;
+  position: absolute;
+  padding: 0;
+}
+
+.collage-video__modal-toggle {
+  background-color: rgb(var(--color-base-background));
+  border: 0.1rem solid rgb(var(--color-border));
+  border-radius: 50%;
+  color: rgb(var(--color-base-text));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: fixed;
+  padding: 1.2rem;
+  z-index: 2;
+  top: 2rem;
+  right: 0.5rem;
+  width: 4.4rem;
+  height: 4.4rem;
+  margin: 0 0 0 auto;
+}
+
+@media screen and (min-width: 750px) {
+  .collage-video__modal-toggle {
+    right: 4.8rem;
+    top: 3.5rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .collage-video__modal-toggle {
+    right: 4.3rem;
+    top: 3rem;
+  }
+}
+
+.collage-video__modal-toggle .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform var(--duration-default) ease;
+}
+
+@media screen and (hover: hover) {
+  .collage-video__modal-toggle:hover .icon {
+    transform: scale(.8) rotate(90deg);
+  }
+}
+
+.collage-content.deferred-media[loading] .deferred-media__poster-button {
+  visibility: hidden;
+}
+
+.collage-content.deferred-media[loaded] > .deferred-media__poster {
+  display: block;
+  visibility: hidden;
+}
