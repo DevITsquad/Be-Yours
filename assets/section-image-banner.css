@@ -69,7 +69,7 @@
     --color-heading: var(--color-base-heading);
     --color-button-background: var(--color-base-accent);
     --color-button-border: var(--color-base-accent);
-    --color-button-text: white;
+    --color-button-text: var(--color-base-solid-button-labels);
     background-color: rgb(var(--color-background));
   }
 
