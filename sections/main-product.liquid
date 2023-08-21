@@ -41,12 +41,6 @@
       padding-bottom: {{ first_image_ratio }}%;
     }
   }
-
-  .custom_center{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
 {%- endstyle -%}
 
 {%- assign first_3d_model = product.media | where: "media_type", "model" | first -%}
@@ -60,7 +54,9 @@
   <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}{% if section.settings.gallery_layout == 'thumbnail_slider' and section.settings.show_thumbnails == false %} product--hide-thumbnails{% endif %}{% if section.settings.mobile_image_ratio == 'adapt' %} product--mobile-adapt{% endif %}{% unless section.settings.enable_image_zoom %} product--zoom-disabled{% endunless %}">
     <product-recently-viewed data-product-id="{{ product.id }}" class="hidden"></product-recently-viewed>
     <div class="grid__item product__media-wrapper">
-      
+      <p class="product__heading mobile_show h1">
+        {{ product.title | escape }}
+      </p>
       <div class="mobile-show">
         {%- if product.metafields.reviews.rating.value != blank -%}
           {% liquid
@@ -72,7 +68,16 @@
               assign rating_decimal = 1
             endif
           %}
-        
+          <div class="rating" role="img" aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}">
+            <span aria-hidden="true" class="rating-star" style="--rating: {{ product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"></span>
+          </div>
+          <p class="rating-text caption">
+            <span aria-hidden="true">{{ product.metafields.reviews.rating.value }} / {{ product.metafields.reviews.rating.value.scale_max }}</span>
+          </p>
+          <p class="rating-count caption">
+            <span aria-hidden="true">({{ product.metafields.reviews.rating_count }})</span>
+            <span class="visually-hidden">{{ product.metafields.reviews.rating_count }} {{ "accessibility.total_reviews" | t }}</span>
+          </p>
         {%- endif -%}
       </div>
       <span id="ProductImages"></span>
@@ -577,21 +582,6 @@
               </div>
             {%- endif -%}
           {%- when 'price' -%}
-
-            <p class="product__heading mobile_show h1 custom_center">
-              {{ product.title | escape }}
-            </p>
-            <div class="custom_center mobile_show">
-              <div class="rating" role="img" aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}">
-                <span aria-hidden="true" class="rating-star" style="--rating: {{ product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"></span>
-              </div>
-              <p class="rating-text caption">
-                <span aria-hidden="true">{{ product.metafields.reviews.rating.value }} / {{ product.metafields.reviews.rating.value.scale_max }}</span>
-              </p>
-              <p class="rating-count caption">
-                <span aria-hidden="true">({{ product.metafields.reviews.rating_count }})</span>
-                <span class="visually-hidden">{{ product.metafields.reviews.rating_count }} {{ "accessibility.total_reviews" | t }}</span>
-              </p></div>
             {%- if titleBlockPrice == false -%}
               <div class="no-js-hidden" id="price-{{ section.id }}" {{ block.shopify_attributes }}>
                 {%- liquid
@@ -618,9 +608,6 @@
                 {%- endform -%}
               </div>
             {%- endif -%}
-       
-         
-
           {%- when 'description' -%}
             <div class="product__description rte" {{ block.shopify_attributes }}>{{ product.description }}</div>
           {%- when 'custom_liquid' -%}
@@ -743,7 +730,7 @@
                   assign rating_decimal = 1
                 endif
               %}
-              <div class="mobile_hide">
+
               <div  class="rating" role="img" aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}">
                 <span aria-hidden="true" class="rating-star" style="--rating: {{ product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"></span>
               </div>
@@ -754,7 +741,6 @@
                 <span aria-hidden="true">({{ product.metafields.reviews.rating_count }})</span>
                 <span class="visually-hidden">{{ product.metafields.reviews.rating_count }} {{ "accessibility.total_reviews" | t }}</span>
               </p>
-            </div>
             {%- endif -%}</div>
           {%- when 'related_buttons' -%}
             <div class="product-link__button product__accordion accordion small-hide" {{ block.shopify_attributes }}>
