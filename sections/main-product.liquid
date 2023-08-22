@@ -63,6 +63,9 @@
                 .sticky_info .price bdi{
                 font-size:1.5rem;
                 }
+                .product__heading.mobile_show.h1{
+                margin:0;
+                }
 {%- endstyle -%}
 
 {%- assign first_3d_model = product.media | where: "media_type", "model" | first -%}
@@ -79,7 +82,7 @@
       <p class="product__heading mobile_show h1">
         {{ product.title | escape }}
       </p>
-      <div class="mobile_show">
+      <div  class="mobile_show">
         {%- if product.metafields.reviews.rating.value != blank -%}
           {% liquid
             assign rating_decimal = 0
@@ -576,7 +579,7 @@
                 {{ product.title | escape }}
               </h1>
               {%- if block.settings.show_price -%}
-                <div class="no-js-hidden" id="price-{{ section.id }}">
+                <div style="margin:0;" class="no-js-hidden" id="price-{{ section.id }}">
                   {%- liquid
                     assign price_class = 'price--' | append: block.settings.price_size
                     render 'price', product: product, use_variant: true, show_badges: false, price_class: price_class
@@ -605,7 +608,7 @@
             {%- endif -%}
           {%- when 'price' -%}
             {%- if titleBlockPrice == false -%}
-              <div class="no-js-hidden" id="price-{{ section.id }}" {{ block.shopify_attributes }}>
+              <div  style="margin:0;"  class="no-js-hidden" id="price-{{ section.id }}" {{ block.shopify_attributes }}>
                 {%- liquid
                   assign show_badges = block.settings.show_badges
                   assign price_class = 'price--' | append: block.settings.price_size
@@ -1050,7 +1053,7 @@
             {%- form 'product', product, id: sticky_cart_form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
               <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled="disabled">
 
-              <div class="product-form__buttons">
+              <div  class="product-form__buttons">
                 {%- if sticky_cart.settings.show_quantity_selector -%}
                   <div class="product-form__quantity small-hide">
                     <label for="Quantity-{{ sticky_cart.id }}" class="visually-hidden">{{ 'products.product.quantity.label' | t }}</label>

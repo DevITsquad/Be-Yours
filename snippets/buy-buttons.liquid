@@ -21,7 +21,7 @@
 
   {%- form 'product', product, id: product_form_id, data-type: 'add-to-cart-form' -%}
     <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled="disabled">
-    <div class="product-form__buttons">
+    <div style='justify-content: center;' class="product-form__buttons">
       {%- if block.settings.show_quantity_selector -%}
         <div class="product-form__quantity">
           <label for="Quantity-{{ block.id }}" class="visually-hidden">

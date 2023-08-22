@@ -11,7 +11,6 @@
             "text": "Free Delivery above $50",
             "text_on_mobile": "Free Delivery above $50",
             "text_size": 12,
-            "image": "shopify:\/\/shop_images\/truck-tick_1.svg",
             "link": ""
           }
         },
@@ -21,7 +20,6 @@
             "text": "10% off First Purchase",
             "text_on_mobile": "10% off First Purchase",
             "text_size": 12,
-            "image": "shopify:\/\/shop_images\/truck-tick_1.svg",
             "link": ""
           }
         },
@@ -66,7 +64,7 @@
       "settings": {
         "only_homepage": true,
         "layout": "default",
-        "mobile_layout": "carousel",
+        "mobile_layout": "marquee",
         "autorotate": true,
         "autorotate_speed": 3,
         "show_navigation": false,
