@@ -11,6 +11,7 @@
             "text": "Free Delivery above $50",
             "text_on_mobile": "Free Delivery above $50",
             "text_size": 12,
+            "image": "shopify:\/\/shop_images\/truck-tick_1.svg",
             "link": ""
           }
         },
@@ -20,13 +21,47 @@
             "text": "10% off First Purchase",
             "text_on_mobile": "10% off First Purchase",
             "text_size": 12,
+            "image": "shopify:\/\/shop_images\/truck-tick_1.svg",
+            "link": ""
+          }
+        },
+        "589f5337-331a-4527-a5f0-472295f4b7c3": {
+          "type": "announcement",
+          "settings": {
+            "text": "Welcome to our store",
+            "text_on_mobile": "",
+            "text_size": 13,
+            "image": "shopify:\/\/shop_images\/truck-tick_1.svg",
+            "link": ""
+          }
+        },
+        "22de3e16-f0a4-429d-bb7d-3adac81c9f75": {
+          "type": "announcement",
+          "settings": {
+            "text": "Welcome to our store",
+            "text_on_mobile": "",
+            "text_size": 13,
+            "image": "shopify:\/\/shop_images\/truck-tick_1.svg",
+            "link": ""
+          }
+        },
+        "d5cb12e8-b1d1-4374-ab96-cae08acf1c00": {
+          "type": "announcement",
+          "settings": {
+            "text": "Welcome to our store",
+            "text_on_mobile": "",
+            "text_size": 13,
+            "image": "shopify:\/\/shop_images\/truck-tick_1.svg",
             "link": ""
           }
         }
       },
       "block_order": [
         "announcement-bar-0",
-        "bd54c199-40a0-4b21-8a2a-cd895d4ed309"
+        "bd54c199-40a0-4b21-8a2a-cd895d4ed309",
+        "589f5337-331a-4527-a5f0-472295f4b7c3",
+        "22de3e16-f0a4-429d-bb7d-3adac81c9f75",
+        "d5cb12e8-b1d1-4374-ab96-cae08acf1c00"
       ],
       "settings": {
         "only_homepage": true,
@@ -37,8 +72,8 @@
         "show_navigation": false,
         "direction": "left",
         "speed": 1.6,
-        "colors_text": "#1a1b18",
-        "colors_background": "#f7eedd",
+        "colors_text": "#ffffff",
+        "colors_background": "#1a1b18",
         "gradient_background": "",
         "padding_top": 0,
         "padding_bottom": 0

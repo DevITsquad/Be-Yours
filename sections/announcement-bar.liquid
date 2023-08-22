@@ -41,7 +41,7 @@
           {%- for block in section.blocks -%}
             <div class="announcement-slider__slide" style="gap:10px;--font-size: {{ block.settings.text_size }}px;" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
               {%- if block.settings.image != blank -%}
-              <img style="height:25px;width:25px;" src="{{block.settings.image | img_url}}" alt='img'> 
+              <img style="height:25px;width:25px; filter: brightness(0) invert(1);" src="{{block.settings.image | img_url}}" alt='img'> 
             {%- endif -%}
               {%- if block.settings.link != blank -%}
                 <a class="announcement-link" href="{{ block.settings.link }}">

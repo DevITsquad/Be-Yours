@@ -7,6 +7,11 @@
     --color-border: {{ section.settings.colors_border.red }}, {{ section.settings.colors_border.green }}, {{ section.settings.colors_border.blue }};
     --color-heading: {{ section.settings.colors_heading.red }}, {{ section.settings.colors_heading.green }}, {{ section.settings.colors_heading.blue }};
   }
+
+  #ContactFooter-email{
+    border:1px silver solid;
+
+  }
 {%- endstyle -%}
 
 {{ 'section-footer.css' | asset_url | stylesheet_tag }}
@@ -109,7 +114,7 @@
               {%- endif -%}
               <div class="grid__item">
                 {%- if section.settings.newsletter_enable -%}
-                  <footer-accordion class="accordion footer-block--newsletter" data-open>
+                  <footer-accordion style="border:none;" class="accordion footer-block--newsletter" data-open>
                     
                       {% comment %} <summary tabindex="-1">
                         <p class="h4 accordion__title">{{ section.settings.newsletter_heading | escape }}</p>
@@ -120,7 +125,7 @@
                           {%- form 'customer', id: 'ContactFooter', class: 'footer__newsletter newsletter-form' -%}
                             <input type="hidden" name="contact[tags]" value="newsletter"/>
 
-                            <div class="field">
+                            <div class="field custom_email">
                               <input
                                 id="ContactFooter-email"
                                 type="email"

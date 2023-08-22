@@ -1,12 +1,55 @@
 {
   "sections": {
+    "b7b2a4cf-79b2-4a78-a857-c9cc3edbd217": {
+      "type": "new-page-banner",
+      "blocks": {
+        "0ef5a7f9-7183-45fd-9986-c6782c904c7d": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/6e955e64-0048-48e8-9ef9-be8be31d5703.jpg"
+          }
+        },
+        "bddab668-8e53-4e53-b46a-a92943243097": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/6e955e64-0048-48e8-9ef9-be8be31d5703.jpg"
+          }
+        },
+        "52e08267-705e-4ff6-ae63-3cd45a33c1f1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/6e955e64-0048-48e8-9ef9-be8be31d5703.jpg"
+          }
+        },
+        "ffa249e9-4e6a-488d-b4ba-ce954122faca": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/6e955e64-0048-48e8-9ef9-be8be31d5703.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "0ef5a7f9-7183-45fd-9986-c6782c904c7d",
+        "bddab668-8e53-4e53-b46a-a92943243097",
+        "52e08267-705e-4ff6-ae63-3cd45a33c1f1",
+        "ffa249e9-4e6a-488d-b4ba-ce954122faca"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Copy_of_IMG_8626_5218d6d5-c9d3-4efa-a9e0-05dbfbc894b5.png",
+        "heading": "One, clear, value proposition",
+        "under_title": "One, clear, strong call to action.",
+        "button_text": "SHOP NOW",
+        "link": "shopify:\/\/collections"
+      }
+    },
     "slideshow": {
       "type": "slideshow",
       "blocks": {
         "slide-0": {
           "type": "image",
+          "disabled": true,
           "settings": {
-            "image": "shopify:\/\/shop_images\/Copy_of_IMG_8626.jpg",
+            "image": "shopify:\/\/shop_images\/Copy_of_IMG_8626.png",
             "image_position": "center center",
             "text_box_position": "bottom-center",
             "subheading": "",
@@ -66,6 +109,7 @@
         "slide-1",
         "slide-2"
       ],
+      "disabled": true,
       "settings": {
         "slideshow_type": "legacy",
         "text_alignment": "center",
@@ -126,6 +170,7 @@
         "template--18814236623122__47b6f066-2822-4489-ac9c-396bc4483889-text-1",
         "template--18814236623122__47b6f066-2822-4489-ac9c-396bc4483889-button-1"
       ],
+      "disabled": true,
       "settings": {
         "image": "shopify:\/\/shop_images\/Screenshot_2023-07-31_at_3.29.05_PM.png",
         "image_position": "center center",
@@ -516,7 +561,6 @@
     },
     "countdown-timer": {
       "type": "countdown-timer",
-      "disabled": true,
       "blocks": {
         "subheading": {
           "type": "subheading",
@@ -568,6 +612,7 @@
         "countdown",
         "button"
       ],
+      "disabled": true,
       "settings": {
         "image_position": "center center",
         "layout": "text_first",
@@ -592,7 +637,6 @@
     },
     "shop-the-look": {
       "type": "shop-the-look",
-      "disabled": true,
       "blocks": {
         "product-0": {
           "type": "product",
@@ -627,6 +671,7 @@
         "product-1",
         "product-2"
       ],
+      "disabled": true,
       "settings": {
         "layout": "image_first",
         "text_box_position": "middle",
@@ -654,7 +699,6 @@
     },
     "lookbook": {
       "type": "lookbook",
-      "disabled": true,
       "blocks": {
         "look-0": {
           "type": "look",
@@ -692,6 +736,7 @@
         "look-1",
         "look-2"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "show_divider": false,
@@ -707,7 +752,6 @@
     },
     "image-with-text-0": {
       "type": "image-with-text",
-      "disabled": true,
       "blocks": {
         "subheading": {
           "type": "subheading",
@@ -749,6 +793,7 @@
         "text",
         "button"
       ],
+      "disabled": true,
       "settings": {
         "image_position": "center center",
         "layout": "text_first",
@@ -774,7 +819,6 @@
     },
     "image-with-text-1": {
       "type": "image-with-text",
-      "disabled": true,
       "blocks": {
         "subheading": {
           "type": "subheading",
@@ -816,6 +860,7 @@
         "text",
         "button"
       ],
+      "disabled": true,
       "settings": {
         "image_position": "center center",
         "layout": "image_first",
@@ -841,7 +886,6 @@
     },
     "tab-collage": {
       "type": "tab-collage",
-      "disabled": true,
       "blocks": {
         "image-0": {
           "type": "image",
@@ -898,6 +942,7 @@
         "image-2",
         "image-3"
       ],
+      "disabled": true,
       "settings": {
         "layout": "text_first",
         "text_box_position": "top",
@@ -925,7 +970,6 @@
     },
     "featured-product": {
       "type": "featured-product",
-      "disabled": true,
       "blocks": {
         "vendor": {
           "type": "text",
@@ -1043,6 +1087,7 @@
         "inventory_status",
         "share"
       ],
+      "disabled": true,
       "settings": {
         "product": "24-7-repair-serum",
         "layout": "media_first",
@@ -1126,7 +1171,6 @@
     },
     "image-with-text-overlay": {
       "type": "image-with-text-overlay",
-      "disabled": true,
       "blocks": {
         "subheading": {
           "type": "subheading",
@@ -1168,6 +1212,7 @@
         "text",
         "button"
       ],
+      "disabled": true,
       "settings": {
         "image_position": "center center",
         "text_box_position": "flex-end",
@@ -1190,7 +1235,6 @@
     },
     "testimonials": {
       "type": "testimonials",
-      "disabled": true,
       "blocks": {
         "testimonial-0": {
           "type": "testimonial",
@@ -1241,6 +1285,7 @@
         "testimonial-3",
         "testimonial-4"
       ],
+      "disabled": true,
       "settings": {
         "autorotate": false,
         "autorotate_speed": 5,
@@ -1390,7 +1435,6 @@
     },
     "scrolling-promotion": {
       "type": "scrolling-promotion",
-      "disabled": true,
       "blocks": {
         "1933458f-2480-4a6c-b863-6e18e5411ff7": {
           "type": "image",
@@ -1458,6 +1502,7 @@
         "279c2db5-d7e9-47bf-abae-2959b4278636",
         "d48d9ee9-19a1-4df7-8456-1e6bc401a2a1"
       ],
+      "disabled": true,
       "settings": {
         "direction": "left",
         "speed": 1.2,
@@ -1473,7 +1518,6 @@
     },
     "map": {
       "type": "map",
-      "disabled": true,
       "blocks": {
         "heading": {
           "type": "heading",
@@ -1506,6 +1550,7 @@
         "text",
         "button"
       ],
+      "disabled": true,
       "settings": {
         "map_address": "620 King St W, Toronto, ON M5V 1M7, Canada",
         "map_api_key": "",
@@ -1532,6 +1577,7 @@
     }
   },
   "order": [
+    "b7b2a4cf-79b2-4a78-a857-c9cc3edbd217",
     "slideshow",
     "47b6f066-2822-4489-ac9c-396bc4483889",
     "rich-text-0",
