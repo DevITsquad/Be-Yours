@@ -154,7 +154,7 @@
         endif
       -%}
 
-      <a href="{{ card_product.url | within: card_collection }}" class="card__media media-wrapper" tabindex="-1">
+      <a href="{{ card_product.url | within: card_collection }}" class="card__media media-wrapper" style="padding:0;" tabindex="-1">
         <div class="image-animate media media--{{ media_size }} media--hover-effect{% unless enable_image_fill %} media--image-contain{% endunless %}"
           {%- if media_size == 'adapt' %} style="--image-ratio-percent: {{ 1 | divided_by: featured_media_aspect_ratio | times: 100 }}%;"{% endif -%}
         >
